@@ -11,7 +11,7 @@ export default class PlayerCard extends Component {
         <div className='GreyLayer'>
           <p className='Name'> {this.props.name} </p>
           <img className='Photo' src={this.props.photo} alt=""/>
-          <h2 className='Price' >{this.props.price}</h2>
+          <h2 className='Price' >{this.props.price} Eth</h2>
         </div>
       </Col>
     )
