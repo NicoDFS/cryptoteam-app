@@ -9,6 +9,7 @@ export default class PlayerCard extends Component {
   render() {
 
     return (
+
       <div className="container">
 
           <div className="leftBar">

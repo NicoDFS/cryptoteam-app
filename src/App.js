@@ -10,16 +10,16 @@ class App extends Component {
       <div className="App" style={divStyle}>
           <Row  type="flex" justify="center" >
             <PlayerCard  
-              name='Neymar Jr.' 
+              name='NEYMAR JR.' 
             />            
             <PlayerCard  
-              name='Lionel Messi' 
+              name='L.MESSI' 
             />
             <PlayerCard  
-              name='M.Salah' 
+              name='M.SALAH' 
             />
             <PlayerCard  
-              name='Paul Pogba' 
+              name='PAUL POGBA' 
             />                                 
           </Row>
       </div>

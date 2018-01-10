@@ -1,53 +1,59 @@
+@import url('https://fonts.googleapis.com/css?family=Fjalla+One');
+
+p{ 
+    font-family: 'Fjalla One', sans-serif;
+}
+
 .container{
     padding: 0;
     /* background-color: rgba(255,255,255,0.07); */
-    /* border: solid white 1px; */
-    margin:10px;
-    width:250px;
-    height:400px;
+    border: solid white 1px;
+    margin: 10px;
+    width: 250px;
+    height: 400px;
     background-image: url('../../Assets/cards/gold2.png');
     background-size: cover;
 }
 
 .leftBar{
     /* background-color:rgba(255,0,0,0.5); */
-    height:100px;
-    width:22%;
-    height:100%;
-    float:left;
+    height: 100px;
+    width: 22%;
+    height: 100%;
+    float: left;
 }
 
 .rightBar{
     /* background-color:rgba(0,0,255,0.5); */
-    height:100px;
-    width:78%;
-    height:100%;
-    float:right;
+    height: 100px;
+    width: 78%;
+    height: 100%;
+    float: right;
 }
 
 .rating{
-    font-size: 30px;
-    margin-top: 50px;
+    font-size: 32px;
+    margin-top: 45px;
     font-weight: 500;
     margin-bottom: 0px;
 }
 
 .position{
-    margin-top:-10px;
-    font-size: 18px;
+    margin-top: -10px;
+    font-size: 20px;
     font-weight: 600;
-    margin-bottom:0;
+    margin-bottom: 0;
 }
 
 .club{
-    width:75%;
-    height:auto;
-    margin-bottom:0;
+    width: 75%;
+    height: auto;
+    margin-bottom: 0;
 }
 
 .nation{
-    width:90%;
-    height:auto;
+    width: 90%;
+    height: auto;
 }
 
 .photo{
@@ -59,74 +65,51 @@
 .name{
     height: 37px;
     margin: 0px;
-    color: #000;
-    /* background-color: rgba(0,255,0,0.5); */
-    font-size: 19px;
     padding-top: 5px;
-    font-weight: 500;
+    /* background-color: rgba(0,255,0,0.5); */
+    font-size: 20px;
+    font-weight: 600;
 }
 
 .statsContainer{
     /* background-color: rgba(255, 247, 0, 0.50); */
-    height:173px;
-    width:100%;
+    height: 173px;
+    width: 100%;
     /* padding-top:12px;
     padding-left:17px; */
-    padding:12px 23px 0px 17px;
+    padding: 12px 23px 0px 17px;
 }
 
 .rightStat{
-    float:right;
+    float: right;
     /* background-color: rgba(0,0,0,0.1); */
-    height:29px;
-    width:47%;
-    margin-bottom:8px;
+    height: 29px;
+    width: 47%;
+    margin-bottom: 8px;
 }
 
 .leftStat{
-    float:left;
+    float: left;
     /* background-color: rgba(0,0,0,0.1); */
-    height:29px;
-    width:47%;
-    margin-bottom:8px;
+    height: 29px;
+    width: 47%;
+    margin-bottom: 8px;
 }
 
 .statName{
     margin: 0px 0px 0px 3px;
-    font-size: 17px;
-    margin-top:5px;
-    font-weight: 500;
-    float:left;
+    font-size: 20px;
+    margin-top: 5px;
+    font-weight: 0;
+    float: left;
+    opacity: 0.8;
 }
 
 .statValue{
     margin: 0;
-    font-size: 21px;
-    margin-top:1px;
-    font-weight: 700;
-    float:left;
-}
-
-.card{
-    height: 250px;
-    margin: 0;
-    width:100%;
-    height:auto;
-}
-
-.greyLayer{
-    padding: 0px;
-    width:100%;
-    margin:0,
-}
-
-
-.price{
-    width: 100%;
-    background-color: #39B54A;
-    margin: 0;
-    padding: 0;
-    height: 35px;
-    padding-top: 6px;
-    color: #fff;
+    font-size: 24px;
+    margin-top: 1px;
+    font-weight: 600;
+    float: left;
+    opacity: 0.9;
 }
