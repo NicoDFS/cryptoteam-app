@@ -6,13 +6,24 @@ p{
 
 .container{
     padding: 0;
-    /* background-color: rgba(255,255,255,0.07); */
-    border: solid white 1px;
+    /* background-color: rgba(255,255,255,0.5); */
+    /* border: solid white 1px; */
     margin: 10px;
-    width: 250px;
-    height: 400px;
-    background-image: url('../../Assets/cards/gold2.png');
+    width: 230px;
+    height: 368px;
     background-size: cover;
+}
+
+.gold{
+    background-image: url('../../Assets/cards/gold2.png');
+}
+
+.silver{
+    background-image: url('../../Assets/cards/silver2.png');
+}
+
+.bronze{
+    background-image: url('../../Assets/cards/bronze2.png');
 }
 
 .leftBar{
@@ -63,9 +74,9 @@ p{
 }
 
 .name{
-    height: 37px;
+    height: 34px;
     margin: 0px;
-    padding-top: 5px;
+    padding-top: 4px;
     /* background-color: rgba(0,255,0,0.5); */
     font-size: 20px;
     font-weight: 600;
@@ -77,23 +88,23 @@ p{
     width: 100%;
     /* padding-top:12px;
     padding-left:17px; */
-    padding: 12px 23px 0px 17px;
+    padding: 10px 21px 0px 15px;
 }
 
 .rightStat{
     float: right;
     /* background-color: rgba(0,0,0,0.1); */
-    height: 29px;
+    height: 26px;
     width: 47%;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .leftStat{
     float: left;
     /* background-color: rgba(0,0,0,0.1); */
-    height: 29px;
+    height: 26px;
     width: 47%;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .statName{

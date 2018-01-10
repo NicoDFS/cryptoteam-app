@@ -5,15 +5,31 @@ import './PlayerCard.css';
 let goldCard= require('../../Assets/cards/gold2.png');
 
 export default class PlayerCard extends Component {
+
+  state = {
+    cardType : "",
+  }
+
+  componentDidMount(){
+    this.setCardType(this.props.rating);
+  }
+
+  setCardType( rating ){
+    switch (true) {
+      case ( rating <= 70 ):this.setState({ cardType :"bronze"});break;
+      case ( rating >= 70 && rating <= 80 ):this.setState({ cardType :"silver"});break;
+      case ( rating > 80 && rating <= 90 ):this.setState({ cardType :"gold"});break;
+    }
+  }
   
   render() {
 
     return (
 
-      <div className="container">
+      <div className={"container " + this.state.cardType } >
 
           <div className="leftBar">
-            <p className="rating">93</p>
+            <p className="rating">{this.props.rating}</p>
             <p className="position">RW</p>
             <img className="club" src="https://fifa17.content.easports.com/fifa/fltOnlineAssets/B1BA185F-AD7C-4128-8A64-746DE4EC5A82/2018/fut/items/images/clubbadges/html5/dark/24x24/l241.png" alt=""/>
             <img className="nation" src="https://fifa17.content.easports.com/fifa/fltOnlineAssets/B1BA185F-AD7C-4128-8A64-746DE4EC5A82/2018/fut/items/images/flags/html5/24x14/52.png" alt=""/>

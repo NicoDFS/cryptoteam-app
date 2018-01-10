@@ -11,15 +11,19 @@ class App extends Component {
           <Row  type="flex" justify="center" >
             <PlayerCard  
               name='NEYMAR JR.' 
+              rating={80}
             />            
             <PlayerCard  
               name='L.MESSI' 
+              rating={90}
             />
             <PlayerCard  
               name='M.SALAH' 
+              rating={68}
             />
             <PlayerCard  
               name='PAUL POGBA' 
+              rating={72}
             />                                 
           </Row>
       </div>
