@@ -6,10 +6,10 @@ export default function Web3Init() {
     // Use Mist/MetaMask's provider
     if (typeof web3 !== 'undefined') {
 
-        console.log('Attempting to connect to metamask provider');
-
-        // TODO: Change Infura provider to Metamask 
-        return new Web3(new Web3.providers.HttpProvider("https://ropsten.infura.io/r5BXHFEB8kpYCrHeEySo"));
+        if (window.web3.currentProvider !== undefined) {
+            console.log('Connected to MetaMask provider,');
+        }
+        return new Web3(window.web3.currentProvider)
     }
 
     //no metamask installed/unlocked
@@ -17,3 +17,5 @@ export default function Web3Init() {
     return undefined;
 
 }
+
+
