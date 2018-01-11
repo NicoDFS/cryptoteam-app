@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import MarketPage from './Components/marketPage/MarketPage'
+import MarketPage from './components/marketPage/MarketPage'
 import './App.css';
 
 class App extends Component {

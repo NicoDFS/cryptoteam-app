@@ -15,7 +15,7 @@ p{
 }
 
 .plat{
-    background-image: url('../../Assets/cards/plat2.png');
+    background-image: url('../../assets/cards/plat2.png');
     color: #D5B43A;
     padding-top:5px;
 }
@@ -29,15 +29,15 @@ p{
 }
 
 .gold{
-    background-image: url('../../Assets/cards/gold2.png');
+    background-image: url('../../assets/cards/gold2.png');
 }
 
 .silver{
-    background-image: url('../../Assets/cards/silver2.png');
+    background-image: url('../../assets/cards/silver2.png');
 }
 
 .bronze{
-    background-image: url('../../Assets/cards/bronze2.png');
+    background-image: url('../../assets/cards/bronze2.png');
 }
 
 .leftBar{
