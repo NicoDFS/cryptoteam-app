@@ -6,11 +6,26 @@ p{
 
 .container{
     padding: 0;
+    padding-top:2px;
     /* background-color: rgba(255,255,255,0.5); */
     /* border: solid white 1px; */
     width: 230px;
-    height: 368px;
+    height: 372px;
     background-size: cover;
+}
+
+.plat{
+    background-image: url('../../Assets/cards/plat2.png');
+    color: #D5B43A;
+    padding-top:5px;
+}
+
+.plat .statsContainer{
+    color: #969798;
+}
+
+.plat .name{
+    margin-top:-1px;
 }
 
 .gold{
@@ -122,4 +137,5 @@ p{
     font-weight: 600;
     float: left;
     opacity: 0.9;
+    width:24px;
 }
