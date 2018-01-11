@@ -1,0 +1,29 @@
+
+
+.cardContainer{
+    width: 270px;
+    /* height: 408px; */
+    height: 458px;
+    background-color: rgba(255, 255, 255, 0.40);
+    padding: 20px;
+    margin: 14px 7px 0px 7px;
+    border-radius: 5px;
+    /* border:solid rgba(0,0,0,0) 1px; */
+    
+}
+
+.cardContainer:hover { 
+    /* border:solid #fff 1px; */
+}
+
+.price{
+    width: 250px;
+    height: 50px;
+    background-color: rgba(0,0,0,0.9);
+    margin: 0px 0px 0px 0px; 
+    font-size: 28px;
+    color: #fff;
+    padding-top: 5px;
+    margin: -60px 0px 11px 17px;
+    border-radius: 5px;
+}

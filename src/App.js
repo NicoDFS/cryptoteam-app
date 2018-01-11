@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PlayerSearch from './Components/marketPage/MarketPage'
+import MarketPage from './Components/marketPage/MarketPage'
 import './App.css';
 
 class App extends Component {
@@ -7,7 +7,7 @@ class App extends Component {
 
     return (
       <div className="App" style={divStyle}>
-          <PlayerSearch/>
+          <MarketPage/>
       </div>
     );
   }
@@ -15,7 +15,6 @@ class App extends Component {
 
 const divStyle = {
   height:window.innerHeight,
-  paddingTop: 200,
 };
 
 
