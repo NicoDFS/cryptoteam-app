@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Row } from 'antd';
 import PriceCard from './PriceCard'
 import './MarketPage.css'
-var sortJsonArray = require('sort-json-array');
 
 let players =  [
     {
