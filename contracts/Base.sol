@@ -9,9 +9,9 @@ contract Base is AccessControl {
     }
 
     event Transfer(address indexed from, address indexed to, uint256 indexed tokenId);
-    event Spawn(address indexed owner, uint256 playerId);
+    event Spawn(uint256 playerId);
 
-    Player[] players;
+    Player[] public players;
 
     // Returns the owner of a specific player given his ID
     mapping (uint256 => address) public playerIndexToOwner;
@@ -19,8 +19,8 @@ contract Base is AccessControl {
     // Returns the number of players a user owns
     mapping (address => uint256) ownershipTokenCount;
 
-    //A mapping from KittyIDs to an address that has been approved to call
-    // transferFrom(). Each Kitty can only have one approved address for transfer
+    //A mapping from playerIDs to an address that has been approved to call
+    // transferFrom(). Each player can only have one approved address for transfer
     mapping (uint256 => address) public playerIndexToApproved;
 
     function _transfer(address _from, address _to, uint256 _tokenId) internal {
@@ -36,8 +36,15 @@ contract Base is AccessControl {
         Transfer(_from, _to, _tokenId);
 }
 
-    function _spawnPlayer() internal returns (uint) {
-        //TODO
+    function _spawnPlayer(uint256 id) external {
+        require(playerIndexToOwner[id] == address(0));
+        players.push(Player(id));
+        playerIndexToOwner[id] = address(this);
+        Spawn(id);
     }
+
+    // function() payable {
+
+    // }
 
 }

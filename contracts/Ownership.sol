@@ -3,7 +3,7 @@ pragma solidity ^0.4.18;
 import "./ERC721.sol";
 import "./Base.sol";
 
-contract CryptoTeamCore is ERC721, Base {
+contract Ownership is ERC721, Base {
 
     string public name = "CryptoTeam";
     string public symbol = "CT";
