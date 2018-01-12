@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
+import Web3Init from './scripts/web3';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const web3Instance = Web3Init();
+ReactDOM.render(<App web3={web3Instance} />, document.getElementById('root'));
 registerServiceWorker();
