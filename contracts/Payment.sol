@@ -45,11 +45,11 @@ contract Payment {
     
     }
 
-    function pause(bool _pauseState) onlyOwner {
+    function pause(bool _pauseState) public onlyOwner {
         paused = _pauseState;
     }
 
-    function() payable {
+    function() public payable {
         owner.transfer(msg.value);
     }
 
