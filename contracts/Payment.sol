@@ -1,6 +1,6 @@
 pragma solidity ^0.4.18;
 
-contract OwnershipCore {
+contract Payment {
 
     address owner = msg.sender;
     bool paused = false;
