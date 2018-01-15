@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Row } from 'antd';
 import PriceCard from './PriceCard'
 import './MarketPage.css'
+import TabsBar from './tabsBar/TabsBar'
 
 let players =  [
     {
@@ -117,6 +118,10 @@ let players =  [
 
 export default class MarketPage extends Component {
 
+    callback(key) {
+        console.log(key);
+    }
+
     sortByKey(array, key) {
         return array.sort(function(a, b) {
             var x = a[key]; var y = b[key];
@@ -127,11 +132,14 @@ export default class MarketPage extends Component {
     render() {
         players = this.sortByKey( players, 'rating');
         return (
-            <Row  type="flex" justify="center"  className="cardsContainer" style={{height:window.innerHeight}} >
+            <div>
+            <TabsBar/>
+            <Row  type="flex" justify="center"  className="cardsContainer" style={{}} >
                 {players.map((item, index) => (
                     <PriceCard  playerInfo={item} />
                 ))}
             </Row>
+            </div>
         )
     }
 }

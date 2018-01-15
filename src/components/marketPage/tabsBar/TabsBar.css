@@ -1,0 +1,37 @@
+.tabsContainer{
+    background-color: #fff;
+    padding: 0px;
+    border-bottom: solid #bbb 1px;
+    padding-left: 4%;
+}
+
+.tab{
+    height: 30px;
+    width: 110px;
+    position: relative;
+    padding-top: 4px;
+}
+
+.active .tabIndicator{
+    opacity: 1;
+}
+
+
+.tabName{
+    font-size: 1.1em;
+    margin: 0;
+    color:#222;
+}
+
+.tabIndicator{
+    background-color: #ED1C24;
+    height: 5px;
+    width: 100%;
+    margin-top: 1px;
+    border-radius: 1px;
+    opacity: 0;
+    transition: opacity .2s ease-out;    
+}
+
+  
+  

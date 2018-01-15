@@ -14,7 +14,7 @@ class App extends Component {
 }
 
 const divStyle = {
-  height:window.innerHeight,
+  // height:window.innerHeight,
 };
 
 
