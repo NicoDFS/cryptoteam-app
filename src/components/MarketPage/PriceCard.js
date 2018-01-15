@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import PlayerCard from '../playerCard/PlayerCard'
+import PlayerCard from '../PlayerCard/PlayerCard'
 import './PriceCard.css';
 
-export default class componentName extends Component {
+export default class PriceCard extends Component {
   render() {
     return (
       <div className="cardContainer">

@@ -27,9 +27,9 @@ export default class TabsBar extends Component {
     }
 
     activateTab( tabIndex ){
-        if(tabIndex != this.state.activatedTab){
+        if(tabIndex !== this.state.activatedTab){
             tabs[this.state.activatedTab].setNotActive();
-            this.state.activatedTab = tabIndex;
+            this.state.setState({activatedTab: tabIndex});
         }
     }
 
