@@ -139,7 +139,8 @@ export default class MarketPage extends Component {
                 <TabsBar />
                 <Row type="flex" justify="center" className="cardsContainer" style={{}} >
                     {players.map((item, index) => (
-                        <PriceCard playerInfo={item} />
+                        // always add key to iterator
+                        <PriceCard key = {index} playerInfo={item} />
                     ))}
                 </Row>
             </div>

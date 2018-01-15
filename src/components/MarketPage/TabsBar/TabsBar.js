@@ -29,7 +29,7 @@ export default class TabsBar extends Component {
     activateTab( tabIndex ){
         if(tabIndex !== this.state.activatedTab){
             tabs[this.state.activatedTab].setNotActive();
-            this.state.setState({activatedTab: tabIndex});
+            this.setState({activatedTab: tabIndex});
         }
     }
 
@@ -37,7 +37,7 @@ export default class TabsBar extends Component {
         return (
         <Row  type="flex" justify="left" className="tabsContainer">
             {tabs.map((item, index) => (
-            <Tab name ={item.name} 
+            <Tab key = {index} name ={item.name} 
                  tabsBar={this}
                  id = {index}
                  ref = {(component) => {tabs[index] = component }} />))}
