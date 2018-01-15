@@ -133,12 +133,15 @@ export default class MarketPage extends Component {
         players = this.sortByKey( players, 'rating');
         return (
             <div>
-            <TabsBar/>
-            <Row  type="flex" justify="center"  className="cardsContainer" style={{}} >
-                {players.map((item, index) => (
-                    <PriceCard  playerInfo={item} />
-                ))}
-            </Row>
+                <Row  type="flex" justify="center">
+                    <h1 className="title"> Marketplace</h1>
+                </Row>                
+                <TabsBar/>
+                <Row  type="flex" justify="center"  className="cardsContainer" style={{}} >
+                    {players.map((item, index) => (
+                        <PriceCard  playerInfo={item} />
+                    ))}
+                </Row>
             </div>
         )
     }

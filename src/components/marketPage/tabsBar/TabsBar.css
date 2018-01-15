@@ -20,7 +20,8 @@
 .tabName{
     font-size: 1.1em;
     margin: 0;
-    color:#222;
+    color:#333;
+    font-weight:500;
 }
 
 .tabIndicator{
