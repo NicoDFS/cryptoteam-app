@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Button } from 'antd';
 import { Web3Provider } from 'react-web3';
-
+import Web3Unavailable from './Web3Unavailable';
 
 export default class Web3Test extends Component {
 
@@ -23,9 +23,10 @@ export default class Web3Test extends Component {
 
     render() {
         return (
-            <Web3Provider>
-                <Button onClick={() => this.sendTransaction()}>Click me to send ETH!</Button>
-            </Web3Provider>
+            // <Web3Provider>
+            //     <Button onClick={() => this.sendTransaction()}>Click me to send ETH!</Button>
+            // </Web3Provider>
+            <Web3Unavailable />
         )
     }
 }
