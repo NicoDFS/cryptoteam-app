@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Web3Test from './components/Web3/testweb3';
+import Web3Test from './test/testweb3';
 import 'antd/dist/antd.css';
 // import './App.css';
 
