@@ -1,0 +1,42 @@
+.dropdownContainer{
+    height: 50px;
+    width: 150px;
+    margin-left: 1%;
+    border:solid #ddd 2px;
+    z-index:1;
+}
+
+.dropdownContainer:hover{
+    background-color: rgba(0,0,0,0.02);
+}
+
+.toggleButton{
+    height: 50px;
+    width: 100%;
+    background-color: transparent;
+    color: inherit;
+    font-Size: 1em;
+    font-weight: 400;
+    padding:11px;
+    color:#999;
+}
+
+.dropdownItem{
+    height: 50px;
+    width: 150px;
+    background-color: #ffffff;
+    color: inherit;
+    font-Size: 1em;
+    font-weight: 400;
+    padding:14px;
+    color:#999;
+    border: solid #eee 1px;
+    border-top:none;
+}
+
+.activeTitle{
+    color:#777;
+    font-Size:1.1em;
+    margin-top:2;
+    font-weight:600;
+}
