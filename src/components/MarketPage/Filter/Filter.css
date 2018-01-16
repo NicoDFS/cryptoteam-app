@@ -1,0 +1,32 @@
+.filterContainer{
+    padding: 4px 4% 4px 4%;
+    height: 70px;
+    width: 100%;
+    background-color: rgb(235,235,235);
+    border-bottom: solid #ccc 1px;
+}
+
+.input{
+    height: 50px;
+    margin-top: 5px;
+    width: 24%;
+    background-color: #fafafa;
+    border: none;
+    font-Size: 1.5em;
+    font-weight: 600;
+    padding: 10px;
+    border: solid #ddd 1px;
+    color: #333;
+    
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #ddd;
+    opacity: 1; /* Firefox */
+}
+
+.input:focus{
+    outline: none;
+    background-color: #fff;
+    
+}

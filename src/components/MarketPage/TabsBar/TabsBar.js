@@ -3,11 +3,13 @@ import './TabsBar.css'
 import { Row } from 'antd'
 import Tab from './Tab'
 
-let tabs = [
-    { 'name':'All', 'active':'false' },
+let tabsInfo = [
+    { 'name':'Buy', 'active':'false' },
+    { 'name':'Sell', 'active':'false' },
     { 'name':'Auctions', 'active':'false' },
-    { 'name':'For Sale', 'active':'false' },
 ]
+
+let tabs = []
 
 export default class TabsBar extends Component {
 
@@ -36,8 +38,9 @@ export default class TabsBar extends Component {
     render() {
         return (
         <Row  type="flex" justify="left" className="tabsContainer">
-            {tabs.map((item, index) => (
-            <Tab key = {index} name ={item.name} 
+            {tabsInfo.map((item, index) => (
+            <Tab key = {index} 
+                 name ={item.name} 
                  tabsBar={this}
                  id = {index}
                  ref = {(component) => {tabs[index] = component }} />))}

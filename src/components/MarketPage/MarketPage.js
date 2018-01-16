@@ -3,6 +3,7 @@ import { Row } from 'antd';
 import PriceCard from './PriceCard'
 import './MarketPage.css'
 import TabsBar from './TabsBar/TabsBar'
+import Filter from './Filter/Filter'
 
 let players = [
     {
@@ -133,10 +134,9 @@ export default class MarketPage extends Component {
         players = this.sortByKey(players, 'rating');
         return (
             <div>
-                <Row type="flex" justify="center">
-                    <h1 className="title"> Marketplace</h1>
-                </Row>
+                <h1 className="title"> Marketplace</h1>
                 <TabsBar />
+                <Filter/>
                 <Row type="flex" justify="center" className="cardsContainer" style={{}} >
                     {players.map((item, index) => (
                         // always add key to iterator
