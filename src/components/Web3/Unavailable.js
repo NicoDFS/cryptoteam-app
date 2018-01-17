@@ -4,6 +4,10 @@ import metamaskLogo from '../../assets/metamaskLogo.png';
 
 export default class Web3Unavailable extends Component {
 
+    componentDidMount() {
+        document.title = "MetaMask Unavailable";
+    }
+
     render() {
         return (
 
@@ -13,11 +17,12 @@ export default class Web3Unavailable extends Component {
             }}>
 
                 <Col offset={7} span={12}>
+
                     <Card title="MetaMask Not Available" bordered={false}
                         style={{ width: 500, boxShadow: "0 0 9px rgba(0,0,0,0.2)" }}>
 
                         Please either download Metamask
-                    for your browser or unlock it if you already have it installed.
+                     for your browser or unlock it if you already have it installed.
                     <br />  <br />  <br />
 
                         <Col offset={2}>
