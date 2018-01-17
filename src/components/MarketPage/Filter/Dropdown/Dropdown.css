@@ -55,8 +55,9 @@
     border: solid #eee 1px;
     border-top:none;
     opacity: 0;
+    z-index:-1;
     margin-top:-25px;
-    transition: margin-top 1s, opacity .05s linear;
+    transition:  margin-top 1s, opacity .05s linear;
 }
 
 .dropdownItem:hover{
