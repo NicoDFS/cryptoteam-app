@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './TabsBar.css'
-import { CSSTransitionGroup } from 'react-transition-group' // ES6
 
 export default class Tab extends Component {
   constructor(){
