@@ -11,6 +11,10 @@ export default class PlayerCard extends Component {
     this.setCardType(this.props.playerInfo.rating);
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setCardType(nextProps.playerInfo.rating);
+  }
+
   setCardType( rating ){
     switch (true) {
       case ( rating < 78 ):this.setState({ cardType :"bronze"});break;
