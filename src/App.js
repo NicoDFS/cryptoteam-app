@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
+import Web3Test from './test/testweb3';
 import MarketPage from './Components/MarketPage/MarketPage'
 import NavBar from './Components/NavBar/NavBar'
-// import './App.css'
 import Web3Test from './Components/web3/testweb3';
+
+// import './App.css'
 import 'antd/dist/antd.css';
 
 class App extends Component {
