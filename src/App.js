@@ -11,7 +11,7 @@ class App extends Component {
   render() {
 
     return (
-      <div className="App" style={divStyle}>
+      <div className="App">
         <NavBar title="cryptoteam" />
         <MarketPage />
       </div>
@@ -19,10 +19,6 @@ class App extends Component {
     );
   }
 }
-
-const divStyle = {
-  // height:window.innerHeight,
-};
 
 
 

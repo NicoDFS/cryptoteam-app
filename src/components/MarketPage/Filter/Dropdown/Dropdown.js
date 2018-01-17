@@ -12,15 +12,35 @@ export default class Dropdown extends Component {
       'activeItem':'', 
     }
     this.items = [];
+    this.setWrapperRef = this.setWrapperRef.bind(this); 
+    this.handleClickOutside = this.handleClickOutside.bind(this);
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('mousedown', this.handleClickOutside);
   }
 
   componentDidMount(){
+    document.addEventListener('mousedown', this.handleClickOutside);
     if(this.props.items){
       this.items = this.props.items;
-      console.log(this.items);
       this.setState({'activeItem':this.items[0]});
     }
     this.onItemClick = this.onItemClick.bind(this);
+  }
+
+  setWrapperRef(node) {
+    this.wrapperRef = node;
+  }
+
+  handleClickOutside(event){
+    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+      console.log('fff');
+    }
+  }
+
+  getActiveItem(){
+    return this.state.activeItem;
   }
 
   toggle(){

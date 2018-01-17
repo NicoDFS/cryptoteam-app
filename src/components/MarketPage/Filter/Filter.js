@@ -5,12 +5,30 @@ import Dropdown from './Dropdown/Dropdown'
 
 export default class Filter extends Component {
 
-  constructor(props) {
-    super(props)
+  constructor() {
+    super();
+    this.sortKey = 'rating';
+    this.sortDir = 'dsc';
+    this.setSortKey = this.setSortKey.bind(this);
+    this.setSortDir = this.setSortDir.bind(this);
+  }
 
-    this.state = {
-      sortBy: 'rating'
+  setSortKey(key) {
+    this.sortKey = key.toLowerCase();
+    this.sortMarket();
+  }
+
+  setSortDir(dir) {
+    if (dir === "Highest first") {
+      this.sortDir = 'dsc';
+    } else {
+      this.sortDir = 'asc';
     }
+    this.sortMarket();
+  }
+
+  sortMarket() {
+    this.props.market.sortByKey(this.sortKey, this.sortDir);
   }
 
 
@@ -18,12 +36,12 @@ export default class Filter extends Component {
     return (
 
       <Row className="filterContainer" type="flex" justify="left">
+
         <input placeholder="Search" className="input" />
-
         <Dropdown items={['Rating', 'Price ascending', 'Popularity', 'Price descending']}
-          title="Sort by: " onChange={this.props.sortBy} />
+          title="Sort by: " onChange={this.setSortDir} />
 
-      </Row>
+      </Row >
     )
   }
 }
