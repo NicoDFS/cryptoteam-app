@@ -8,7 +8,7 @@ export default class Filter extends Component {
   constructor() {
     super();
     this.state = {
-      filters: ['Rating', 'Price ascending', 'Price descending', 'Popularity'],
+      filters: ['Rating', 'Price ascending', 'Price descending', 'Popularity', 'Price to rating ratio'],
       activeIndex: 0
     }
   }

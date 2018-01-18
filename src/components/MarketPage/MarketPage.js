@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Row } from 'antd';
+import { CometSpinLoader } from 'react-css-loaders';
 import PriceCard from './PriceCard'
 import './MarketPage.css'
 import TabsBar from './TabsBar/TabsBar'
@@ -12,7 +13,8 @@ export default class MarketPage extends Component {
         super();
         this.state = {
             'market':[],
-            'market_static': []
+            'market_static': [],
+            'loaded': false
         }
     }
 
@@ -23,6 +25,7 @@ export default class MarketPage extends Component {
         getMarket().then((marketData) => {
             this.setState({'market':marketData, 'market_static': marketData});
             this.sortByIndex(0);
+            this.setState({loaded: true})
         });
     }
 
@@ -35,6 +38,7 @@ export default class MarketPage extends Component {
                 case 1: return a.price - b.price;                            //price ascending
                 case 2: return b.price - a.price;                           //price descending
                 case 3: return a.popularity - b.popularity;      //popularity descending (not ready yet)
+                case 4: return (b.rating/b.price) - (a.rating/a.price)      //price:rating ratio
                 default: return b.rating - a.rating;                    //sort by rating (case 0)
             }
         });
@@ -58,6 +62,11 @@ export default class MarketPage extends Component {
             <div>
 
                 <h1 className="title"> Marketplace</h1>
+
+                <CometSpinLoader color="#68cc9c" size={50}
+                    style={{ display: !this.state.loaded ? 'block' : 'none' }} />
+                
+               <div style={{ display: this.state.loaded ? 'block' : 'none' }}>
                 <TabsBar />
                 <Filter  market = {this}/>
                
@@ -66,6 +75,7 @@ export default class MarketPage extends Component {
                         <PriceCard key = {index} playerInfo={item} />
                     ))}
                 </Row>
+                </div>
 
             </div>
         )
