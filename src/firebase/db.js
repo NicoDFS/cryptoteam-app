@@ -121,7 +121,13 @@ async function getMarket() {
     return snapshot.val();
 }
 
+async function getPlayer(id) {
+    let playerRef = db.ref('/players/' + id);
+    let snapshot = await playerRef.once('value');
+    return snapshot.val();
+}
+
 export {
     addPlayer, addUser, disownPlayer, givePlayer,
-    offerPlayer, buyPlayer, getMarket
+    offerPlayer, buyPlayer, getMarket, getPlayer
 }
