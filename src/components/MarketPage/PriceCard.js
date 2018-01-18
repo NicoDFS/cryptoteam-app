@@ -5,12 +5,23 @@ import './PriceCard.css';
 
 
 export default class PriceCard extends Component {
+
+  handleClick() {
+    let playerInfo = this.props.playerInfo;
+    // console.log(playerInfo);
+
+    // Route to PlayerPage
+
+  }
+
   render() {
     return (
-      <Card className="cardContainer-ant">
-        <PlayerCard playerInfo={this.props.playerInfo} /> <br />
-        <p className="price" >{this.props.playerInfo.price} ETH</p>
-      </Card>
+      <div onClick={() => this.handleClick()}>
+        <Card className="cardContainer-ant">
+          <PlayerCard playerInfo={this.props.playerInfo} /> <br />
+          <p className="price" >{this.props.playerInfo.price} ETH</p>
+        </Card>
+      </div>
     )
   }
 }
