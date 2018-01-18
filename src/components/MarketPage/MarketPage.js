@@ -22,6 +22,7 @@ export default class MarketPage extends Component {
 
         getMarket().then((marketData) => {
             this.setState({'market':marketData, 'market_static': marketData});
+            this.sortByIndex(0);
         });
     }
 
