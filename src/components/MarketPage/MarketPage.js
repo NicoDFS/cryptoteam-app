@@ -7,6 +7,7 @@ import TabsBar from './TabsBar/TabsBar'
 import Filter from './Filter/Filter'
 import { getMarket } from '../../firebase/db'
 
+
 export default class MarketPage extends Component {
     
     constructor(){
@@ -62,21 +63,23 @@ export default class MarketPage extends Component {
             <div>
 
                 <h1 className="title"> Marketplace</h1>
-
-                <CometSpinLoader color="#68cc9c" size={50}
-                    style={{ display: !this.state.loaded ? 'block' : 'none' }} />
                 
-               <div style={{ display: this.state.loaded ? 'block' : 'none' }}>
+               <div>
                 <TabsBar />
                 <Filter  market = {this}/>
-               
-                <Row type="flex" justify="center" className="cardsContainer" style={{}} >
+
+                <CometSpinLoader color="#ED1C24" size={50}
+                    style={{ display: !this.state.loaded ? 'block' : 'none'}} />
+
+                <Row type="flex" justify="center" 
+                    className={ this.state.loaded ? 'cardsContainer' : 'cardsContainer hidden'} >
+
                     {this.state.market.map((item, index) => (
-                        <PriceCard key = {index} playerInfo={item} />
+                        <PriceCard style={{ display: this.state.loaded ? 'block' : 'none' }} key = {index} playerInfo={item} />
                     ))}
                 </Row>
                 </div>
-
+ 
             </div>
         )
     }

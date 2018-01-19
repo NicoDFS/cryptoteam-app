@@ -16,12 +16,12 @@ export default class PriceCard extends Component {
 
   render() {
     return (
-      <div onClick={() => this.handleClick()}>
+      <a onClick={() => this.handleClick()}>
         <Card className="cardContainer-ant">
           <PlayerCard playerInfo={this.props.playerInfo} /> <br />
           <p className="price" >{this.props.playerInfo.price} ETH</p>
         </Card>
-      </div>
+      </a>
     )
   }
 }
