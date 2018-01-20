@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import { Button } from 'antd';
-import { Web3Provider } from 'react-web3';
+// import { Button } from 'antd';
+// import { Web3Provider } from 'react-web3';
 import Web3Unavailable from '../components/Web3/Unavailable';
 
 export default class Web3Test extends Component {
