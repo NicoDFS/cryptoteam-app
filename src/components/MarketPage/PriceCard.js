@@ -16,7 +16,7 @@ export default class PriceCard extends Component {
 
   render() {
     return (
-      <a onClick={() => this.handleClick()}>
+      <a onClick={this.props.onClick}>
         <Card className="cardContainer-ant">
           <PlayerCard playerInfo={this.props.playerInfo} /> <br />
           <p className="price" >{this.props.playerInfo.price} ETH</p>
