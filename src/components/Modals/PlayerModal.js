@@ -1,31 +1,52 @@
 import React, { Component } from 'react'
 import { Modal, Button } from 'antd';
+import config from '../../config'
 
+let web3;
 
 export default class PlayerModal extends Component {
 
     constructor(props) {
         super(props);
+
         this.state = {
             visible: false
         }
     }
 
     componentDidMount = () => {
-        this.setState({ visible: this.props.visible });
+        web3 = this.props.web3;
     }
 
-    handleOk = (e) => {
-
-        this.setState({
-            visible: false,
-        });
+    setVisible = (visibility) => {
+        this.setState({ visible: visibility });
     }
+
+    purchase = (player) => {
+
+        this.setState({ confirmLoading: true });
+        let price = web3.toWei(player.price, 'ether');
+
+        web3.eth.sendTransaction({
+            from: web3.eth.accounts[0],
+            to: config.contract,
+            value: price
+        }, (err, txHash) => {
+
+            this.setState({
+                visible: false,
+                confirmLoading: false
+            });
+
+
+
+        })
+
+    }
+
+
     handleCancel = () => {
-        console.log('yeyeyey!');
-        this.setState({
-            visible: false,
-        });
+        this.setState({ visible: false });
     }
 
     render() {
@@ -36,7 +57,7 @@ export default class PlayerModal extends Component {
                 <Modal
                     title={this.props.player.name}
                     visible={this.state.visible}
-                    onOk={this.props.handleOk}
+                    onOk={this.handleOk}
                     onCancel={this.handleCancel}
                     confirmLoading={this.state.confirmLoading}
                     footer={[
@@ -46,9 +67,9 @@ export default class PlayerModal extends Component {
                         <Button key="submit" type="primary"
                             onClick={() => this.purchase(this.props.player)}>
                             Buy for {this.props.player.price} ETH
-                    </Button>
-                    ]}
-                >
+                        </Button>
+                    ]}>
+
                     <p><b>First Name: </b> {this.props.player.firstName}</p>
                     <p><b>Last Name:  </b>{this.props.player.lastName}</p>
                     <p><b>Position:  </b>{this.props.player.position}</p>

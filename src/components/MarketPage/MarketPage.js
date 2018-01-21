@@ -17,7 +17,6 @@ import authenticate from '../../firebase/auth'
 import './MarketPage.css'
 
 //Other
-import config from '../../config'
 let web3;
 
 export default class MarketPage extends Component {
