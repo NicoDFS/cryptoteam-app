@@ -96,27 +96,6 @@ export default class MarketPage extends Component {
 
     }
 
-    testPurchase(player) {
-
-        let price = web3.toWei(player.price, 'ether');
-
-        web3.eth
-            .sendTransaction({
-                from: web3.eth.accounts[0],
-                to: config.contract,
-                value: price
-            }, (err, txHash) => {
-
-                console.log(err);
-                console.log(txHash);
-
-                if (!err) {
-                    // show txHash
-                    // then firebase db should update to reflect purchase
-                }
-
-            })
-    }
 
     render() {
         return (
@@ -149,10 +128,11 @@ export default class MarketPage extends Component {
                             {this.state.market.map((item, index) => (
 
                                 <PriceCard
+                                    web3={web3}
                                     style={{ display: this.state.loaded ? 'block' : 'none' }}
                                     key={index}
                                     playerInfo={item}
-                                    onClick={() => this.testPurchase(item)} />))}
+                                />))}
 
                         </Row>
                     </div>
