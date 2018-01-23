@@ -1,12 +1,15 @@
 // Base components
 import React, { Component } from 'react';
-import { Row } from 'antd';
+import { Row, Pagination } from 'antd';
 import { CometSpinLoader } from 'react-css-loaders';
 import { Web3Provider } from 'react-web3';
 import PriceCard from './PriceCard'
 import TabsBar from './TabsBar/TabsBar'
 import Filter from './Filter/Filter'
 import Web3Unavailable from '../Web3/Unavailable';
+
+// Tools
+import { chunk } from 'lodash';
 
 // Firebase
 import firebase from '../../firebase'
@@ -26,6 +29,8 @@ export default class MarketPage extends Component {
         this.state = {
             market: [],
             market_static: [],
+            market_split: [],
+            cards_per_page: 10,
             loaded: false,
             user: ''
         }
@@ -38,8 +43,14 @@ export default class MarketPage extends Component {
         getMarket().then((marketData) => {
 
             web3 = this.props.web3;
+            let market_split = chunk(marketData, this.state.cards_per_page);
 
-            this.setState({ market: marketData, market_static: marketData });
+            this.setState({
+                market: market_split[0],
+                market_static: marketData,
+                market_split: market_split
+            });
+
             this.sortByIndex(0);
 
             let address = web3.eth.accounts[0];
@@ -52,7 +63,7 @@ export default class MarketPage extends Component {
             .onAuthStateChanged((user) => {
 
                 if (user) {
-                    console.log(user.uid);
+                    // console.log(user.uid);
                     this.setState({ loaded: true, user: user.id });
                 }
 
@@ -95,6 +106,24 @@ export default class MarketPage extends Component {
 
     }
 
+    updatePagination(pageNumber) {
+        let cards = this.state.market_split[pageNumber - 1];
+        this.setState({ market: cards });
+    }
+
+    onShowSizeChange(number, size) {
+
+        let market = this.state.market_static;
+        let split = chunk(market, size);
+
+        this.setState({
+            cards_per_page: size,
+            market_split: split,
+            market: split[number - 1]
+        });
+
+    }
+
 
     render() {
         return (
@@ -130,13 +159,20 @@ export default class MarketPage extends Component {
                                     web3={web3}
                                     style={{ display: this.state.loaded ? 'block' : 'none' }}
                                     key={index}
-                                    playerInfo={item}
-                                />))}
+                                    playerInfo={item} />
+                            ))}
 
                         </Row>
-                    </div>
 
+                        <Pagination showSizeChanger className="cardsContainer" defaultCurrent={1}
+                            onShowSizeChange={(current, size) => this.onShowSizeChange(current, size)}
+                            total={this.state.market_split.length * 10}
+                            pageSizeOptions={['15', '30', '40']}
+                            onChange={(number, size) => this.updatePagination(number, size)} />
+
+                    </div>
                 </div>
+
             </Web3Provider>
         )
     }
