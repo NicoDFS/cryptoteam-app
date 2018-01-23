@@ -33,6 +33,7 @@ export default class MarketPage extends Component {
             market_static: [],
             market_split: [],
             cards_per_page: 10,
+            current_page: 0,
             loaded: false,
             user: ''
         }
@@ -105,12 +106,18 @@ export default class MarketPage extends Component {
         });
 
         this.setState({ market: temp });
+    }
 
+    checkSearchField(searchTerm) {
+        if (searchTerm === '' || searchTerm === ' ') {
+            let market = this.state.market_split[this.state.current_page];
+            this.setState({ market: market });
+        }
     }
 
     updatePagination(pageNumber) {
         let cards = this.state.market_split[pageNumber - 1];
-        this.setState({ market: cards });
+        this.setState({ market: cards, current_page: pageNumber - 1 });
     }
 
     onShowSizeChange(number, size) {
