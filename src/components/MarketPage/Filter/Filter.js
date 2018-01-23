@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Row, Input } from 'antd'
+import { Row, Input, Affix } from 'antd'
 import './Filter.css'
 import Dropdown from './Dropdown/Dropdown'
 
@@ -33,19 +33,23 @@ export default class Filter extends Component {
   render() {
     return (
 
-      <Row className="filterContainer" type="flex" justify="left">
-        {/* <input placeholder="Search" className="input" onChange={(e) => this.searchMarket(e)} /> */}
+      <Affix>
+        <Row className="filterContainer" type="flex" justify="left">
 
-        <Search placeholder="Search"
-          className="input-ant"
-          style={{ width: '24%' }}
-          // enterButton
-          onChange={(e) => this.checkSearchField(e)}
-          onSearch={value => this.searchMarket(value)} />
+          {/* Live search */}
+          {/* <input placeholder="Search" className="input" onChange={(e) => this.searchMarket(e)} /> */}
 
-        <Dropdown items={this.state.filters}
-          title="Sort by: " onChange={(e) => this.sortMarket(e)} />
-      </Row >
+          {/* Non-live search */}
+          <Search placeholder="Search"
+            className="input-ant"
+            style={{ width: '24%' }}
+            onChange={(e) => this.checkSearchField(e)}
+            onSearch={value => this.searchMarket(value)} />
+
+          <Dropdown items={this.state.filters}
+            title="Sort by: " onChange={(e) => this.sortMarket(e)} />
+        </Row >
+      </Affix>
     )
   }
 }
