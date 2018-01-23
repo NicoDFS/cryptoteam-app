@@ -11,7 +11,6 @@ import Web3Unavailable from '../Web3/Unavailable';
 // Tools
 import { chunk } from 'lodash';
 
-
 // Firebase
 import firebase from '../../firebase'
 import { getMarket } from '../../firebase/db'
@@ -117,6 +116,7 @@ export default class MarketPage extends Component {
 
     updatePagination(pageNumber) {
         let cards = this.state.market_split[pageNumber - 1];
+        window.scrollTo(0, 30);
         this.setState({ market: cards, current_page: pageNumber - 1 });
     }
 
