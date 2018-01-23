@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, Button } from 'antd';
+import { Modal, Button, notification } from 'antd';
 import config from '../../config'
 
 let web3;
@@ -22,6 +22,7 @@ export default class PlayerModal extends Component {
         this.setState({ visible: visibility });
     }
 
+
     purchase = (player) => {
 
         this.setState({ confirmLoading: true });
@@ -38,6 +39,30 @@ export default class PlayerModal extends Component {
                 confirmLoading: false
             });
 
+            if (!err) {
+                const args = {
+                    message: 'Purchase Successful',
+                    description: `You have successfully bought ${player.name} 
+                    for ${ player.price} ETH.
+                    Transaction hash: ${ txHash}`,
+                    duration: 3,
+                    style: {
+                        width: 500,
+                        marginLeft: -100,
+                    }
+                };
+                notification['success'](args);
+            }
+
+            else {
+                const args = {
+                    message: 'Error Purchasing Player',
+                    description: `An error occurred while trying to 
+                purchase this player. Please try again later`,
+                    duration: 3.5
+                };
+                notification['error'](args);
+            }
 
 
         })
