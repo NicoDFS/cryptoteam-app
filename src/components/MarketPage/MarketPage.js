@@ -11,6 +11,7 @@ import Web3Unavailable from '../Web3/Unavailable';
 // Tools
 import { chunk } from 'lodash';
 
+
 // Firebase
 import firebase from '../../firebase'
 import { getMarket } from '../../firebase/db'
@@ -21,6 +22,7 @@ import './MarketPage.css'
 
 //Other
 let web3;
+let accent_clean = require('remove-accents');
 
 export default class MarketPage extends Component {
 
@@ -96,10 +98,10 @@ export default class MarketPage extends Component {
         let temp = this.state.market_static;
 
         temp = temp.filter((a) => {
-            return a
-                .name
-                .toLowerCase()
-                .indexOf(term.toLowerCase()) !== -1;
+            return accent_clean(a.name.toLowerCase())
+                .indexOf(term.toLowerCase()) !== -1 ||
+                a.name.toLowerCase()
+                    .indexOf(term.toLowerCase()) !== -1
         });
 
         this.setState({ market: temp });
