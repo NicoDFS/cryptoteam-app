@@ -1,0 +1,22 @@
+.custom-content-navbar{
+    min-width:100%;
+    height: 75px;
+    background-color: #2b2e2e;
+    padding-left:4%
+}
+
+.custom-content-logo{
+    font-size:2.4em;
+    float:left;
+    color:rgb(255, 255, 255);
+    margin-top:7px;
+    position:absolute;
+    font-weight:100;
+}
+
+.custom-content{
+  margin: 24px 16px;
+  background: #fff;
+  min-height: 100vh;
+  min-width: 100vh;
+}
