@@ -1,5 +1,5 @@
 .navBar{
-    width:100%;
+    width:100vh;
     height: 75px;
     background-color: #2b2e2e;
     padding-left:4%
@@ -16,5 +16,5 @@
 
 .layout{
     min-height: 100vh;
-    min-height: 100vh;
+    min-width: 100vh;
 }

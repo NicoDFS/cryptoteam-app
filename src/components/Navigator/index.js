@@ -3,7 +3,7 @@ import { Layout, Menu, Icon } from 'antd';
 import { Link, HashRouter } from 'react-router-dom'
 import './Navigator.css';
 
-const { Header, Content, Sider } = Layout;
+const { Sider } = Layout;
 
 export default class Navigator extends Component {
 
