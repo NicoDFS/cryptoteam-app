@@ -152,7 +152,7 @@ export default class MarketContent extends Component {
 
                 <Row
                     type="flex"
-                    justify="center"
+                    justify="left"
                     className={this.state.loaded ? 'cardsContainer' : 'cardsContainer hidden'}>
 
                     {this.state.market.map((item, index) => (
