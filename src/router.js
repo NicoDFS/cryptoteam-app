@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { HashRouter, Route } from 'react-router-dom'
-import CustomContent from './components/CustomContent/CustomContent';
 
 // Pages
 import MarketPage from './components/MarketPage/MarketPage'
