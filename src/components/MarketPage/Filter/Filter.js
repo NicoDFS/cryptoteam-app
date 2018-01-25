@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
-import { Row } from 'antd'
+import { Row, Input, Affix } from 'antd'
 import './Filter.css'
 import Dropdown from './Dropdown/Dropdown'
+
+const Search = Input.Search;
 
 export default class Filter extends Component {
 
@@ -19,19 +21,35 @@ export default class Filter extends Component {
     this.setState({ activeIndex: index });
   }
 
-  searchMarket(e) {
-    let searchTerm = e.target.value;
+  searchMarket(searchTerm) {
     this.props.market.searchWith(searchTerm);
   }
+
+  checkSearchField(e) {
+    this.props.market.checkSearchField(e.target.value);
+  }
+
 
   render() {
     return (
 
-      <Row className="filterContainer" type="flex" justify="left">
-        <input placeholder="Search" className="input" onChange={(e) => this.searchMarket(e)} />
-        <Dropdown items={this.state.filters}
-          title="Sort by: " onChange={(e) => this.sortMarket(e)} />
-      </Row >
+      <Affix>
+        <Row className="filterContainer" type="flex" justify="left">
+
+          {/* Live search */}
+          {/* <input placeholder="Search" className="input" onChange={(e) => this.searchMarket(e)} /> */}
+
+          {/* Non-live search */}
+          <Search placeholder="Search"
+            className="input-ant"
+            style={{ width: '24%' }}
+            onChange={(e) => this.checkSearchField(e)}
+            onSearch={value => this.searchMarket(value)} />
+
+          <Dropdown items={this.state.filters}
+            title="Sort by: " onChange={(e) => this.sortMarket(e)} />
+        </Row >
+      </Affix>
     )
   }
 }

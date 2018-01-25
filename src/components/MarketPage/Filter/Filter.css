@@ -16,7 +16,12 @@
     padding: 10px;
     border: solid #ddd 1px;
     color: #333;
-    
+}
+
+.input-ant{
+    height: 50px;
+    width: 24%;
+    font-Size: 1.5em;
 }
 
 .filterTitle{

@@ -1,14 +1,31 @@
 .benchItem{
     width:300px;
     height:90px;
-    background-color: #f2f2f2;
+    background-color: #e5e5e5;
+    margin:6px;
+    /* background-image: url('../../../assets/cards/platCropped.PNG'); */
+    background-size:cover;
+    padding:7px;
+}
+
+.benchCount{
+    font-size:2.2em;
+    font-weight:200;
+    color:#000;
+    margin:25px;
+    /* float:left; */
 }
 
 .benchItemPic{
     width:70px;
     float:left;
-    margin:5px 5px 5px 10px;
     border-radius: 35px;
+}
+
+.benchItemclub{
+    width:50px;
+    float:right;
+    margin-top:13px;
 }
 
 .benchItemName{

@@ -3,9 +3,9 @@ import { HashRouter, Route } from 'react-router-dom'
 
 // Pages
 import MarketPage from './components/MarketPage/MarketPage'
-import NavBar from './components/NavBar/NavBar'
-import PlayerPage from './components/PlayerPage/PlayerPage'
-import AuthPage from './components/AuthPage/AuthPage'
+// import NavBar from './components/NavBar/NavBar'
+// import PlayerPage from './components/PlayerPage/PlayerPage'
+// import AuthPage from './components/AuthPage/AuthPage'
 import HomePage from './components/HomePage/HomePage'
 import ProfilePage from './components/ProfilePage/ProfilePage'
 
@@ -19,10 +19,7 @@ class RouterConfig extends Component {
             <HashRouter>
                 <div className="App">
 
-                    {/* Static section */}
-                    <div>
-                        <NavBar title="Cryptoteam" />
-                    </div>
+                    <Route path="//" component={HomePage} />
 
                     {/* Dynamic section */}
                     <div>
@@ -35,9 +32,9 @@ class RouterConfig extends Component {
                         <Route path="/profile"
                             render={() => <ProfilePage web3={this.props.web3} />} />
 
-                        <Route path="/player" component={PlayerPage} />
 
                     </div>
+
 
                 </div>
             </HashRouter>
