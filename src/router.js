@@ -7,6 +7,7 @@ import NavBar from './components/NavBar/NavBar'
 import PlayerPage from './components/PlayerPage/PlayerPage'
 import AuthPage from './components/AuthPage/AuthPage'
 import HomePage from './components/HomePage/HomePage'
+import ProfilePage from './components/ProfilePage/ProfilePage'
 
 
 class RouterConfig extends Component {
@@ -30,6 +31,9 @@ class RouterConfig extends Component {
 
                         <Route path="/market"
                             render={() => <MarketPage web3={this.props.web3} />} />
+
+                        <Route path="/profile"
+                            render={() => <ProfilePage web3={this.props.web3} />} />
 
                         <Route path="/player" component={PlayerPage} />
 
