@@ -25,6 +25,7 @@
     width: 24%;
     font-Size: 1.5em;
     margin-left:20px;
+    border-radius: 0px!important;
 }
 
 .filterTitle{

@@ -9,7 +9,7 @@ export default class Navigator extends Component {
 
     constructor(props) {
         super(props)
-        this.state = { collapsed: false }
+        this.state = { collapsed: true }
     }
 
     toggle = () => {
@@ -26,7 +26,7 @@ export default class Navigator extends Component {
         return (
             <Layout className="layout">
                 <Sider
-                    collapsible
+                    // collapsible
                     collapsed={this.state.collapsed}
                     onCollapse={this.onCollapse}
                     style={{ fontWeight: 100 }}

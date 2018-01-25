@@ -35,11 +35,24 @@ export default class MarketContent extends Component {
             cards_per_page: 10,
             current_page: 0,
             loaded: false,
-            user: ''
+            user: '',
+            height: 0
         }
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    }
+
+    updateWindowDimensions() {
+        this.setState({ width: window.innerWidth });
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
     }
 
     componentDidMount() {
+
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
 
         document.title = "Marketplace";
 
@@ -75,7 +88,7 @@ export default class MarketContent extends Component {
 
     sortByIndex(index) {
 
-        let temp = this.state.market;
+        let temp = this.state.market_static;
 
         temp.sort((a, b) => {
             switch (index) {
@@ -91,7 +104,12 @@ export default class MarketContent extends Component {
                     return b.rating - a.rating; //sort by rating (case 0)
             }
         });
-        this.setState({ market: temp });
+        let market_split = chunk(temp, this.state.cards_per_page);
+
+        this.setState({
+            market: market_split[0],
+            market_split: market_split
+        });
     }
 
     searchWith(term) {
@@ -105,7 +123,14 @@ export default class MarketContent extends Component {
                     .indexOf(term.toLowerCase()) !== -1
         });
 
-        this.setState({ market: temp });
+        let market_split = chunk(temp, this.state.cards_per_page);
+
+        this.setState({
+            market: market_split[0],
+            market_split: market_split
+        });
+
+        window.scrollTo(0, 85);
     }
 
     checkSearchField(searchTerm) {
@@ -117,7 +142,7 @@ export default class MarketContent extends Component {
 
     updatePagination(pageNumber) {
         let cards = this.state.market_split[pageNumber - 1];
-        window.scrollTo(0, 30);
+        window.scrollTo(0, 85);
         this.setState({ market: cards, current_page: pageNumber - 1 });
     }
 
@@ -131,7 +156,7 @@ export default class MarketContent extends Component {
             market_split: split,
             market: split[number - 1]
         });
-
+        window.scrollTo(0, 85);
     }
 
 
@@ -153,7 +178,7 @@ export default class MarketContent extends Component {
                 <Row
                     type="flex"
                     justify="center"
-                    
+                    style={{width:(this.state.width-100)}}
                     className={this.state.loaded ? 'cardsContainer' : 'cardsContainer hidden'}>
 
                     {this.state.market.map((item, index) => (
@@ -167,7 +192,8 @@ export default class MarketContent extends Component {
 
                 </Row>
 
-                <Pagination showSizeChanger className="cardsContainer" defaultCurrent={1}
+                <Pagination showSizeChanger  defaultCurrent={1} 
+                    style={{marginBottom:30}}
                     onShowSizeChange={(current, size) => this.onShowSizeChange(current, size)}
                     total={this.state.market_split.length * 10}
                     pageSizeOptions={['15', '30', '40']}
