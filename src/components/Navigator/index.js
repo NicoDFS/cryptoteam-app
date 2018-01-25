@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Layout, Menu, Icon } from 'antd';
+import { Layout, Menu, Icon, Affix } from 'antd';
 import { Link, HashRouter } from 'react-router-dom'
 import './Navigator.css';
 
@@ -31,8 +31,9 @@ export default class Navigator extends Component {
                     onCollapse={this.onCollapse}
                     style={{ fontWeight: 100 }}
                 >
-
+                    
                     <HashRouter>
+                    <Affix>
                         <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
 
                             <Menu.Item key="1">
@@ -59,6 +60,7 @@ export default class Navigator extends Component {
                             </Menu.Item>
 
                         </Menu>
+                        </Affix>
                     </HashRouter>
                 </Sider>
                 {this.props.children}

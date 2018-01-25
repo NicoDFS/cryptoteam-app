@@ -1,7 +1,7 @@
 .benchItem{
     width:300px;
     height:90px;
-    background-color: #e5e5e5;
+    background-color: rgba(255, 255, 255, 0.70);    
     margin:6px;
     /* background-image: url('../../../assets/cards/platCropped.PNG'); */
     background-size:cover;
