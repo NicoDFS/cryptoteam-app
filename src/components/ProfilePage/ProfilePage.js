@@ -13,7 +13,7 @@ export default class ProfilePage extends Component {
       //   <Bench/>
       // </div>
 
-      <CustomContent title="Profie"
+      <CustomContent title="Profile"
       content={<Bench/>} />
     )
   }

@@ -1,9 +1,11 @@
 .filterContainer{
     padding: 9px 4% 9px 4%;
     height: 70px;
-    width: 100%;
-    background-color: rgb(235,235,235);
-    border-bottom: solid #ccc 1px;
+    /* background-color: rgb(235,235,235); */
+    /* border-bottom: solid #ddd 1px; */
+    overflow:visible;
+    margin-top:-96px;
+    margin-bottom: 20px;
 }
 
 .input{
@@ -22,6 +24,7 @@
     height: 50px;
     width: 24%;
     font-Size: 1.5em;
+    margin-left:20px;
 }
 
 .filterTitle{
@@ -36,5 +39,4 @@
 .input:focus{
     outline: none;
     background-color: #fff;
-    
 }

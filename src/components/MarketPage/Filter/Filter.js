@@ -33,23 +33,23 @@ export default class Filter extends Component {
   render() {
     return (
 
-      <Affix>
-        <Row className="filterContainer" type="flex" justify="left">
+        <Row className="filterContainer" type="flex" justify="end" >
 
           {/* Live search */}
           {/* <input placeholder="Search" className="input" onChange={(e) => this.searchMarket(e)} /> */}
 
           {/* Non-live search */}
-          <Search placeholder="Search"
-            className="input-ant"
-            style={{ width: '24%' }}
-            onChange={(e) => this.checkSearchField(e)}
-            onSearch={value => this.searchMarket(value)} />
 
+          
           <Dropdown items={this.state.filters}
             title="Sort by: " onChange={(e) => this.sortMarket(e)} />
+
+          <Search placeholder="Search"
+            className="input-ant"
+            style={{ width: '24%',  }}
+            onChange={(e) => this.checkSearchField(e)}
+            onSearch={value => this.searchMarket(value)} />
         </Row >
-      </Affix>
     )
   }
 }

@@ -142,7 +142,7 @@ export default class MarketContent extends Component {
                 web3UnavailableScreen={Web3Unavailable}
                 accountUnavailableScreen={Web3Unavailable}>
 
-                <TabsBar />
+                {/* <TabsBar /> */}
                 <Filter market={this} />
 
                 <CometSpinLoader
@@ -152,7 +152,7 @@ export default class MarketContent extends Component {
 
                 <Row
                     type="flex"
-                    justify="left"
+                    justify="center"
                     className={this.state.loaded ? 'cardsContainer' : 'cardsContainer hidden'}>
 
                     {this.state.market.map((item, index) => (

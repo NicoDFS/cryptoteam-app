@@ -118,7 +118,7 @@ export default class Bench extends Component {
   render() {
     return (
       <div>
-        <p className="benchCount">12 Players</p>
+        {/* <p className="benchCount">12 Players</p> */}
         <Row type="flex" justify="center" >
           {bench.map((item, index) => (
             <BenchItem
