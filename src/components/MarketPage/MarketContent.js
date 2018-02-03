@@ -57,20 +57,20 @@ export default class MarketContent extends Component {
         document.title = "Marketplace";
 
         getMarket().then((marketData) => {
+            if(marketData){
+                web3 = this.props.web3;
+                let market_split = chunk(marketData, this.state.cards_per_page);
 
-            web3 = this.props.web3;
-            let market_split = chunk(marketData, this.state.cards_per_page);
+                this.setState({
+                    market: market_split[0],
+                    market_static: marketData,
+                    market_split: market_split
+                });
 
-            this.setState({
-                market: market_split[0],
-                market_static: marketData,
-                market_split: market_split
-            });
-
-            this.sortByIndex(0);
-
-            let address = web3.eth.accounts[0];
-            authenticate(address)
+                this.sortByIndex(0);
+                let address = web3.eth.accounts[0];
+                authenticate(address)
+            }
         });
 
         //sign in the user and disable loader
@@ -104,12 +104,15 @@ export default class MarketContent extends Component {
                     return b.rating - a.rating; //sort by rating (case 0)
             }
         });
-        let market_split = chunk(temp, this.state.cards_per_page);
 
-        this.setState({
-            market: market_split[0],
-            market_split: market_split
-        });
+        if(temp.length > 0){
+            let market_split = chunk(temp, this.state.cards_per_page);
+
+            this.setState({
+                market: market_split[0],
+                market_split: market_split
+            });
+        }
     }
 
     searchWith(term) {
@@ -123,13 +126,15 @@ export default class MarketContent extends Component {
                     .indexOf(term.toLowerCase()) !== -1
         });
 
-        let market_split = chunk(temp, this.state.cards_per_page);
+        if(temp.length > 0){
+            let market_split = chunk(temp, this.state.cards_per_page);
 
-        this.setState({
-            market: market_split[0],
-            market_split: market_split
-        });
+            this.setState({
+                market: market_split[0],
+                market_split: market_split
+            });
 
+        }
         window.scrollTo(0, 85);
     }
 
@@ -180,7 +185,6 @@ export default class MarketContent extends Component {
                     justify="center"
                     style={{width:(this.state.width-100)}}
                     className={this.state.loaded ? 'cardsContainer' : 'cardsContainer hidden'}>
-
                     {this.state.market.map((item, index) => (
 
                         <PriceCard
