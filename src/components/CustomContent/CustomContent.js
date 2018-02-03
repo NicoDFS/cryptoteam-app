@@ -9,6 +9,27 @@ import './CustomContent.css';
 const { Header, Content } = Layout;
 
 export default class CustomContent extends Component {
+    constructor(){
+        super();
+        this.state = {
+            screenWidth:0
+        }
+        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+    }
+
+    updateWindowDimensions() {
+        this.setState({ screenWidth: window.innerWidth });
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('resize', this.updateWindowDimensions);
+    }
+
+    componentDidMount() {
+
+        this.updateWindowDimensions();
+        window.addEventListener('resize', this.updateWindowDimensions);
+    }
 
     render() {
 
@@ -16,7 +37,7 @@ export default class CustomContent extends Component {
 
         //only render a title if one was passed as a prop
         if (this.props.title) {
-            header = <Header className="custom-content-navbar ">
+            header = <Header style={{width:this.state.screenWidth - 80}} className="custom-content-navbar ">
                 <p className="custom-content-logo">{this.props.title}</p>
             </Header>
         }

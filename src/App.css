@@ -5,6 +5,10 @@ p{
   font-family: 'Roboto', sans-serif;
 }
 
+body{
+  overflow-x: hidden;
+}
+
 .App {
   text-align: center;
   /* background-image: url("./assets/darkBackground2.jpg"); */
