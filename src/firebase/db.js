@@ -29,7 +29,7 @@ function offerPlayer(playerInstanceId, seller, price, callback) {
 
     let marketRef = db.ref('/market');
 
-    db.ref('/users/' + seller + '/owned/' + playerInstanceId)
+    db.ref('/users/' + seller + '/owned/' + playerInstanceId )
         .once('value').then((snapshot) => {
 
             let playerData = snapshot.val();
@@ -127,7 +127,14 @@ async function getPlayer(id) {
     return snapshot.val();
 }
 
+async function getUser( userAddress ){
+    let ref = db.ref('/users/' + userAddress );
+    let snapshot = await ref.once('value');
+    return snapshot.val();
+}
+
 export {
     addPlayer, addUser, disownPlayer, givePlayer,
-    offerPlayer, buyPlayer, getMarket, getPlayer
+    offerPlayer, buyPlayer, getMarket, getPlayer,
+    getUser
 }

@@ -6,10 +6,10 @@ export default class BenchItem extends Component {
     return (
       <div className="benchItem cardContainer-ant">
         <img  className="benchItemPic" alt=""
-        src={this.props.player.headShot}/>
-        <p className="benchItemName" >{this.props.player.name}</p>
+        src={this.props.player.info.headshot}/>
+        <p className="benchItemName" >{this.props.player.info.name}</p>
         <img  className="benchItemclub" alt=""
-        src={this.props.player.clubLogo}/>
+        src={this.props.player.club.logo}/>
       </div>
     )
   }
