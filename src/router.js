@@ -24,7 +24,6 @@ class RouterConfig extends Component {
                     {/* Dynamic section */}
                     <div>
 
-                        <Route path="//" component={HomePage} />
 
                         <Route path="/market"
                             render={() => <MarketPage web3={this.props.web3} />} />

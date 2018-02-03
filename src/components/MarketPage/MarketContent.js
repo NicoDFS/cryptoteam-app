@@ -56,20 +56,29 @@ export default class MarketContent extends Component {
 
         document.title = "Marketplace";
 
-        getMarket().then((marketData) => {
-            if(marketData){
-                web3 = this.props.web3;
-                let market_split = chunk(marketData, this.state.cards_per_page);
+        getMarket().then((market) => {
+            if(market){
+                let marketData = [];
+                // Getting players ids ( json keys )
+                let playerIds = Object.keys(market);
+                playerIds.forEach( (playerId , index ) => {  
+                    // Using players ids to retrieve players data and add them to the market
+                    marketData.push(market[playerId]);
+                    if( index == playerIds.length-1 ){
+                        web3 = this.props.web3;
+                        let market_split = chunk(marketData, this.state.cards_per_page);
 
-                this.setState({
-                    market: market_split[0],
-                    market_static: marketData,
-                    market_split: market_split
+                        this.setState({
+                            market: market_split[0],
+                            market_static: marketData,
+                            market_split: market_split
+                        });
+
+                        this.sortByIndex(0);
+                        let address = web3.eth.accounts[0];
+                        authenticate(address)
+                    }
                 });
-
-                this.sortByIndex(0);
-                let address = web3.eth.accounts[0];
-                authenticate(address)
             }
         });
 
@@ -99,9 +108,9 @@ export default class MarketContent extends Component {
                 case 3:
                     return a.popularity - b.popularity; //popularity descending (not ready yet)
                 case 4:
-                    return (b.rating / b.price) - (a.rating / a.price) //price:rating ratio
+                    return (b.info.rating / b.price) - (a.info.rating / a.price) //price:rating ratio
                 default:
-                    return b.rating - a.rating; //sort by rating (case 0)
+                    return b.info.rating - a.info.rating; //sort by rating (case 0)
             }
         });
 
@@ -120,9 +129,9 @@ export default class MarketContent extends Component {
         let temp = this.state.market_static;
 
         temp = temp.filter((a) => {
-            return accent_clean(a.name.toLowerCase())
+            return accent_clean(a.info.name.toLowerCase())
                 .indexOf(term.toLowerCase()) !== -1 ||
-                a.name.toLowerCase()
+                a.info.name.toLowerCase()
                     .indexOf(term.toLowerCase()) !== -1
         });
 

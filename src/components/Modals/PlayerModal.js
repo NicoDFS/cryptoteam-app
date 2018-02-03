@@ -95,10 +95,10 @@ export default class PlayerModal extends Component {
                         </Button>
                     ]}>
 
-                    <p><b>First Name: </b> {this.props.player.firstName}</p>
-                    <p><b>Last Name:  </b>{this.props.player.lastName}</p>
-                    <p><b>Position:  </b>{this.props.player.position}</p>
-                    <p><b>Rating: </b>{this.props.player.rating}</p>
+                    <p><b>First Name: </b> {this.props.player.info.firstname}</p>
+                    <p><b>Last Name:  </b>{this.props.player.info.lastname}</p>
+                    <p><b>Position:  </b>{this.props.player.info.position}</p>
+                    <p><b>Rating: </b>{this.props.player.info.rating}</p>
 
                 </Modal>
 
