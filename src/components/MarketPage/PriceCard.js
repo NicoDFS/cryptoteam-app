@@ -19,12 +19,14 @@ export default class PriceCard extends Component {
         <a onClick={() => this.openModal()}>
           <Card className="cardContainer-ant">
             <PlayerCard playerInfo={this.props.playerInfo} /> <br />
-            <p className="price" >{this.props.playerInfo.price} ETH</p>
+            <p className="price" >{this.props.price} ETH</p>
           </Card>
         </a>
 
         <PlayerModal web3={this.props.web3}
+          action="buy"
           player={this.props.playerInfo}
+          price = {this.props.price}
           ref='playerModal' />
 
       </div>

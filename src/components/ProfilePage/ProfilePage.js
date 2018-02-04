@@ -35,7 +35,7 @@ export default class ProfilePage extends Component {
     return (
       <CustomContent title="Profile"
       content={
-        <Bench  players={this.state.bench}/>
+        <Bench  web3={this.props.web3}players={this.state.bench}/>
       } />
     )
   }

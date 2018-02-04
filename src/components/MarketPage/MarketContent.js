@@ -60,11 +60,11 @@ export default class MarketContent extends Component {
             if(market){
                 let marketData = [];
                 // Getting players ids ( json keys )
-                let playerIds = Object.keys(market);
-                playerIds.forEach( (playerId , index ) => {  
+                let offerIds = Object.keys(market);
+                offerIds.forEach( (offerId , index ) => {  
                     // Using players ids to retrieve players data and add them to the market
-                    marketData.push(market[playerId]);
-                    if( index == playerIds.length-1 ){
+                    marketData.push(market[offerId]);
+                    if( index == offerIds.length-1 ){
                         web3 = this.props.web3;
                         let market_split = chunk(marketData, this.state.cards_per_page);
 
@@ -106,11 +106,11 @@ export default class MarketContent extends Component {
                 case 2:
                     return b.price - a.price; //price descending
                 case 3:
-                    return a.popularity - b.popularity; //popularity descending (not ready yet)
+                    return a.player.popularity - b.player.popularity; //popularity descending (not ready yet)
                 case 4:
-                    return (b.info.rating / b.price) - (a.info.rating / a.price) //price:rating ratio
+                    return (b.player.info.rating / b.price) - (a.player.info.rating / a.price) //price:rating ratio
                 default:
-                    return b.info.rating - a.info.rating; //sort by rating (case 0)
+                    return b.player.info.rating - a.player.info.rating; //sort by rating (case 0)
             }
         });
 
@@ -131,7 +131,7 @@ export default class MarketContent extends Component {
         temp = temp.filter((a) => {
             return accent_clean(a.info.name.toLowerCase())
                 .indexOf(term.toLowerCase()) !== -1 ||
-                a.info.name.toLowerCase()
+                a.player.info.name.toLowerCase()
                     .indexOf(term.toLowerCase()) !== -1
         });
 
@@ -200,7 +200,8 @@ export default class MarketContent extends Component {
                             web3={web3}
                             style={{ display: this.state.loaded ? 'block' : 'none' }}
                             key={index}
-                            playerInfo={item} />
+                            playerInfo={item.player}
+                            price={item.price} />
                     ))}
 
                 </Row>

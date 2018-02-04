@@ -121,9 +121,9 @@ export default class Bench extends Component {
         {/* <p className="benchCount">12 Players</p> */}
         <Row type="flex" justify="center" >
           {this.props.players.map((item, index) => (
-            <BenchItem
-              key={index}
-              player={item} />
+            <BenchItem web3={this.props.web3}  
+            key={index}
+            player={item} />
           ))}
         </Row>
       </div>

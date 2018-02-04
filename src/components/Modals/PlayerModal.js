@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Modal, Button, notification } from 'antd';
 import config from '../../config'
-
+import PlayerCard from '../PlayerCard/PlayerCard'
+import { offerPlayer } from '../../firebase/db'
 let web3;
 
 export default class PlayerModal extends Component {
@@ -20,6 +21,14 @@ export default class PlayerModal extends Component {
 
     setVisible = (visibility) => {
         this.setState({ visible: visibility });
+    }
+
+    sell = ()=> {
+        let playerData = this.props.player;
+        let sellerId = "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2";
+        offerPlayer( playerData, sellerId, 5 , ( offerId )=> {
+            this.setState({ visible: false });
+        });
     }
 
 
@@ -89,9 +98,16 @@ export default class PlayerModal extends Component {
 
                         <Button key="back" onClick={this.handleCancel}>Cancel</Button>,
 
-                        <Button key="submit" type="primary"
-                            onClick={() => this.purchase(this.props.player)}>
-                            Buy for {this.props.player.price} ETH
+                        <Button style={{ display: this.props.action == "buy" ? "inline" : "none" }} 
+                        key="buy" type="primary"
+                        onClick={() => this.purchase(this.props.player)}>
+                        Buy for {this.props.price} ETH
+                        </Button>,
+
+                        <Button style={{ display: this.props.action == "sell" ? "inline" : "none" }} 
+                        key="sell" type="primary"
+                        onClick={() => this.sell()}>
+                        Sell Player
                         </Button>
                     ]}>
 
@@ -99,6 +115,7 @@ export default class PlayerModal extends Component {
                     <p><b>Last Name:  </b>{this.props.player.info.lastname}</p>
                     <p><b>Position:  </b>{this.props.player.info.position}</p>
                     <p><b>Rating: </b>{this.props.player.info.rating}</p>
+                    {/* <PlayerCard playerInfo={this.props.player}/> */}
 
                 </Modal>
 
