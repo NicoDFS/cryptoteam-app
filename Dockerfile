@@ -1,5 +1,9 @@
 FROM node:latest
 
+RUN mkdir -p /usr/cryptoteam
+COPY . /usr/cryptoteam
+WORKDIR /usr/cryptoteam
+
 # container will run on port 5000
 EXPOSE 5000 
 
