@@ -1,9 +1,5 @@
 FROM node:latest
 
-RUN mkdir -p /usr/app
-WORKDIR /usr/app
-COPY . /usr/app
-
 # container will run on port 5000
 EXPOSE 5000 
 
