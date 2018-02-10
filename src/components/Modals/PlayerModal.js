@@ -45,6 +45,7 @@ export default class PlayerModal extends Component {
         this.setState({ confirmLoading: true });
         let price = web3.toWei(player.price, 'ether');
 
+        //replace with contract instance and ABI
         web3.eth.sendTransaction({
             from: web3.eth.accounts[0],
             to: config.contract,

@@ -18,6 +18,7 @@ contract Payment {
         _;
     }
     
+    //expected amount should be in wei
     function buyFromContract(uint256 _expectedAmount) public payable notPaused {
 
             require(_expectedAmount == msg.value && msg.value != 0);
