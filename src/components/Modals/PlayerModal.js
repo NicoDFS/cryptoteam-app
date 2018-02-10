@@ -43,8 +43,7 @@ export default class PlayerModal extends Component {
     purchase = (player) => {
 
         this.setState({ confirmLoading: true });
-        let price = web3.toWei(player.price, 'ether');
-
+        let price = web3.toWei(this.props.price, 'ether');
         //replace with contract instance and ABI
         web3.eth.sendTransaction({
             from: web3.eth.accounts[0],
@@ -60,8 +59,8 @@ export default class PlayerModal extends Component {
             if (!err) {
                 const args = {
                     message: 'Purchase Successful',
-                    description: `You have successfully bought ${player.name} 
-                    for ${ player.price} ETH.
+                    description: `You have successfully bought ${player.info.name} 
+                    for ${ this.props.price} ETH.
                     Transaction hash: ${ txHash}`,
                     duration: 3,
                     style: {
@@ -73,6 +72,7 @@ export default class PlayerModal extends Component {
             }
 
             else {
+                console.log(err);
                 const args = {
                     message: 'Error Purchasing Player',
                     description: `An error occurred while trying to 

@@ -2,32 +2,32 @@ import React, { Component } from 'react'
 import './TabsBar.css'
 
 export default class Tab extends Component {
-  constructor(){
+  constructor() {
     super();
     this.state = {
-      'active':false
+      'active': false
     }
   }
 
-  componentDidMount(){
-    if(this.props.active){
-      this.setState({'active':true});
+  componentDidMount() {
+    if (this.props.active) {
+      this.setState({ 'active': true });
     }
   }
 
-  setActive(){
-    this.setState({'active':true});
+  setActive() {
+    this.setState({ 'active': true });
     this.props.tabsBar.activateTab(this.props.id);
   }
 
-  setNotActive(){
-    this.setState({'active':false});
+  setNotActive() {
+    this.setState({ 'active': false });
   }
 
 
   render() {
     return (
-      <a onClick={ ()=> this.setActive() } className={ this.state.active ? "tab active" : "tab" }>
+      <a onClick={() => this.setActive()} className={this.state.active ? "tab active" : "tab"}>
         <p className="tabName">{this.props.name}</p>
         <div className="tabIndicator" />
       </a>
