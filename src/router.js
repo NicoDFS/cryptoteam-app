@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { HashRouter, Route } from 'react-router-dom'
+import asyncComponent from './components/AsyncComponent'
 
 // Pages
-import MarketPage from './components/MarketPage/MarketPage'
-// import NavBar from './components/NavBar/NavBar'
-// import PlayerPage from './components/PlayerPage/PlayerPage'
-// import AuthPage from './components/AuthPage/AuthPage'
 import HomePage from './components/HomePage/HomePage'
-import ProfilePage from './components/ProfilePage/ProfilePage'
+// import MarketPage from './components/MarketPage/MarketPage'
+// import ProfilePage from './components/ProfilePage/ProfilePage'
+
+// code splitting
+const AsyncMarketPage = asyncComponent(() => import('./components/MarketPage/MarketPage'));
+const AsyncProfilePage = asyncComponent(() => import('./components/ProfilePage/ProfilePage'));
 
 
 class RouterConfig extends Component {
@@ -26,10 +28,10 @@ class RouterConfig extends Component {
 
 
                         <Route path="/market"
-                            render={() => <MarketPage web3={this.props.web3} />} />
+                            render={() => <AsyncMarketPage web3={this.props.web3} />} />
 
                         <Route path="/profile"
-                            render={() => <ProfilePage web3={this.props.web3} />} />
+                            render={() => <AsyncProfilePage web3={this.props.web3} />} />
 
 
                     </div>
