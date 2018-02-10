@@ -17,18 +17,21 @@ export default class PlayerModal extends Component {
 
     componentDidMount = () => {
         web3 = this.props.web3;
+        this.setState({ action: this.props.action });
     }
 
     setVisible = (visibility) => {
         this.setState({ visible: visibility });
     }
 
-    sell = () => {
+    offerPlayer = () => {
         let playerData = this.props.player;
         let sellerId = "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2";
         if (!isNaN(this.state.price)) {
             offerPlayer(playerData, sellerId, this.state.price, (offerId) => {
                 this.setState({ visible: false });
+                this.setState({ action: "updateOffer" });
+                this.props.onOfferPlayer();
             });
         } else {
             alert("Please enter a valid number");
@@ -82,6 +85,10 @@ export default class PlayerModal extends Component {
 
     }
 
+    cancelOffer() {
+
+    }
+
     updatePrice = (newPrice) => {
         this.setState({ price: newPrice });
     }
@@ -107,20 +114,28 @@ export default class PlayerModal extends Component {
 
                         <Button key="back" onClick={this.handleCancel}>Cancel</Button>,
 
-                        <Button style={{ display: this.props.action === "buy" ? "inline" : "none" }}
+                        <Button style={{ display: this.state.action === "buy" ? "inline" : "none" }}
                             key="buy" type="primary"
                             onClick={() => this.purchase(this.props.player)}>
                             Buy for {this.props.price} ETH
                         </Button>,
 
-                        <Button style={{ display: this.props.action === "sell" ? "inline" : "none" }}
+                        <Button style={{ display: this.state.action === "offer" ? "inline" : "none" }}
                             key="sell" type="primary"
-                            onClick={() => this.sell()}>
+                            onClick={() => this.offerPlayer()}>
                             Offer Player
                         </Button>,
 
+                        <Button style={{ display: this.state.action === "updateOffer" ? "inline" : "none" }}
+                            key="sell"
+                            type="danger"
+                            className="remove-button"
+                            onClick={() => this.cancelOffer()}>
+                            Cancel Offer
+                        </Button>,
+
                         <InputNumber min={0} key={1} placeholder="ETH" onChange={this.updatePrice}
-                            style={{ display: this.props.action === "sell" ? "inline" : "none" }}
+                            style={{ display: this.state.action === "offer" ? "inline" : "none" }}
                             className="price-input">ETH</InputNumber>
                     ]}>
                     <img className="headshot" src={this.props.player.info.headshot} />

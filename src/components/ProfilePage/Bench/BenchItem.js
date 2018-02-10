@@ -5,10 +5,26 @@ import PlayerModal from '../../Modals/PlayerModal'
 let saleRibbon = require('../../../assets/saleRibbon.png');
 
 export default class BenchItem extends Component {
+  constructor() {
+    super();
+    this.state = {};
+  }
 
+  componentWillMount() {
+    if (this.props.player.offer == null) {
+      this.setState({ playerOffered: false });
+    } else {
+      this.setState({ playerOffered: true });
+    }
+  }
 
   openModal = () => {
     this.refs.playerModal.setVisible(true);
+  }
+
+
+  onOfferPlayer = () => {
+    this.setState({ playerOffered: true });
   }
 
   render() {
@@ -17,9 +33,7 @@ export default class BenchItem extends Component {
       <div>
         <a>
           <div onClick={() => this.openModal()} className="benchItem">
-            <div style={{ display: this.props.player.offer == null ? "none" : "block" }}
-              className="forSale" alt="" />
-            <img style={{ display: this.props.player.offer == null ? "none" : "block" }}
+            <img style={{ display: !this.state.playerOffered ? "none" : "block" }}
               src={saleRibbon} className="ribbon" alt="" />
             <img className="benchItemPic" alt=""
               src={this.props.player.info.headshot} />
@@ -30,8 +44,9 @@ export default class BenchItem extends Component {
         </a>
 
         <PlayerModal web3={this.props.web3}
-          action="sell"
+          action={!this.state.playerOffered ? "offer" : "updateOffer"}
           player={this.props.player}
+          onOfferPlayer={this.onOfferPlayer}
           ref='playerModal' />
       </div>
     )

@@ -23,7 +23,19 @@
     width:130px;
     padding-top:5px;
     margin-top:5px;
-    
-    
+}
+
+.player-modal .remove-button{
+    background-color:#f7343d;
+    border-color:#f7343d;
+    color:#fff;
+    -webkit-transition-duration: .2s; /* Safari */
+    transition-duration: .2s;
+}
+
+.player-modal .remove-button:hover{
+    background-color:#f7343ebd;
+    border-color:#f7343e00;
+    color:#fff;
 }
 
