@@ -1,11 +1,11 @@
 .cardsContainer{
     /* overflow-y: scroll; */
-    background-color: rgb(235,235,235);
-    padding: 0px 10% 0px 10%;
+    /* background-color: rgb(235,235,235); */
+    /* padding: 0px 5% 0px 5%; */
     width:100%;
     opacity: 1;
     transition: opacity .7s; 
-    padding-bottom:20px;
+    padding-bottom:30px;
 }
 
 .hidden{

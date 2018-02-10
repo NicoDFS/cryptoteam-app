@@ -25,33 +25,58 @@ function addUser(userInfo) {
     return id;
 }
 
-function offerPlayer(playerInstanceId, seller, price, callback) {
+// function offerPlayer(playerInstanceId, seller, price, callback) {
 
+//     let marketRef = db.ref('/market');
+
+//     db.ref('/users/' + seller + '/owned/' + playerInstanceId )
+//         .once('value').then((snapshot) => {
+
+//             let playerData = snapshot.val();
+
+//             if (playerData === null) {
+//                 return undefined;
+//             }
+
+//             else {
+//                 let pushRef = marketRef.push();
+
+//                 pushRef.set({
+//                     player: playerData,
+//                     instance: playerInstanceId,
+//                     seller: seller, price: price
+//                 });
+//                 let offerId = pushRef.key;
+//                 callback(offerId);
+//             }
+
+//         });
+
+// }
+
+function offerPlayer(playerData, seller, price, callback) {
     let marketRef = db.ref('/market');
+    let pushRef = marketRef.push();
 
-    db.ref('/users/' + seller + '/owned/' + playerInstanceId)
-        .once('value').then((snapshot) => {
+    pushRef.set({
+        player: playerData,
+        instance: playerData.info.id,
+        seller: seller,
+        price: price
+    });
 
-            let playerData = snapshot.val();
+    let offerId = pushRef.key;
 
-            if (playerData === null) {
-                return undefined;
-            }
+    // Add offer id to owned player object
+    let userRef = db.ref('/users/' + seller + "/owned/" + playerData.info.id );
+    pushRef = userRef.child("offer");
 
-            else {
-                let pushRef = marketRef.push();
+    pushRef.set({
+        offerid: offerId,
+        price:price,
+    });
 
-                pushRef.set({
-                    player: playerData,
-                    instance: playerInstanceId,
-                    seller: seller, price: price
-                });
-                let offerId = pushRef.key;
-                callback(offerId);
-            }
-
-        });
-
+    callback(offerId);
 }
 
 function givePlayer(playerId, userId, callback) {
@@ -127,7 +152,14 @@ async function getPlayer(id) {
     return snapshot.val();
 }
 
+async function getUser( userAddress ){
+    let ref = db.ref('/users/' + userAddress );
+    let snapshot = await ref.once('value');
+    return snapshot.val();
+}
+
 export {
     addPlayer, addUser, disownPlayer, givePlayer,
-    offerPlayer, buyPlayer, getMarket, getPlayer
+    offerPlayer, buyPlayer, getMarket, getPlayer,
+    getUser
 }

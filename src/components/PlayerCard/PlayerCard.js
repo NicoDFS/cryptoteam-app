@@ -8,11 +8,11 @@ export default class PlayerCard extends Component {
   }
 
   componentDidMount() {
-    this.setCardType(this.props.playerInfo.rating);
+    this.setCardType(this.props.playerInfo.info.rating);
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setCardType(nextProps.playerInfo.rating);
+    this.setCardType(nextProps.playerInfo.info.rating);
   }
 
   setCardType(rating) {
@@ -31,15 +31,15 @@ export default class PlayerCard extends Component {
       <div className={"container " + this.state.cardType} >
 
         <div className="leftBar">
-          <p className="rating">{this.props.playerInfo.rating}</p>
-          <p className="position">{this.props.playerInfo.position}</p>
-          <img className="club" src={this.props.playerInfo.clubLogo} alt="" />
-          <img className="nation" src={this.props.playerInfo.nationFlag} alt="" />
+          <p className="rating">{this.props.playerInfo.info.rating}</p>
+          <p className="position">{this.props.playerInfo.info.position}</p>
+          <img className="club" src={this.props.playerInfo.club.logo} alt="" />
+          <img className="nation" src={this.props.playerInfo.nation.flag} alt="" />
         </div>
 
         <div className="rightBar">
-          <img className='photo' src={this.props.playerInfo.headShot} alt="" />
-          <p className="name">{this.props.playerInfo.name}</p>
+          <img className='photo' src={this.props.playerInfo.info.headshot} alt="" />
+          <p className="name">{this.props.playerInfo.info.name}</p>
           <div className="statsContainer">
 
             <div className="rightStat">
