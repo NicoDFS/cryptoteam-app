@@ -57,14 +57,14 @@ export default class MarketContent extends Component {
         document.title = "Marketplace";
 
         getMarket().then((market) => {
-            if(market){
+            if (market) {
                 let marketData = [];
                 // Getting players ids ( json keys )
                 let offerIds = Object.keys(market);
-                offerIds.forEach( (offerId , index ) => {  
+                offerIds.forEach((offerId, index) => {
                     // Using players ids to retrieve players data and add them to the market
                     marketData.push(market[offerId]);
-                    if( index == offerIds.length-1 ){
+                    if (index == offerIds.length - 1) {
                         web3 = this.props.web3;
                         let market_split = chunk(marketData, this.state.cards_per_page);
 
@@ -114,7 +114,7 @@ export default class MarketContent extends Component {
             }
         });
 
-        if(temp.length > 0){
+        if (temp.length > 0) {
             let market_split = chunk(temp, this.state.cards_per_page);
 
             this.setState({
@@ -135,7 +135,7 @@ export default class MarketContent extends Component {
                     .indexOf(term.toLowerCase()) !== -1
         });
 
-        if(temp.length > 0){
+        if (temp.length > 0) {
             let market_split = chunk(temp, this.state.cards_per_page);
 
             this.setState({
@@ -192,7 +192,7 @@ export default class MarketContent extends Component {
                 <Row
                     type="flex"
                     justify="center"
-                    style={{width:(this.state.width-100)}}
+                    style={{ width: (this.state.width - 100) }}
                     className={this.state.loaded ? 'cardsContainer' : 'cardsContainer hidden'}>
                     {this.state.market.map((item, index) => (
 
@@ -206,8 +206,8 @@ export default class MarketContent extends Component {
 
                 </Row>
 
-                <Pagination showSizeChanger  defaultCurrent={1} 
-                    style={{marginBottom:30}}
+                <Pagination showSizeChanger defaultCurrent={1}
+                    style={{ marginBottom: 30 }}
                     onShowSizeChange={(current, size) => this.onShowSizeChange(current, size)}
                     total={this.state.market_split.length * 10}
                     pageSizeOptions={['15', '30', '40']}

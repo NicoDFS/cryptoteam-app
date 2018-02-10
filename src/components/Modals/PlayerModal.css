@@ -1,0 +1,29 @@
+.player-modal .headshot{
+    position: absolute;
+    margin-left:-10px;
+    margin-top:-13px;
+}
+
+.player-modal .info{
+    margin-left:140px;
+    height:120px;
+}
+
+.player-modal button{
+    border-radius: 2px;
+    height:40px;
+    margin-top:5px;
+    margin-bottom:5px;
+}
+
+.player-modal .price-input{
+    float:left;
+    border-radius: 2px;
+    height:40px;
+    width:130px;
+    padding-top:5px;
+    margin-top:5px;
+    
+    
+}
+
