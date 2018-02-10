@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Modal, Button, notification, InputNumber } from 'antd';
 import config from '../../config'
-import PlayerCard from '../PlayerCard/PlayerCard'
 import { offerPlayer } from '../../firebase/db'
 import './PlayerModal.css';
 let web3;
+
 export default class PlayerModal extends Component {
 
     constructor(props) {
@@ -27,6 +27,7 @@ export default class PlayerModal extends Component {
     offerPlayer = () => {
         let playerData = this.props.player;
         let sellerId = "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2";
+
         if (!isNaN(this.state.price)) {
             offerPlayer(playerData, sellerId, this.state.price, (offerId) => {
                 this.setState({ visible: false });
@@ -125,19 +126,19 @@ export default class PlayerModal extends Component {
                         </Button>,
 
                         <Button style={{ display: this.state.action === "offer" ? "inline" : "none" }}
-                            key="sell" type="primary"
+                            key="offer" type="primary"
                             onClick={() => this.offerPlayer()}>
                             Offer Player
                         </Button>,
 
                         <Button style={{ display: this.state.action === "updateOffer" ? "inline" : "none" }}
-                            key="sell" type="primary"
+                            key="update-offer" type="primary"
                             onClick={() => this.updateOffer()}>
                             Update Offer
                         </Button>,
 
                         <Button style={{ display: this.state.action === "updateOffer" ? "inline" : "none" }}
-                            key="sell"
+                            key="cancel-offer"
                             type="danger"
                             className="remove-button"
                             onClick={() => this.cancelOffer()}>
@@ -154,7 +155,7 @@ export default class PlayerModal extends Component {
                             className="price-input">ETH</InputNumber>
                     ]
                     }>
-                    <img className="headshot" src={this.props.player.info.headshot} />
+                    <img className="headshot" src={this.props.player.info.headshot} alt="" />
                     <div className="info">
                         <p><b>First Name: </b> {this.props.player.info.firstname}</p>
                         <p><b>Last Name:  </b>{this.props.player.info.lastname}</p>

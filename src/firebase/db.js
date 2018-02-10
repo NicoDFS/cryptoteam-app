@@ -25,35 +25,6 @@ function addUser(userInfo) {
     return id;
 }
 
-// function offerPlayer(playerInstanceId, seller, price, callback) {
-
-//     let marketRef = db.ref('/market');
-
-//     db.ref('/users/' + seller + '/owned/' + playerInstanceId )
-//         .once('value').then((snapshot) => {
-
-//             let playerData = snapshot.val();
-
-//             if (playerData === null) {
-//                 return undefined;
-//             }
-
-//             else {
-//                 let pushRef = marketRef.push();
-
-//                 pushRef.set({
-//                     player: playerData,
-//                     instance: playerInstanceId,
-//                     seller: seller, price: price
-//                 });
-//                 let offerId = pushRef.key;
-//                 callback(offerId);
-//             }
-
-//         });
-
-// }
-
 function offerPlayer(playerData, seller, price, callback) {
     let marketRef = db.ref('/market');
     let pushRef = marketRef.push();
@@ -68,12 +39,12 @@ function offerPlayer(playerData, seller, price, callback) {
     let offerId = pushRef.key;
 
     // Add offer id to owned player object
-    let userRef = db.ref('/users/' + seller + "/owned/" + playerData.info.id );
+    let userRef = db.ref('/users/' + seller + "/owned/" + playerData.info.id);
     pushRef = userRef.child("offer");
 
     pushRef.set({
         offerid: offerId,
-        price:price,
+        price: price,
     });
 
     callback(offerId);
@@ -139,6 +110,14 @@ function buyPlayer(offerID, buyer) {
 
 }
 
+// updates a users most recent sign in time if the user already exists,
+// otherwise adds as new user
+function signIn(userAddress) {
+    db.ref('/users/' + userAddress).set({
+        lastSignIn: new Date()
+    })
+}
+
 //chain .then(marketData) when you call this function somewhere else
 async function getMarket() {
     let marketRef = db.ref('/market');
@@ -152,8 +131,8 @@ async function getPlayer(id) {
     return snapshot.val();
 }
 
-async function getUser( userAddress ){
-    let ref = db.ref('/users/' + userAddress );
+async function getUser(userAddress) {
+    let ref = db.ref('/users/' + userAddress);
     let snapshot = await ref.once('value');
     return snapshot.val();
 }
@@ -161,5 +140,5 @@ async function getUser( userAddress ){
 export {
     addPlayer, addUser, disownPlayer, givePlayer,
     offerPlayer, buyPlayer, getMarket, getPlayer,
-    getUser
+    getUser, signIn
 }

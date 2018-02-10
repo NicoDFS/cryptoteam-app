@@ -4,7 +4,6 @@ import { Row, Pagination } from 'antd';
 import { CometSpinLoader } from 'react-css-loaders';
 import { Web3Provider } from 'react-web3';
 import PriceCard from './PriceCard'
-import TabsBar from './TabsBar/TabsBar'
 import Filter from './Filter/Filter'
 import Web3Unavailable from '../Web3/Unavailable';
 
@@ -36,6 +35,7 @@ export default class MarketContent extends Component {
             current_page: 0,
             loaded: false,
             user: '',
+            width: window.innerWidth,
             height: 0
         }
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
@@ -62,9 +62,11 @@ export default class MarketContent extends Component {
                 // Getting players ids ( json keys )
                 let offerIds = Object.keys(market);
                 offerIds.forEach((offerId, index) => {
+
                     // Using players ids to retrieve players data and add them to the market
                     marketData.push(market[offerId]);
-                    if (index == offerIds.length - 1) {
+
+                    if (index === offerIds.length - 1) {
                         web3 = this.props.web3;
                         let market_split = chunk(marketData, this.state.cards_per_page);
 
@@ -88,7 +90,7 @@ export default class MarketContent extends Component {
             .onAuthStateChanged((user) => {
 
                 if (user) {
-                    // console.log(user.uid);
+                    // console.log(user.id);    //the user address
                     this.setState({ loaded: true, user: user.id });
                 }
 
@@ -129,7 +131,7 @@ export default class MarketContent extends Component {
         let temp = this.state.market_static;
 
         temp = temp.filter((a) => {
-            return accent_clean(a.info.name.toLowerCase())
+            return accent_clean(a.player.info.name.toLowerCase())
                 .indexOf(term.toLowerCase()) !== -1 ||
                 a.player.info.name.toLowerCase()
                     .indexOf(term.toLowerCase()) !== -1
@@ -181,7 +183,6 @@ export default class MarketContent extends Component {
                 web3UnavailableScreen={Web3Unavailable}
                 accountUnavailableScreen={Web3Unavailable}>
 
-                {/* <TabsBar /> */}
                 <Filter market={this} />
 
                 <CometSpinLoader
