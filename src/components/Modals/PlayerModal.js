@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { Modal, Button, notification, InputNumber } from 'antd';
 import config from '../../config'
-import { offerPlayer } from '../../firebase/db'
+import firebase from '../../firebase';
+import { offerPlayer, buyPlayer } from '../../firebase/db'
 import './PlayerModal.css';
 let web3;
 
@@ -28,14 +29,13 @@ export default class PlayerModal extends Component {
         let playerData = this.props.player;
         let sellerId = "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2";
 
-        if (!isNaN(this.state.price)) {
+        if (!isNaN(this.state.price) && this.state.price > 0) {
             offerPlayer(playerData, sellerId, this.state.price, (offerId) => {
-                this.setState({ visible: false });
-                this.setState({ action: "updateOffer" });
+                this.setState({ visible: false, action: "updateOffer" });
                 this.props.onOfferPlayer();
             });
         } else {
-            alert("Please enter a valid number");
+            alert("Please enter a number greater than 0.");
         }
     }
 
@@ -44,6 +44,7 @@ export default class PlayerModal extends Component {
 
         this.setState({ confirmLoading: true });
         let price = web3.toWei(this.props.price, 'ether');
+
         //replace with contract instance and ABI
         web3.eth.sendTransaction({
             from: web3.eth.accounts[0],
@@ -57,22 +58,28 @@ export default class PlayerModal extends Component {
             });
 
             if (!err) {
-                const args = {
-                    message: 'Purchase Successful',
-                    description: `You have successfully bought ${player.info.name} 
+
+                //transfer player
+                buyPlayer(this.props.offerId, firebase.auth().currentUser.id, () => {
+                    const args = {
+                        message: 'Purchase Successful',
+                        description: `You have successfully bought ${player.info.name} 
                     for ${ this.props.price} ETH.
                     Transaction hash: ${ txHash}`,
-                    duration: 3,
-                    style: {
-                        width: 500,
-                        marginLeft: -100,
-                    }
-                };
-                notification['success'](args);
+                        duration: 3,
+                        style: {
+                            width: 500,
+                            marginLeft: -100,
+                        }
+                    };
+                    notification['success'](args);
+                });
+
+
             }
 
             else {
-                console.log(err);
+
                 const args = {
                     message: 'Error Purchasing Player',
                     description: `An error occurred while trying to 

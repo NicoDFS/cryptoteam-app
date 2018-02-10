@@ -78,7 +78,7 @@ function disownPlayer(playerInstanceId, userId, callback) {
     db.ref('/users/' + userId + '/owned/' + playerInstanceId).remove();
 }
 
-function buyPlayer(offerID, buyer) {
+function buyPlayer(offerID, buyer, callback) {
 
     let ref = db.ref('/market/' + offerID);
 
@@ -107,7 +107,7 @@ function buyPlayer(offerID, buyer) {
         });
 
     });
-
+    callback();
 }
 
 // updates a users most recent sign in time if the user already exists,

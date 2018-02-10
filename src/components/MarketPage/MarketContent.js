@@ -11,7 +11,7 @@ import Web3Unavailable from '../Web3/Unavailable';
 import { chunk } from 'lodash';
 
 // Firebase
-import firebase from '../../firebase'
+// import firebase from '../../firebase'
 import { getMarket } from '../../firebase/db'
 import authenticate from '../../firebase/auth'
 
@@ -58,13 +58,15 @@ export default class MarketContent extends Component {
 
         getMarket().then((market) => {
             if (market) {
+
                 let marketData = [];
-                // Getting players ids ( json keys )
+
                 let offerIds = Object.keys(market);
                 offerIds.forEach((offerId, index) => {
 
-                    // Using players ids to retrieve players data and add them to the market
-                    marketData.push(market[offerId]);
+                    let offer = market[offerId];
+                    offer.id = offerId;
+                    marketData.push(offer);
 
                     if (index === offerIds.length - 1) {
                         web3 = this.props.web3;
@@ -78,23 +80,18 @@ export default class MarketContent extends Component {
 
                         this.sortByIndex(0);
                         let address = web3.eth.accounts[0];
-                        authenticate(address)
+
+                        authenticate(address, (err) => {
+                            if (!err) {
+                                console.log('logged in as ' + address);
+                                this.setState({ loaded: true, user: address });
+                            }
+                        })
                     }
                 });
             }
         });
 
-        //sign in the user and disable loader
-        firebase
-            .auth()
-            .onAuthStateChanged((user) => {
-
-                if (user) {
-                    // console.log(user.id);    //the user address
-                    this.setState({ loaded: true, user: user.id });
-                }
-
-            });
     }
 
     sortByIndex(index) {
@@ -201,6 +198,7 @@ export default class MarketContent extends Component {
                             web3={web3}
                             style={{ display: this.state.loaded ? 'block' : 'none' }}
                             key={index}
+                            offerId={item.id}
                             playerInfo={item.player}
                             price={item.price} />
                     ))}

@@ -1,26 +1,42 @@
 import firebase from './index';
+import { signIn } from './db'
 let request = require('xhr-request');
 
-export default function authenticate(address) {
+export default function authenticate(address, callback) {
 
-    const userAuth = 'https://us-central1-cryptoteam-eth.cloudfunctions.net/userAuth';
-    let req = { uid: address };
+    let currentUser = firebase.auth().currentUser;
 
-    //send POST request with req object as body
-    //get custom token and use for sign in
-    request(userAuth, {
-        json: true,
-        method: 'POST',
-        responseType: 'text',
-        body: req
-    }, (err, data) => {
+    //if no user is signed in
+    if (!currentUser) {
 
-        if (!err) {
-            // sign in after token is returned
-            let token = data;
-            firebase.auth().signInWithCustomToken(token);
-            // addUser(address);        // users are already automatically saved in auth db
-        }
+        console.log('no user signed in');
+        const userAuth = 'https://us-central1-cryptoteam-eth.cloudfunctions.net/userAuth';
+        let req = { uid: address };
 
-    })
+        //send POST request with req object as body
+        //get custom token and use for sign in
+        request(userAuth, {
+            json: true,
+            method: 'POST',
+            responseType: 'text',
+            body: req
+        }, (err, data) => {
+
+            if (!err) {
+                // sign in after token is returned
+                let token = data;
+                firebase.auth().signInWithCustomToken(token);   //.then() here?
+                signIn(address);
+            }
+
+            else {
+                return err;
+            }
+
+        })
+    }
+    else {
+        console.log('firebase user already signed in.');
+    }
+    callback();
 }
