@@ -89,6 +89,10 @@ export default class PlayerModal extends Component {
 
     }
 
+    updateOffer() {
+
+    }
+
     updatePrice = (newPrice) => {
         this.setState({ price: newPrice });
     }
@@ -127,6 +131,12 @@ export default class PlayerModal extends Component {
                         </Button>,
 
                         <Button style={{ display: this.state.action === "updateOffer" ? "inline" : "none" }}
+                            key="sell" type="primary"
+                            onClick={() => this.updateOffer()}>
+                            Update Offer
+                        </Button>,
+
+                        <Button style={{ display: this.state.action === "updateOffer" ? "inline" : "none" }}
                             key="sell"
                             type="danger"
                             className="remove-button"
@@ -134,10 +144,16 @@ export default class PlayerModal extends Component {
                             Cancel Offer
                         </Button>,
 
-                        <InputNumber min={0} key={1} placeholder="ETH" onChange={this.updatePrice}
-                            style={{ display: this.state.action === "offer" ? "inline" : "none" }}
+                        <InputNumber min={0} key={1}
+                            defaultValue={this.props.player.offer ? this.props.player.offer.price : null}
+                            placeholder="ETH" onChange={this.updatePrice}
+                            style={{
+                                display: this.state.action === "offer" ||
+                                    this.state.action === "updateOffer" ? "inline" : "none"
+                            }}
                             className="price-input">ETH</InputNumber>
-                    ]}>
+                    ]
+                    }>
                     <img className="headshot" src={this.props.player.info.headshot} />
                     <div className="info">
                         <p><b>First Name: </b> {this.props.player.info.firstname}</p>
@@ -147,7 +163,7 @@ export default class PlayerModal extends Component {
                     </div>
                     {/* <PlayerCard playerInfo={this.props.player}/> */}
 
-                </Modal>
+                </Modal >
 
             </div >
         )
