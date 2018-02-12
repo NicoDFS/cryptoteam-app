@@ -33,12 +33,12 @@ export default class BenchItem extends Component {
       <div>
         <a>
           <div onClick={() => this.openModal()} className="benchItem">
-            <img style={{ display: !this.state.playerOffered ? "none" : "block" }}
+            <img draggable="false" style={{ display: !this.state.playerOffered ? "none" : "block" }}
               src={saleRibbon} className="ribbon" alt="" />
-            <img className="benchItemPic" alt=""
+            <img draggable="false" className="benchItemPic" alt=""
               src={this.props.player.info.headshot} />
             <p className="benchItemName" >{this.props.player.info.name.substr(0, 13)}</p>
-            <img className="benchItemclub" alt=""
+            <img draggable="false" className="benchItemclub" alt=""
               src={this.props.player.club.logo} />
           </div>
         </a>

@@ -160,10 +160,10 @@ export default class PlayerModal extends Component {
                                 display: this.state.action === "offer" ||
                                     this.state.action === "updateOffer" ? "inline" : "none"
                             }}
-                            className="price-input">ETH</InputNumber>
+                            className="price-input">ETH</InputNumber> 
                     ]
                     }>
-                    <img className="headshot" src={this.props.player.info.headshot} alt="" />
+                    <img draggable="false" className="headshot" src={this.props.player.info.headshot} alt="" />
                     <div className="info">
                         <p><b>First Name: </b> {this.props.player.info.firstname}</p>
                         <p><b>Last Name:  </b>{this.props.player.info.lastname}</p>

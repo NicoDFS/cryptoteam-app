@@ -33,12 +33,12 @@ export default class PlayerCard extends Component {
         <div className="leftBar">
           <p className="rating">{this.props.playerInfo.info.rating}</p>
           <p className="position">{this.props.playerInfo.info.position}</p>
-          <img className="club" src={this.props.playerInfo.club.logo} alt="" />
-          <img className="nation" src={this.props.playerInfo.nation.flag} alt="" />
+          <img draggable="false" className="club" src={this.props.playerInfo.club.logo} alt="" />
+          <img draggable="false" className="nation" src={this.props.playerInfo.nation.flag} alt="" />
         </div>
 
         <div className="rightBar">
-          <img className='photo' src={this.props.playerInfo.info.headshot} alt="" />
+          <img draggable="false" className='photo' src={this.props.playerInfo.info.headshot} alt="" />
           <p className="name">{this.props.playerInfo.info.name}</p>
           <div className="statsContainer">
 
