@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { HashRouter, Route } from 'react-router-dom'
+import { HashRouter, Route, Switch } from 'react-router-dom'
 import asyncComponent from './components/AsyncComponent'
 
 // Pages
 import HomePage from './components/HomePage/HomePage'
+import PageNotFound from './components/PageNotFound/PageNotFound';
 // import MarketPage from './components/MarketPage/MarketPage'
 // import ProfilePage from './components/ProfilePage/ProfilePage'
 
@@ -21,21 +22,20 @@ class RouterConfig extends Component {
             <HashRouter>
                 <div className="App">
 
-                    <Route path="//" component={HomePage} />
+                    <Switch>
 
-                    {/* Dynamic section */}
-                    <div>
+                        <Route path="//" component={HomePage} />
 
-
+                        {/* Dynamic section */}
                         <Route path="/market"
                             render={() => <AsyncMarketPage web3={this.props.web3} />} />
 
                         <Route path="/profile"
                             render={() => <AsyncProfilePage web3={this.props.web3} />} />
 
+                        <Route component={PageNotFound} />
 
-                    </div>
-
+                    </Switch>
 
                 </div>
             </HashRouter>
