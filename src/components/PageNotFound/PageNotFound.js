@@ -21,7 +21,7 @@ export default class PageNotFound extends Component {
 
                 <a href="https://discord.gg/CPwmU6C"
                     style={{ display: 'flex', justifyContent: 'center' }}>
-                    <i class="fab fa-discord fa-5x"></i>
+                    <i className="fab fa-discord fa-5x"></i>
                 </a>
 
             </Card>

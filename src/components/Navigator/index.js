@@ -31,35 +31,41 @@ export default class Navigator extends Component {
                     onCollapse={this.onCollapse}
                     style={{ fontWeight: 100 }}
                 >
-                    
+
                     <HashRouter>
-                    <Affix>
-                        <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
+                        <Affix>
+                            <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
 
-                            <Menu.Item key="1">
-                                <Icon type="home" />
-                                <span>Home</span>
-                                <Link to="/" />
-                            </Menu.Item>
+                                <Menu.Item key="1">
+                                    <Icon type="home" />
+                                    <span>Home</span>
+                                    <Link to="/" />
+                                </Menu.Item>
 
-                            <Menu.Item key="2">
-                                <Icon type="shopping-cart" />
-                                <span>Marketplace</span>
-                                <Link to="/market" />
-                            </Menu.Item>
+                                <Menu.Item key="2">
+                                    <Icon type="wallet" />
+                                    <span>Marketplace</span>
+                                    <Link to="/market" />
+                                </Menu.Item>
 
-                            <Menu.Item key="3">
-                                <Icon type="idcard" />
-                                <span>Profile</span>
-                                <Link to="/profile" />
-                            </Menu.Item>
+                                <Menu.Item key="3">
+                                    <Icon type="skin" />
+                                    <span>Profile</span>
+                                    <Link to="/profile" />
+                                </Menu.Item>
 
-                            <Menu.Item key="4">
-                                <Icon type="upload" />
-                                <span>Other</span>
-                            </Menu.Item>
+                                <Menu.Item key="4">
+                                    <Icon type="pushpin-o" />
+                                    <span>Bulletin</span>
+                                </Menu.Item>
 
-                        </Menu>
+                                <Menu.Item key="5">
+                                    <a href="https://discord.gg/CPwmU6C">
+                                        <i className="fab fa-discord fa-lg"></i>
+                                    </a>
+                                </Menu.Item>
+
+                            </Menu>
                         </Affix>
                     </HashRouter>
                 </Sider>
