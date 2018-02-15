@@ -183,7 +183,7 @@ export default class MarketContent extends Component {
                 <Filter market={this} />
 
                 <CometSpinLoader
-                    color="#ED1C24"
+                    color="rgb(8, 45, 81)"
                     size={50}
                     style={{ display: !this.state.loaded ? 'block' : 'none' }} />
 
