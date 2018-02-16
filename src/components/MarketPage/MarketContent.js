@@ -12,7 +12,6 @@ import NoResults from './NoResults';
 import { chunk } from 'lodash';
 
 // Firebase
-// import firebase from '../../firebase'
 import { getMarket } from '../../firebase/db'
 import authenticate from '../../firebase/auth'
 
@@ -57,42 +56,47 @@ export default class MarketContent extends Component {
         window.addEventListener('resize', this.updateWindowDimensions);
 
         document.title = "Marketplace";
+        web3 = this.props.web3;
+        let address = web3.eth.accounts[0];
 
-        getMarket().then((market) => {
-            if (market) {
+        //authenticate before getting market data
+        authenticate(address, (err) => {
 
-                let marketData = [];
+            if (!err) {
 
-                let offerIds = Object.keys(market);
-                offerIds.forEach((offerId, index) => {
+                console.log('logged in as ' + address);
 
-                    let offer = market[offerId];
-                    offer.id = offerId;
-                    marketData.push(offer);
+                getMarket().then((market) => {
+                    if (market) {
 
-                    if (index === offerIds.length - 1) {
-                        web3 = this.props.web3;
-                        let market_split = chunk(marketData, this.state.cards_per_page);
+                        let marketData = [];
 
-                        this.setState({
-                            market: market_split[0],
-                            market_static: marketData,
-                            market_split: market_split
-                        });
+                        let offerIds = Object.keys(market);
+                        offerIds.forEach((offerId, index) => {
 
-                        this.sortByIndex(0);
-                        let address = web3.eth.accounts[0];
+                            let offer = market[offerId];
+                            offer.id = offerId;
+                            marketData.push(offer);
 
-                        authenticate(address, (err) => {
-                            if (!err) {
-                                console.log('logged in as ' + address);
-                                this.setState({ loaded: true, user: address });
+                            if (index === offerIds.length - 1) {
+                                let market_split = chunk(marketData, this.state.cards_per_page);
+
+                                this.setState({
+                                    market: market_split[0],
+                                    market_static: marketData,
+                                    market_split: market_split,
+                                    loaded: true,
+                                    user: address
+                                });
+
+                                this.sortByIndex(0);
                             }
-                        })
+                        });
                     }
                 });
+
             }
-        });
+        })
 
     }
 
