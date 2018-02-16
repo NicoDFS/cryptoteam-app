@@ -4,6 +4,8 @@ import CustomContent from '../CustomContent/CustomContent'
 import { getUser } from '../../firebase/db'
 import './ProfilePage.css'
 import authenticate from '../../firebase/auth'
+import NoResults from './NoResults'
+import { Row } from 'antd'
 let web3;
 
 export default class ProfilePage extends Component {
@@ -12,7 +14,8 @@ export default class ProfilePage extends Component {
     super(props);
     this.state = {
       bench: [],
-      userAddress: ''
+      userAddress: '',
+      no_results: false,
     }
 
     web3 = this.props.web3;
@@ -34,7 +37,7 @@ export default class ProfilePage extends Component {
   getUserData(userAddress) {
 
     getUser(userAddress).then((userData) => {
-      if (userData) {
+      if (userData.owned) {
 
         let bench = [];
 
@@ -50,16 +53,29 @@ export default class ProfilePage extends Component {
             this.setState({ bench: bench });
           }
         });
+      } else {
+        this.setState({ no_results: true });
       }
     });
 
   }
 
   render() {
+
+    let no_results = null
+
+    if (this.state.no_results) {
+      no_results = <NoResults />
+    }
+
     return (
-      <CustomContent title="Profile"
+      <CustomContent title="Bench"
         content={
-          <Bench web3={this.props.web3} players={this.state.bench} />
+          <Row type="flex"
+            justify="center">
+            <Bench web3={this.props.web3} players={this.state.bench} />
+            {no_results}
+          </Row>
         } />
     )
   }
