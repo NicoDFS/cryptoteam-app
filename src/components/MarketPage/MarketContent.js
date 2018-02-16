@@ -6,6 +6,7 @@ import { Web3Provider } from 'react-web3';
 import PriceCard from './PriceCard'
 import Filter from './Filter/Filter'
 import Web3Unavailable from '../Web3/Unavailable';
+import NoResults from './NoResults';
 
 // Tools
 import { chunk } from 'lodash';
@@ -32,6 +33,7 @@ export default class MarketContent extends Component {
             market_static: [],
             market_split: [],
             cards_per_page: 10,
+            no_results: false,
             current_page: 0,
             loaded: false,
             user: '',
@@ -139,10 +141,17 @@ export default class MarketContent extends Component {
 
             this.setState({
                 market: market_split[0],
-                market_split: market_split
+                market_split: market_split,
+                no_results: false
             });
 
         }
+
+        // no search results
+        else {
+            this.setState({ market: [], no_results: true });
+        }
+
         window.scrollTo(0, 85);
     }
 
@@ -174,6 +183,13 @@ export default class MarketContent extends Component {
 
 
     render() {
+
+        let no_results = null
+
+        if (this.state.no_results) {
+            no_results = <NoResults />
+        }
+
         return (
 
             <Web3Provider
@@ -194,7 +210,7 @@ export default class MarketContent extends Component {
                     className={this.state.loaded ? 'cardsContainer' : 'cardsContainer hidden'}>
                     {this.state.market.map((item, index) => (
 
-                        <PriceCard
+                        < PriceCard
                             web3={web3}
                             style={{ display: this.state.loaded ? 'block' : 'none' }}
                             key={index}
@@ -202,13 +218,13 @@ export default class MarketContent extends Component {
                             playerInfo={item.player}
                             price={item.price} />
                     ))}
-
+                    {no_results}
                 </Row>
 
                 <Pagination showSizeChanger defaultCurrent={1}
                     style={{
                         marginBottom: 30,
-                        display: this.state.loaded ? 'block' : 'none'
+                        display: this.state.loaded && !this.state.no_results ? 'block' : 'none'
                     }}
                     onShowSizeChange={(current, size) => this.onShowSizeChange(current, size)}
                     total={this.state.market_split.length * 10}
