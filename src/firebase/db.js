@@ -114,8 +114,8 @@ function buyPlayer(offerID, buyer, callback) {
 // otherwise adds as new user
 function signIn(userAddress) {
     db.ref('/users/' + userAddress).set({
-        lastSignIn: new Date()
-    })
+        lastSignIn: new Date().getTime() + ""
+    });
 }
 
 //chain .then(marketData) when you call this function somewhere else
