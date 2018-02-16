@@ -11,7 +11,6 @@ export default class PriceCard extends Component {
   }
 
   render() {
-
     return (
 
       <div>

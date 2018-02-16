@@ -158,7 +158,7 @@ export default class MarketContent extends Component {
     checkSearchField(searchTerm) {
         if (searchTerm === '' || searchTerm === ' ') {
             let market = this.state.market_split[this.state.current_page];
-            this.setState({ market: market });
+            this.setState({ market: market, no_results: false });
         }
     }
 

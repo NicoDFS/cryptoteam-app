@@ -27,7 +27,12 @@ export default class BenchItem extends Component {
     this.setState({ playerOffered: true });
   }
 
+  onRemoveOffer = () => {
+    this.setState({ playerOffered: false });
+  }
+
   render() {
+
     return (
       // style={{opacity: this.props.player.offer == null ? 1 : 0.4}}
       <div>
@@ -46,7 +51,9 @@ export default class BenchItem extends Component {
         <PlayerModal web3={this.props.web3}
           action={!this.state.playerOffered ? "offer" : "updateOffer"}
           player={this.props.player}
+          userAddress={this.props.userAddress}
           onOfferPlayer={this.onOfferPlayer}
+          onRemoveOffer={this.onRemoveOffer}
           ref='playerModal' />
       </div>
     )

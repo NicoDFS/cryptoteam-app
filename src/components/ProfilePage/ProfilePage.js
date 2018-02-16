@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Bench from './Bench/Bench'
 import CustomContent from '../CustomContent/CustomContent'
-import { getUser } from '../../firebase/db'
+import { getUser, removeOffer } from '../../firebase/db'
 import './ProfilePage.css'
 import authenticate from '../../firebase/auth'
 import NoResults from './NoResults'
@@ -24,12 +24,13 @@ export default class ProfilePage extends Component {
   componentDidMount() {
 
     let address = web3.eth.accounts[0];
-
     authenticate(address, (err) => {
       if (!err) {
         console.log('logged in as ' + address);
-        this.setState({ userAddress: address });
-        this.getUserData(address);
+        // this.setState({ userAddress: address });
+        // this.getUserData(this.state.userAddress);
+        this.setState({ userAddress: "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2" });
+        this.getUserData("1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2");
       }
     })
   }
@@ -73,7 +74,7 @@ export default class ProfilePage extends Component {
         content={
           <Row type="flex"
             justify="center">
-            <Bench web3={this.props.web3} players={this.state.bench} />
+            <Bench web3={this.props.web3} userAddress={this.state.userAddress} players={this.state.bench} />
             {no_results}
           </Row>
         } />

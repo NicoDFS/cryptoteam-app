@@ -25,6 +25,13 @@ function addUser(userInfo) {
     return id;
 }
 
+function removeOffer(offerId, userAddress, playerId) {
+    let marketRef = db.ref('/market/' + offerId);
+    let pushRef = marketRef.remove();
+    let playerRef = db.ref('/users/' + userAddress + "/owned/" + playerId + "/offer");
+    let pushRef1 = playerRef.remove();
+}
+
 function offerPlayer(playerData, seller, price, callback) {
     let marketRef = db.ref('/market');
     let pushRef = marketRef.push();
@@ -43,11 +50,19 @@ function offerPlayer(playerData, seller, price, callback) {
     pushRef = userRef.child("offer");
 
     pushRef.set({
-        offerid: offerId,
+        id: offerId,
         price: price,
     });
 
     callback(offerId);
+}
+
+function updateOffer(offerId, playerId, seller, newPrice, callback) {
+    let marketRef = db.ref('/market/' + offerId);
+    let pushRef = marketRef.update({ price: newPrice });
+
+    let userRef = db.ref('/users/' + seller + "/owned/" + playerId + "/offer");
+    pushRef = userRef.update({ price: newPrice });
 }
 
 function givePlayer(playerId, userId, callback) {
@@ -140,5 +155,5 @@ async function getUser(userAddress) {
 export {
     addPlayer, addUser, disownPlayer, givePlayer,
     offerPlayer, buyPlayer, getMarket, getPlayer,
-    getUser, signIn
+    getUser, signIn, removeOffer, updateOffer
 }
