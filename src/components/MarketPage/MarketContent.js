@@ -206,7 +206,10 @@ export default class MarketContent extends Component {
                 </Row>
 
                 <Pagination showSizeChanger defaultCurrent={1}
-                    style={{ marginBottom: 30 }}
+                    style={{
+                        marginBottom: 30,
+                        display: this.state.loaded ? 'block' : 'none'
+                    }}
                     onShowSizeChange={(current, size) => this.onShowSizeChange(current, size)}
                     total={this.state.market_split.length * 10}
                     pageSizeOptions={['15', '30', '40']}
