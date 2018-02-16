@@ -19,7 +19,7 @@ export default class PageNotFound extends Component {
                 and let us know in <a>#bug-reports. </a>
                 <br /><br />
 
-                <a href="https://discord.gg/CPwmU6C"
+                <a href="https://discord.gg/CPwmU6C" target="_blank" rel="noopener noreferrer"
                     style={{ display: 'flex', justifyContent: 'center' }}>
                     <i className="fab fa-discord fa-5x"></i>
                 </a>
