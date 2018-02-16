@@ -56,7 +56,8 @@ export default class Navigator extends Component {
 
                                 <Menu.Item key="4">
                                     <Icon type="pushpin-o" />
-                                    <span>Bulletin</span>
+                                    <span>Roadmap</span>
+                                    <Link to="/roadmap" />
                                 </Menu.Item>
 
                                 <Menu.Item key="5">

@@ -4,9 +4,8 @@ import asyncComponent from './components/AsyncComponent'
 
 // Pages
 import HomePage from './components/HomePage/HomePage'
+import Roadmap from './components/Roadmap/Roadmap';
 import PageNotFound from './components/PageNotFound/PageNotFound';
-// import MarketPage from './components/MarketPage/MarketPage'
-// import ProfilePage from './components/ProfilePage/ProfilePage'
 
 // code splitting
 const AsyncMarketPage = asyncComponent(() => import('./components/MarketPage/MarketPage'));
@@ -32,6 +31,8 @@ class RouterConfig extends Component {
 
                         <Route path="/profile"
                             render={() => <AsyncProfilePage web3={this.props.web3} />} />
+
+                        <Route path="/roadmap" component={Roadmap} />
 
                         <Route component={PageNotFound} />
 
