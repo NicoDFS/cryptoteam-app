@@ -201,7 +201,8 @@ export default class MarketContent extends Component {
                 <CometSpinLoader
                     color="rgb(8, 45, 81)"
                     size={50}
-                    style={{ display: !this.state.loaded ? 'block' : 'none' }} />
+                    style={{ display: !this.state.loaded ? 'block' : 'none', marginTop: 220 }}
+                />
 
                 <Row
                     type="flex"
