@@ -17,7 +17,7 @@ export default class PlayerModal extends Component {
 
     componentDidMount = () => {
         web3 = this.props.web3;
-        this.setState({ action: this.props.action });
+        this.setState({ action: this.props.action, price: this.props.price });
         if (this.props.player.offer) {
             this.setState({
                 offerId: this.props.player.offer.id,
@@ -45,57 +45,76 @@ export default class PlayerModal extends Component {
         }
     }
 
+    afterPurchase = (player, err, txHash) => {
 
-    purchase = (player) => {
-        this.setState({ confirmLoading: true });
-        let price = web3.toWei(this.props.price, 'ether');
+        this.setState({
+            visible: false,
+            confirmLoading: false
+        });
 
-        //replace with contract instance and ABI
-        web3.eth.sendTransaction({
-            from: web3.eth.accounts[0],
-            to: config.contract,
-            value: price
-        }, (err, txHash) => {
+        if (!err) {
 
-            this.setState({
-                visible: false,
-                confirmLoading: false
-            });
-
-            if (!err) {
-
-                //transfer player
-                buyPlayer(this.props.offerId, firebase.auth().currentUser.uid, () => {
-                    const args = {
-                        message: 'Purchase Successful',
-                        description: `You have successfully bought ${player.info.name} 
+            //transfer player
+            buyPlayer(this.props.offerId, firebase.auth().currentUser.uid, txHash, () => {
+                const args = {
+                    message: 'Purchase Successful',
+                    description: `You have successfully bought ${player.info.name} 
                     for ${ this.props.price} ETH.
                     Transaction hash: ${ txHash}`,
-                        duration: 3,
-                        style: {
-                            width: 500,
-                            marginLeft: -100,
-                        }
-                    };
-                    notification['success'](args);
-                });
-
-
-            }
-
-            else {
-
-                const args = {
-                    message: 'Error Purchasing Player',
-                    description: `An error occurred while trying to 
-                purchase this player. Please try again later`,
-                    duration: 3.5
+                    duration: 3,
+                    style: {
+                        width: 500,
+                        marginLeft: -100,
+                    }
                 };
-                notification['error'](args);
-            }
+                notification['success'](args);
+            });
 
 
-        })
+        }
+
+        else {
+
+            const args = {
+                message: 'Error Purchasing Player',
+                description: `An error occurred while trying to 
+                purchase this player. Please try again later`,
+                duration: 3.5
+            };
+            notification['error'](args);
+        }
+
+
+    }
+
+    purchase = (player) => {
+
+        this.setState({ confirmLoading: true });
+        let price = web3.toWei(this.state.price, 'ether');
+        let seller = this.props.seller;
+
+        let contract = web3.eth.contract(config.abi);
+        let contractInstance = contract.at(config.address);
+
+        //buy from contract
+        if (seller === config.address) {
+            contractInstance.buyFromContract(price, {
+                from: web3.eth.accounts[0],
+                value: price
+            }, (err, txHash) => {
+                this.afterPurchase(player, err, txHash);
+            })
+        }
+
+        // buy from another user
+        else {
+            contractInstance.buyFromUser(price, seller, {
+                from: web3.eth.accounts[0],
+                value: price
+            }, (err, txHash) => {
+                this.afterPurchase(player, err, txHash);
+            })
+        }
 
     }
 

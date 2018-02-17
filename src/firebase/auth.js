@@ -9,7 +9,7 @@ export default function authenticate(address, callback) {
     //if no user is signed in
     if (!currentUser) {
 
-        console.log('no user signed in');
+        console.log('Authenticating...');
         const userAuth = 'https://us-central1-cryptoteam-eth.cloudfunctions.net/userAuth';
         let req = { uid: address };
 
@@ -38,7 +38,6 @@ export default function authenticate(address, callback) {
         })
     }
     else {
-        console.log('firebase user already signed in.');
         callback();
     }
 }

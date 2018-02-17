@@ -64,8 +64,6 @@ export default class MarketContent extends Component {
 
             if (!err) {
 
-                console.log('logged in as ' + address);
-
                 getMarket().then((market) => {
                     if (market) {
 
@@ -220,6 +218,7 @@ export default class MarketContent extends Component {
                             style={{ display: this.state.loaded ? 'block' : 'none' }}
                             key={index}
                             offerId={item.id}
+                            seller={item.seller}
                             playerInfo={item.player}
                             price={item.price} />
                     ))}
