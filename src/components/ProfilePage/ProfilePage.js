@@ -27,10 +27,8 @@ export default class ProfilePage extends Component {
     authenticate(address, (err) => {
       if (!err) {
         console.log('logged in as ' + address);
-        // this.setState({ userAddress: address });
-        // this.getUserData(this.state.userAddress);
-        this.setState({ userAddress: "1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2" });
-        this.getUserData("1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2");
+        this.setState({ userAddress: address });
+        this.getUserData(this.state.userAddress);
       }
     })
   }
@@ -74,7 +72,7 @@ export default class ProfilePage extends Component {
         content={
           <Row type="flex"
             justify="center">
-            <Bench web3={this.props.web3} userAddress={this.state.userAddress} players={this.state.bench} />
+            <Bench web3={this.props.web3} players={this.state.bench} />
             {no_results}
           </Row>
         } />

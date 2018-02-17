@@ -51,7 +51,6 @@ export default class BenchItem extends Component {
         <PlayerModal web3={this.props.web3}
           action={!this.state.playerOffered ? "offer" : "updateOffer"}
           player={this.props.player}
-          userAddress={this.props.userAddress}
           onOfferPlayer={this.onOfferPlayer}
           onRemoveOffer={this.onRemoveOffer}
           ref='playerModal' />

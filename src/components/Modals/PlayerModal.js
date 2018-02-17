@@ -33,7 +33,7 @@ export default class PlayerModal extends Component {
 
     offerPlayer = () => {
         let playerData = this.props.player;
-        let sellerId = this.props.userAddress;
+        let sellerId = firebase.auth().currentUser.uid;
 
         if (!isNaN(this.state.price) && this.state.price > 0) {
             offerPlayer(playerData, sellerId, this.state.price, (offerId) => {
@@ -100,7 +100,7 @@ export default class PlayerModal extends Component {
     }
 
     removeOffer = () => {
-        removeOffer(this.state.offerId, this.props.userAddress, this.props.player.info.id);
+        removeOffer(this.state.offerId, firebase.auth().currentUser.uid, this.props.player.info.id);
         this.setState({ visible: false, action: "offer", offerPrice: undefined });
         this.props.onRemoveOffer();
         this.setState({ price: null });
@@ -108,7 +108,7 @@ export default class PlayerModal extends Component {
 
     updateOffer = () => {
         if (!isNaN(this.state.price) && this.state.price > 0) {
-            updateOffer(this.state.offerId, this.props.player.info.id, this.props.userAddress, this.state.price);
+            updateOffer(this.state.offerId, this.props.player.info.id, firebase.auth().currentUser.uid, this.state.price);
             this.setState({ visible: false });
         } else {
             alert("Please enter a number greater than 0.");

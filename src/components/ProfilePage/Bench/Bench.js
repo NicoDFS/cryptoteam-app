@@ -19,8 +19,7 @@ export default class Bench extends Component {
                         {this.props.players.map((item, index) => (
                             <BenchItem web3={this.props.web3}
                                 key={index}
-                                player={item}
-                                userAddress={this.props.userAddress} />
+                                player={item} />
                         ))}
                     </Row>
                 </div>
