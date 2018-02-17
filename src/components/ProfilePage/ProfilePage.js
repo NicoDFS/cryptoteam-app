@@ -27,15 +27,15 @@ export default class ProfilePage extends Component {
     authenticate(address, (err) => {
       if (!err) {
         console.log('logged in as ' + address);
-        this.setState({ userAddress: address });
-        this.getUserData(this.state.userAddress);
+        this.getUserData(address);
       }
     })
   }
 
-  getUserData(userAddress) {
+  getUserData(address) {
 
-    getUser(userAddress).then((userData) => {
+    getUser(address).then((userData) => {
+
       if (userData.owned) {
 
         let bench = [];
@@ -52,8 +52,9 @@ export default class ProfilePage extends Component {
             this.setState({ bench: bench });
           }
         });
+        this.setState({ userAddress: address });
       } else {
-        this.setState({ no_results: true });
+        this.setState({ no_results: true, userAddress: address });
       }
     });
 
