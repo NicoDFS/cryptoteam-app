@@ -54,13 +54,18 @@ export default class Navigator extends Component {
                                     <Link to="/profile" />
                                 </Menu.Item>
 
+                                <Menu.Item key="5">
+                                    <Icon type="trophy" />
+                                    <span>Leagues (coming soon!)</span>
+                                </Menu.Item>
+
                                 <Menu.Item key="4">
                                     <Icon type="pushpin-o" />
                                     <span>Roadmap</span>
                                     <Link to="/roadmap" />
                                 </Menu.Item>
 
-                                <Menu.Item key="5">
+                                <Menu.Item key="6">
                                     <a href="https://discord.gg/CPwmU6C"
                                         target="_blank"
                                         rel="noopener noreferrer">

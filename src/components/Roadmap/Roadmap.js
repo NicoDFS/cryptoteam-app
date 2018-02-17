@@ -26,7 +26,7 @@ export default class Roadmap extends Component {
               <p>Modifications and fixes</p>
             </Timeline.Item>
 
-            <Timeline.Item color="green">Official launch v1.0</Timeline.Item>
+            <Timeline.Item color="green">Official launch of v1.0</Timeline.Item>
             <Timeline.Item color="orange">Bug fixes and updates</Timeline.Item>
 
             <Timeline.Item color="blue">
