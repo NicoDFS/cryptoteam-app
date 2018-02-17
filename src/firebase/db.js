@@ -121,7 +121,7 @@ function buyPlayer(offerID, buyer, callback) {
 // updates a users most recent sign in time if the user already exists,
 // otherwise adds as new user
 function signIn(userAddress) {
-    db.ref('/users/' + userAddress).set({
+    db.ref('/users/' + userAddress).update({
         lastSignIn: new Date().getTime() + ""
     });
 }

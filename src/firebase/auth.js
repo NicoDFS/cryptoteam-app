@@ -24,9 +24,11 @@ export default function authenticate(address, callback) {
 
             if (!err) {
                 // sign in after token is returned
-                let token = data;
-                firebase.auth().signInWithCustomToken(token);   //.then() here?
-                signIn(address);
+                firebase.auth().signInWithCustomToken(data).then(() => {
+                    signIn(address);
+                    callback();
+                });
+
             }
 
             else {
@@ -37,6 +39,6 @@ export default function authenticate(address, callback) {
     }
     else {
         console.log('firebase user already signed in.');
+        callback();
     }
-    callback();
 }

@@ -61,7 +61,9 @@ export default class Navigator extends Component {
                                 </Menu.Item>
 
                                 <Menu.Item key="5">
-                                    <a href="https://discord.gg/CPwmU6C">
+                                    <a href="https://discord.gg/CPwmU6C"
+                                        target="_blank"
+                                        rel="noopener noreferrer">
                                         <i className="fab fa-discord fa-lg"></i>
                                     </a>
                                 </Menu.Item>
