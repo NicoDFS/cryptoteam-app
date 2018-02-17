@@ -27,9 +27,9 @@ function addUser(userInfo) {
 
 function removeOffer(offerId, userAddress, playerId) {
     let marketRef = db.ref('/market/' + offerId);
-    let pushRef = marketRef.remove();
+    marketRef.remove();
     let playerRef = db.ref('/users/' + userAddress + "/owned/" + playerId + "/offer");
-    let pushRef1 = playerRef.remove();
+    playerRef.remove();
 }
 
 function offerPlayer(playerData, seller, price, callback) {
@@ -59,10 +59,10 @@ function offerPlayer(playerData, seller, price, callback) {
 
 function updateOffer(offerId, playerId, seller, newPrice, callback) {
     let marketRef = db.ref('/market/' + offerId);
-    let pushRef = marketRef.update({ price: newPrice });
+    marketRef.update({ price: newPrice });
 
     let userRef = db.ref('/users/' + seller + "/owned/" + playerId + "/offer");
-    pushRef = userRef.update({ price: newPrice });
+    userRef.update({ price: newPrice });
 }
 
 function givePlayer(playerId, userId, callback) {
