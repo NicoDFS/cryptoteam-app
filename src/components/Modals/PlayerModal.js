@@ -21,6 +21,7 @@ export default class PlayerModal extends Component {
         if (this.props.player.offer) {
             this.setState({
                 offerId: this.props.player.offer.id,
+                price: this.props.player.offer.price,
             })
         }
     }
@@ -103,6 +104,7 @@ export default class PlayerModal extends Component {
         removeOffer(this.state.offerId, this.props.userAddress, this.props.player.info.id);
         this.setState({ visible: false, action: "offer", offerPrice: undefined });
         this.props.onRemoveOffer();
+        this.setState({ price: null });
     }
 
     updateOffer = () => {
@@ -166,7 +168,7 @@ export default class PlayerModal extends Component {
                         </Button>,
 
                         <InputNumber min={0} key={1}
-                            defaultValue={this.props.player.offer ? this.props.player.offer.price : null}
+                            value={this.state.price ? this.state.price : null}
                             placeholder="ETH" onChange={this.updatePrice}
                             style={{
                                 display: this.state.action === "offer" ||
