@@ -12,7 +12,7 @@ export default class NoReuslts extends Component {
                     textAlign: 'left',
                     marginTop: 50
                 }} >
-                Visit our <a href="/#/market" >market</a> to buy players.
+                Visit the <a href="/#/market" >market</a> to buy players.
                 {/* <i className="fas fa-search fa-2x" style={{ marginLeft: 155 }} /> */}
             </Card>
         )
