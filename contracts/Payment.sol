@@ -29,11 +29,11 @@ contract Payment {
             Transfer(address(this), msg.sender, msg.value);
     }
 
-    function buyFromUser(uint _expectedAmount, address seller) public payable notPaused {
+    function buyFromUser(uint256 _expectedAmount, address seller) public payable notPaused {
 
         require(_expectedAmount == msg.value && msg.value != 0);
         
-        uint256 fee = (25 * msg.value)/10000;
+        uint256 fee = (50 * msg.value)/10000;
         uint256 sellerFunds = msg.value - fee;
 
         seller.transfer(sellerFunds);

@@ -1,5 +1,5 @@
 let config = {
-    contract: '0x77c0AB00BfE3Aba0CCA37472E088f13F433530F5'
+    contract: '0x3e638A3d1e71c43aC596f2C536dB8EB7E3676355'
 }
 
 export default config;
