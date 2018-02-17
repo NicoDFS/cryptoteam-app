@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Bench from './Bench/Bench'
 import CustomContent from '../CustomContent/CustomContent'
-import { getUser, removeOffer } from '../../firebase/db'
+import { getUser } from '../../firebase/db'
 import './ProfilePage.css'
 import authenticate from '../../firebase/auth'
 import NoResults from './NoResults'

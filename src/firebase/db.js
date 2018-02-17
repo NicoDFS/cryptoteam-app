@@ -27,9 +27,9 @@ function addUser(userInfo) {
 
 function removeOffer(offerId, userAddress, playerId) {
     let marketRef = db.ref('/market/' + offerId);
-    let pushRef = marketRef.remove();
+    marketRef.remove();
     let playerRef = db.ref('/users/' + userAddress + "/owned/" + playerId + "/offer");
-    let pushRef1 = playerRef.remove();
+    playerRef.remove();
 }
 
 function offerPlayer(playerData, seller, price, callback) {
@@ -59,33 +59,24 @@ function offerPlayer(playerData, seller, price, callback) {
 
 function updateOffer(offerId, playerId, seller, newPrice, callback) {
     let marketRef = db.ref('/market/' + offerId);
-    let pushRef = marketRef.update({ price: newPrice });
+    marketRef.update({ price: newPrice });
 
     let userRef = db.ref('/users/' + seller + "/owned/" + playerId + "/offer");
-    pushRef = userRef.update({ price: newPrice });
+    userRef.update({ price: newPrice });
 }
 
-function givePlayer(playerId, userId, callback) {
+function givePlayer(player, userId, callback) {
 
-    //get player data
-    db.ref('/players/' + playerId).once('value').then((snapshot) => {
-
-        let player = snapshot.val();
-        player.id = playerId;       //original playerId in player table
-
-        if (player === null) {
-            return undefined;
-        }
-
-        else {
-            let usersRef = db.ref('/users/' + userId + '/owned/');
-            let pushRef = usersRef.push();
-            pushRef.set(player);
-            let instanceId = pushRef.key;
-            callback(instanceId);
-        }
-
-    });
+    if (player === null) {
+        return undefined;
+    }
+    else {
+        let usersRef = db.ref('/users/' + userId + '/owned/');
+        let pushRef = usersRef.child(player.info.id);
+        pushRef.set(player);
+        let instanceId = pushRef.key;
+        callback(instanceId);
+    }
 }
 
 //removes a player from a users owned players 
@@ -109,7 +100,9 @@ function buyPlayer(offerID, buyer, callback) {
         //remove offer from market
         ref.remove(() => {
 
-            disownPlayer(instanceId, sellerId, givePlayer(player.id, buyer));
+            disownPlayer(instanceId, sellerId, givePlayer(player, buyer, (instanceId) => {
+
+            }));
 
             //save purchase data
             db.ref('/purchases/').push().set({

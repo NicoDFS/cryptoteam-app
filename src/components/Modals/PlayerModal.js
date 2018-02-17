@@ -47,7 +47,6 @@ export default class PlayerModal extends Component {
 
 
     purchase = (player) => {
-
         this.setState({ confirmLoading: true });
         let price = web3.toWei(this.props.price, 'ether');
 
@@ -66,7 +65,7 @@ export default class PlayerModal extends Component {
             if (!err) {
 
                 //transfer player
-                buyPlayer(this.props.offerId, firebase.auth().currentUser.id, () => {
+                buyPlayer(this.props.offerId, firebase.auth().currentUser.uid, () => {
                     const args = {
                         message: 'Purchase Successful',
                         description: `You have successfully bought ${player.info.name} 
@@ -168,8 +167,7 @@ export default class PlayerModal extends Component {
                         </Button>,
 
                         <InputNumber min={0} key={1}
-                            value={this.state.price}
-                            defaultValue={this.props.player.offer ? this.props.player.offer.price : null}
+                            value={this.state.price ? this.state.price : null}
                             placeholder="ETH" onChange={this.updatePrice}
                             style={{
                                 display: this.state.action === "offer" ||
