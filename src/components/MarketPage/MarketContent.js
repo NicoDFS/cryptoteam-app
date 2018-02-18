@@ -41,6 +41,7 @@ export default class MarketContent extends Component {
         }
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
         this.removeOffer = this.removeOffer.bind(this);
+        this.updateOffer = this.updateOffer.bind(this);
     }
 
     updateWindowDimensions() {
@@ -191,7 +192,9 @@ export default class MarketContent extends Component {
     }
 
     updateOffer(index, newPrice) {
-
+        let updatedMarket = this.state.market;
+        updatedMarket[index].price = newPrice;
+        this.setState({ market: updatedMarket });
     }
 
 
@@ -235,7 +238,7 @@ export default class MarketContent extends Component {
                             price={item.price}
                             owned={item.seller === this.state.user ? true : false}
                             removeOffer={this.removeOffer}
-                            updateOffer={() => console.log("")}
+                            updateOffer={this.updateOffer}
                         />
                     ))}
                     {no_results}

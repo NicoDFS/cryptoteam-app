@@ -189,13 +189,13 @@ export default class PlayerModal extends Component {
         this.setState({ visible: false, action: "offer", offerPrice: undefined });
 
         // Price card
-
         if (this.props.offerId) {
+
+            // Remove price card from market
             this.props.onRemoveOffer(this.props.index);
         }
 
         // Bench item
-
         else {
             this.props.onRemoveOffer();
             this.setState({ price: null });
@@ -213,6 +213,13 @@ export default class PlayerModal extends Component {
 
             updateOffer(this.state.offerId, this.props.player.info.id,
                 firebase.auth().currentUser.uid, this.state.price);
+
+            // If price card
+            if (this.props.offerId) {
+
+                // Update price in price card
+                this.props.onUpdateOffer(this.props.index, this.state.price)
+            }
 
             this.setState({ visible: false });
             notification['success']({
