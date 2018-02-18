@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Modal, Button, notification, InputNumber } from 'antd';
+import { Modal, Button, InputNumber } from 'antd';
+import swal from 'sweetalert2';
 import config from '../../config'
 import firebase from '../../firebase';
 import { offerPlayer, buyPlayer, removeOffer, updateOffer } from '../../firebase/db'
@@ -56,18 +57,16 @@ export default class PlayerModal extends Component {
 
             //transfer player
             buyPlayer(this.props.offerId, firebase.auth().currentUser.uid, txHash, () => {
-                const args = {
-                    message: 'Purchase Successful',
-                    description: `You have successfully bought ${player.info.name} 
-                    for ${ this.props.price} ETH.
-                    Transaction hash: ${ txHash}`,
-                    duration: 3,
-                    style: {
-                        width: 500,
-                        marginLeft: -100,
-                    }
-                };
-                notification['success'](args);
+
+                swal({
+                    type: 'success',
+                    title: 'Purchase Successful',
+                    html: `<br/> You have successfully bought ${player.info.name} 
+                    for ${this.props.price} ETH. Player will be added to your bench
+                    when the transaction is confirmed.`,
+                    footer: `<a href = https://etherscan.io/tx/${txHash}/> View transaction <a/>`
+                })
+
             });
 
 
@@ -75,13 +74,13 @@ export default class PlayerModal extends Component {
 
         else {
 
-            const args = {
-                message: 'Error Purchasing Player',
-                description: `An error occurred while trying to 
-                purchase this player. Please try again later`,
-                duration: 3.5
-            };
-            notification['error'](args);
+            swal({
+                type: 'error',
+                title: 'Oops...',
+                text: `An error occurred while trying to 
+                purchase this player. Please try again later`
+            })
+
         }
 
 

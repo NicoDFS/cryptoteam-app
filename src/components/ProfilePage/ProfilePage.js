@@ -26,7 +26,6 @@ export default class ProfilePage extends Component {
     let address = web3.eth.accounts[0];
     authenticate(address, (err) => {
       if (!err) {
-        // console.log('logged in as ' + address);
         this.getUserData(address);
       }
     })
