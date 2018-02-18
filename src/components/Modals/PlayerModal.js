@@ -16,19 +16,43 @@ export default class PlayerModal extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+
+        this.setState({ action: nextProps.action });
+
+        // if price card ( market page )
+
+        if (this.props.offerId) {
+            this.setState({
+                price: nextProps.price,
+                offerId: nextProps.offerId,
+            });
+        }
+
+        // if bench item ( bench page )
+
+        if (this.props.player.offer) {
+            this.setState({
+                offerId: nextProps.player.offer.id,
+                price: nextProps.player.offer.price,
+            })
+        }
+    }
+
     componentDidMount = () => {
         web3 = this.props.web3;
-        this.setState({
-            action: this.props.action,
+        this.setState({ action: this.props.action });
 
-            // Only in price card
+        // if price card ( market page )
 
-            price: this.props.price,
-            offerId: this.props.offerId,
+        if (this.props.offerId) {
+            this.setState({
+                price: this.props.price,
+                offerId: this.props.offerId,
+            });
+        }
 
-        });
-
-        // Only in bench item
+        // if bench item ( bench page )
 
         if (this.props.player.offer) {
             this.setState({
@@ -220,6 +244,8 @@ export default class PlayerModal extends Component {
                             className="price-input" />
                     ]
                     }>
+                    <p>{this.props.seller}</p>
+                    <br />
                     <img draggable="false" className="headshot" src={this.props.player.info.headshot} alt="" />
                     <div className="info">
                         <p><b>First Name: </b> {this.props.player.info.firstname}</p>

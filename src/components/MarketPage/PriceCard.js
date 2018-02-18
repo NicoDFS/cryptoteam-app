@@ -23,11 +23,11 @@ export default class PriceCard extends Component {
         </a>
 
         <PlayerModal web3={this.props.web3}
-          action={this.props.owned ? "updateOffer" : "buy"}
           player={this.props.playerInfo}
           seller={this.props.seller}
           price={this.props.price}
           offerId={this.props.offerId}
+          action={this.props.owned ? "updateOffer" : "buy"}
           ref='playerModal' />
 
       </div>
