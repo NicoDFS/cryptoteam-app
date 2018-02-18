@@ -28,6 +28,7 @@ export default class PriceCard extends Component {
           price={this.props.price}
           offerId={this.props.offerId}
           action={this.props.owned ? "updateOffer" : "buy"}
+          onRemoveOffer={() => console.log("")}
           ref='playerModal' />
 
       </div>

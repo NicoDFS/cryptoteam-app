@@ -3,7 +3,7 @@ import { Modal, Button, InputNumber, notification } from 'antd';
 import swal from 'sweetalert2';
 import config from '../../config'
 import firebase from '../../firebase';
-import { offerPlayer, buyPlayer, removeOffer, updateOffer } from '../../firebase/db'
+import { offerPlayer, buyPlayer, removeOffer, updateOffer, checkOfferAvailability } from '../../firebase/db'
 import './PlayerModal.css';
 let web3;
 
@@ -64,6 +64,21 @@ export default class PlayerModal extends Component {
 
     setVisible = (visibility) => {
         this.setState({ visible: visibility });
+        // if (visibility && this.props.offerId) {
+        //     checkOfferAvailability(this.state.offerId).then((offerIsAvailable) => {
+        //         if (offerIsAvailable) {
+        //             this.setState({ visible: visibility });
+        //         } else {
+        //             notification['error']({
+        //                 message: 'This player is no longer available in the market',
+        //                 duration: 3
+        //             });
+        //         }
+        //     });
+        // }
+        // else {
+        //     this.setState({ visible: visibility });
+        // }
     }
 
 
@@ -88,36 +103,41 @@ export default class PlayerModal extends Component {
             confirmLoading: false
         });
 
-        if (!err) {
+        // check if offer is still available in market
 
-            //transfer player
-            buyPlayer(this.props.offerId, firebase.auth().currentUser.uid, txHash, () => {
+        checkOfferAvailability(this.state.offerId).then((offerIsAvailable) => {
+            if (offerIsAvailable) {
+                if (!err) {
 
-                swal({
-                    type: 'success',
-                    title: 'Purchase Successful',
-                    html: `<br/> You have successfully bought ${player.info.name} 
+                    //transfer player
+
+                    buyPlayer(this.props.offerId, firebase.auth().currentUser.uid, txHash, () => {
+                        swal({
+                            type: 'success',
+                            title: 'Purchase Successful',
+                            html: `<br/> You have successfully bought ${player.info.name} 
                     for ${this.props.price} ETH. Player will be added to your bench
                     when the transaction is confirmed.`,
-                    footer: `<a href = https://etherscan.io/tx/${txHash}/> View transaction <a/>`
-                })
-
-            });
-
-
-        }
-
-        else {
-
-            swal({
-                type: 'error',
-                title: 'Oops...',
-                text: `An error occurred while trying to 
+                            footer: `<a href = https://etherscan.io/tx/${txHash}/> View transaction <a/>`
+                        })
+                    });
+                }
+                else {
+                    swal({
+                        type: 'error',
+                        title: 'Oops...',
+                        text: `An error occurred while trying to 
                 purchase this player. Please try again later`
-            })
-
-        }
-
+                    })
+                }
+            } else {
+                notification['error']({
+                    message: 'This player is no longer available in the market',
+                    duration: 3
+                });
+                this.setVisible(false);
+            }
+        });
 
     }
 
@@ -130,26 +150,37 @@ export default class PlayerModal extends Component {
         let contract = web3.eth.contract(config.abi);
         let contractInstance = contract.at(config.address);
 
-        //buy from contract
-        if (seller === config.address) {
-            contractInstance.buyFromContract(price, {
-                from: web3.eth.accounts[0],
-                value: price
-            }, (err, txHash) => {
-                this.afterPurchase(player, err, txHash);
-            })
-        }
+        // check if offer is available in market
 
-        // buy from another user
-        else {
-            contractInstance.buyFromUser(price, seller, {
-                from: web3.eth.accounts[0],
-                value: price
-            }, (err, txHash) => {
-                this.afterPurchase(player, err, txHash);
-            })
-        }
+        checkOfferAvailability(this.state.offerId).then((offerIsAvailable) => {
+            if (offerIsAvailable) {
+                //buy from contract
+                if (seller === config.address) {
+                    contractInstance.buyFromContract(price, {
+                        from: web3.eth.accounts[0],
+                        value: price
+                    }, (err, txHash) => {
+                        this.afterPurchase(player, err, txHash);
+                    })
+                }
 
+                // buy from another user
+                else {
+                    contractInstance.buyFromUser(price, seller, {
+                        from: web3.eth.accounts[0],
+                        value: price
+                    }, (err, txHash) => {
+                        this.afterPurchase(player, err, txHash);
+                    })
+                }
+            } else {
+                notification['error']({
+                    message: 'This player is no longer available in the market',
+                    duration: 3
+                });
+                this.setVisible(false);
+            }
+        });
     }
 
     removeOffer = () => {
@@ -244,7 +275,9 @@ export default class PlayerModal extends Component {
                             className="price-input" />
                     ]
                     }>
-                    <p>{this.props.seller}</p>
+                    <p style={{ display: this.props.offerId ? 'block' : 'none' }} >
+                        <b>Owner: </b>{this.props.seller}
+                    </p>
                     <br />
                     <img draggable="false" className="headshot" src={this.props.player.info.headshot} alt="" />
                     <div className="info">
