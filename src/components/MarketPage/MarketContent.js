@@ -70,6 +70,7 @@ export default class MarketContent extends Component {
                         let marketData = [];
 
                         let offerIds = Object.keys(market);
+
                         offerIds.forEach((offerId, index) => {
 
                             let offer = market[offerId];
@@ -220,7 +221,8 @@ export default class MarketContent extends Component {
                             offerId={item.id}
                             seller={item.seller}
                             playerInfo={item.player}
-                            price={item.price} />
+                            price={item.price}
+                            owned={item.seller === this.state.user ? true : false} />
                     ))}
                     {no_results}
                 </Row>

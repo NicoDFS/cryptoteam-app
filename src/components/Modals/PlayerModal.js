@@ -18,7 +18,18 @@ export default class PlayerModal extends Component {
 
     componentDidMount = () => {
         web3 = this.props.web3;
-        this.setState({ action: this.props.action, price: this.props.price });
+        this.setState({
+            action: this.props.action,
+
+            // Only in price card
+
+            price: this.props.price,
+            offerId: this.props.offerId,
+
+        });
+
+        // Only in bench item
+
         if (this.props.player.offer) {
             this.setState({
                 offerId: this.props.player.offer.id,
