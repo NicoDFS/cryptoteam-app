@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Modal, Button, InputNumber } from 'antd';
+import { Modal, Button, InputNumber, notification } from 'antd';
 import swal from 'sweetalert2';
 import config from '../../config'
 import firebase from '../../firebase';
@@ -118,16 +118,31 @@ export default class PlayerModal extends Component {
     }
 
     removeOffer = () => {
+
         removeOffer(this.state.offerId, firebase.auth().currentUser.uid, this.props.player.info.id);
         this.setState({ visible: false, action: "offer", offerPrice: undefined });
+
         this.props.onRemoveOffer();
         this.setState({ price: null });
+
+        notification['success']({
+            message: 'Offer removed',
+            duration: 3
+        });
     }
 
     updateOffer = () => {
         if (!isNaN(this.state.price) && this.state.price > 0) {
-            updateOffer(this.state.offerId, this.props.player.info.id, firebase.auth().currentUser.uid, this.state.price);
+
+            updateOffer(this.state.offerId, this.props.player.info.id,
+                firebase.auth().currentUser.uid, this.state.price);
+
             this.setState({ visible: false });
+            notification['success']({
+                message: 'Offer updated',
+                duration: 3
+            });
+
         } else {
             alert("Please enter a number greater than 0.");
         }
