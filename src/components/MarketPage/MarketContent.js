@@ -40,6 +40,7 @@ export default class MarketContent extends Component {
             height: 0
         }
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
+        this.removeOffer = this.removeOffer.bind(this);
     }
 
     updateWindowDimensions() {
@@ -183,6 +184,16 @@ export default class MarketContent extends Component {
         window.scrollTo(0, 85);
     }
 
+    removeOffer(index) {
+        let updatedMarket = this.state.market;
+        updatedMarket.splice(index, 1);
+        this.setState({ market: updatedMarket });
+    }
+
+    updateOffer(index, newPrice) {
+
+    }
+
 
     render() {
 
@@ -217,11 +228,15 @@ export default class MarketContent extends Component {
                             web3={web3}
                             style={{ display: this.state.loaded ? 'block' : 'none' }}
                             key={index}
+                            index={index}
                             offerId={item.id}
                             seller={item.seller}
                             playerInfo={item.player}
                             price={item.price}
-                            owned={item.seller === this.state.user ? true : false} />
+                            owned={item.seller === this.state.user ? true : false}
+                            removeOffer={this.removeOffer}
+                            updateOffer={() => console.log("")}
+                        />
                     ))}
                     {no_results}
                 </Row>
