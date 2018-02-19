@@ -179,6 +179,10 @@ export default class PlayerModal extends Component {
                     duration: 3
                 });
                 this.setVisible(false);
+
+                // Remove price card from market
+                this.props.onRemoveOffer(this.props.index);
+
             }
         });
     }
