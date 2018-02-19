@@ -43,34 +43,38 @@ export default class PlayerCard extends Component {
           <div className="statsContainer">
 
             <div className="rightStat">
-              <p className="statValue">89</p>
-              <p className="statName">PAC</p>
-            </div>
-
-            <div className="leftStat">
-              <p className="statValue">91</p>
+              <p className="statValue">{this.props.playerInfo.stats.dribbling}</p>
               <p className="statName">DRI</p>
             </div>
 
+            <div className="leftStat">
+              <p className="statValue">{this.props.playerInfo.stats.longpassing}</p>
+              <p className="statName">PAC</p>
+            </div>
+
             <div className="rightStat">
-              <p className="statValue">78</p>
+              <p className="statValue">{this.props.playerInfo.stats.strength}</p>
+              <p className="statName">STR</p>
+            </div>
+
+            <div className="leftStat">
+              <p className="statValue">{Math.ceil((this.props.playerInfo.stats.longshots +
+                this.props.playerInfo.stats.shotpower) / 2)}</p>
               <p className="statName">SHO</p>
             </div>
 
-            <div className="leftStat">
-              <p className="statValue">99</p>
-              <p className="statName">DEF</p>
+            <div className="rightStat">
+              <p className="statValue">{Math.ceil((this.props.playerInfo.stats.strength +
+                this.props.playerInfo.stats.acceleration) / 2)}</p>
+              <p className="statName">PHY</p>
             </div>
 
-            <div className="rightStat">
-              <p className="statValue">73</p>
+            <div className="leftStat">
+              <p className="statValue">{Math.ceil((this.props.playerInfo.stats.longpassing +
+                this.props.playerInfo.stats.shortpassing) / 2)}</p>
               <p className="statName">PAS</p>
             </div>
 
-            <div className="leftStat">
-              <p className="statValue">92</p>
-              <p className="statName">PHY</p>
-            </div>
 
           </div>
         </div>
