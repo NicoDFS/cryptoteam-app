@@ -22,7 +22,7 @@ export default class PlayerModal extends Component {
 
         // if price card ( market page )
 
-        if (this.props.offerId) {
+        if (nextProps.offerId) {
             this.setState({
                 price: nextProps.price,
                 offerId: nextProps.offerId,
@@ -31,7 +31,7 @@ export default class PlayerModal extends Component {
 
         // if bench item ( bench page )
 
-        if (this.props.player.offer) {
+        if (nextProps.player.offer) {
             this.setState({
                 offerId: nextProps.player.offer.id,
                 price: nextProps.player.offer.price,
