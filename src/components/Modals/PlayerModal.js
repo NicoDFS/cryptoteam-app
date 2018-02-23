@@ -114,9 +114,9 @@ export default class PlayerModal extends Component {
                     buyPlayer(this.props.offerId, firebase.auth().currentUser.uid, txHash, () => {
                         swal({
                             type: 'success',
-                            title: 'Purchase Successful',
-                            html: `<br/> You have successfully bought ${player.info.name} 
-                    for ${this.props.price} ETH. Player will be added to your bench
+                            title: 'Transaction Sent',
+                            html: `<br/> Transaction to buy ${player.info.name} 
+                    for ${this.props.price} ETH has been sent. Player will be added to your bench
                     when the transaction is confirmed.`,
                             footer: `<a href = https://etherscan.io/tx/${txHash}/> View transaction <a/>`
                         })
@@ -160,6 +160,14 @@ export default class PlayerModal extends Component {
                         from: web3.eth.accounts[0],
                         value: price
                     }, (err, txHash) => {
+
+                        // let event = contractInstance.Buy();
+
+                        // event.watch((err, res) => {
+                        //     console.log(err);
+                        //     console.log(res);
+                        // })
+
                         this.afterPurchase(player, err, txHash);
                     })
                 }
@@ -170,7 +178,16 @@ export default class PlayerModal extends Component {
                         from: web3.eth.accounts[0],
                         value: price
                     }, (err, txHash) => {
+
                         this.afterPurchase(player, err, txHash);
+
+                        // let event = contractInstance.Buy();
+
+                        // event.watch((err, res) => {
+                        //     console.log(err);
+                        //     console.log(res);
+                        // })
+
                     })
                 }
             } else {
