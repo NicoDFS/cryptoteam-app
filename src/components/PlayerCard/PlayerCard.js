@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './PlayerCard.css';
+let truncate = require('truncate');
 
 export default class PlayerCard extends Component {
 
@@ -39,7 +40,7 @@ export default class PlayerCard extends Component {
 
         <div className="rightBar">
           <img draggable="false" className='photo' src={this.props.playerInfo.info.headshot} alt="" />
-          <p className="name">{this.props.playerInfo.info.name}</p>
+          <p className="name">{truncate(this.props.playerInfo.info.name, 17)}</p>
           <div className="statsContainer">
 
             <div className="rightStat">

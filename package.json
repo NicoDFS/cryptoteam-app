@@ -15,6 +15,7 @@
     "remove-accents": "^0.4.2",
     "serve": "^6.4.4",
     "sweetalert2": "^7.12.4",
+    "truncate": "^2.0.0",
     "web3": "0.19.1",
     "xhr-request": "^1.0.1"
   },
