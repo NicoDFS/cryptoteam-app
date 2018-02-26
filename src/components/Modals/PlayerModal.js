@@ -31,7 +31,7 @@ export default class PlayerModal extends Component {
 
         // if bench item ( bench page )
 
-        if (nextProps.player.offer) {
+        else if (nextProps.player && nextProps.player.offer) {
             this.setState({
                 offerId: nextProps.player.offer.id,
                 price: nextProps.player.offer.price,
