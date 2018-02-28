@@ -140,11 +140,8 @@ function buyPlayer(offerID, buyer, txHash, callback) {
 async function checkOfferAvailability(offerId) {
     let marketRef = db.ref('/market/' + offerId);
     let snapshot = await marketRef.once('value');
-    if (snapshot.val() != null) {
-        return true;
-    } else {
-        return false;
-    }
+    return snapshot.val();
+
 }
 
 // updates a users most recent sign in time if the user already exists,

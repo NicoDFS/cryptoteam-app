@@ -105,40 +105,62 @@ export default class PlayerModal extends Component {
 
         // check if offer is still available in market
 
-        checkOfferAvailability(this.state.offerId).then((offerIsAvailable) => {
-            if (offerIsAvailable) {
-                if (!err) {
+        checkOfferAvailability(this.state.offerId).then((offer) => {
+            if (offer != null) {
+                if (this.priceNotUpdated(offer)) {
+                    if (!err) {
+                        //transfer player
 
-                    //transfer player
-
-                    buyPlayer(this.props.offerId, firebase.auth().currentUser.uid, txHash, () => {
-                        swal({
-                            type: 'success',
-                            title: 'Transaction Sent',
-                            html: `<br/> Transaction to buy ${player.info.name} 
+                        buyPlayer(this.props.offerId, firebase.auth().currentUser.uid, txHash, () => {
+                            swal({
+                                type: 'success',
+                                title: 'Transaction Sent',
+                                html: `<br/> Transaction to buy ${player.info.name} 
                     for ${this.props.price} ETH has been sent. Player will be added to your bench
                     when the transaction is confirmed.`,
-                            footer: `<a href = https://etherscan.io/tx/${txHash}/> View transaction <a/>`
-                        })
-                    });
-                }
-                else {
-                    swal({
-                        type: 'error',
-                        title: 'Oops...',
-                        text: `An error occurred while trying to 
+                                footer: `<a href = https://etherscan.io/tx/${txHash}/> View transaction <a/>`
+                            })
+                        });
+                    }
+                    else {
+                        swal({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: `An error occurred while trying to 
                 purchase this player. Please try again later`
-                    })
+                        })
+                    }
                 }
-            } else {
+            }
+            else {
                 notification['error']({
                     message: 'This player is no longer available in the market',
                     duration: 3
                 });
+
+                // Return ETH to buyer
+
+
                 this.setVisible(false);
             }
         });
 
+    }
+
+    //
+
+    priceNotUpdated = (offer) => {
+        if (offer.price != this.state.price) {
+            notification['warning']({
+                message: 'This offer is now for ' + offer.price + " ETH.",
+                duration: 15
+            });
+            this.setState({ price: offer.price });
+            this.props.onUpdateOffer(this.props.index, this.state.price)
+            return false;
+        } else {
+            return true
+        }
     }
 
     purchase = (player) => {
@@ -152,43 +174,45 @@ export default class PlayerModal extends Component {
 
         // check if offer is available in market
 
-        checkOfferAvailability(this.state.offerId).then((offerIsAvailable) => {
-            if (offerIsAvailable) {
-                //buy from contract
-                if (seller === config.address) {
-                    contractInstance.buyFromContract(price, {
-                        from: web3.eth.accounts[0],
-                        value: price
-                    }, (err, txHash) => {
+        checkOfferAvailability(this.state.offerId).then((offer) => {
+            if (offer != null) {
+                if (this.priceNotUpdated(offer)) {
+                    //buy from contract
+                    if (seller === config.address) {
+                        contractInstance.buyFromContract(price, {
+                            from: web3.eth.accounts[0],
+                            value: price
+                        }, (err, txHash) => {
 
-                        // let event = contractInstance.Buy();
+                            // let event = contractInstance.Buy();
 
-                        // event.watch((err, res) => {
-                        //     console.log(err);
-                        //     console.log(res);
-                        // })
+                            // event.watch((err, res) => {
+                            //     console.log(err);
+                            //     console.log(res);
+                            // })
 
-                        this.afterPurchase(player, err, txHash);
-                    })
-                }
+                            this.afterPurchase(player, err, txHash);
+                        })
+                    }
 
-                // buy from another user
-                else {
-                    contractInstance.buyFromUser(price, seller, {
-                        from: web3.eth.accounts[0],
-                        value: price
-                    }, (err, txHash) => {
+                    // buy from another user
+                    else {
+                        contractInstance.buyFromUser(price, seller, {
+                            from: web3.eth.accounts[0],
+                            value: price
+                        }, (err, txHash) => {
 
-                        this.afterPurchase(player, err, txHash);
+                            this.afterPurchase(player, err, txHash);
 
-                        // let event = contractInstance.Buy();
+                            // let event = contractInstance.Buy();
 
-                        // event.watch((err, res) => {
-                        //     console.log(err);
-                        //     console.log(res);
-                        // })
+                            // event.watch((err, res) => {
+                            //     console.log(err);
+                            //     console.log(res);
+                            // })
 
-                    })
+                        })
+                    }
                 }
             } else {
                 notification['error']({
@@ -281,7 +305,7 @@ export default class PlayerModal extends Component {
                         <Button style={{ display: this.state.action === "buy" ? "inline" : "none" }}
                             key="buy" type="primary"
                             onClick={() => this.purchase(this.props.player)}>
-                            Buy for {this.props.price} ETH
+                            Buy for {this.state.price} ETH
                         </Button>,
 
                         <Button style={{ display: this.state.action === "offer" ? "inline" : "none" }}
