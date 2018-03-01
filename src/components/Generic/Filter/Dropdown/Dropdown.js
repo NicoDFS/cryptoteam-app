@@ -14,10 +14,7 @@ export default class Dropdown extends Component {
     this.items = [];
     this.setWrapperRef = this.setWrapperRef.bind(this);
     this.handleClickOutside = this.handleClickOutside.bind(this);
-  }
-
-  componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside);
+    this.onItemClick = this.onItemClick.bind(this);
   }
 
   componentDidMount() {
@@ -27,6 +24,14 @@ export default class Dropdown extends Component {
       this.setState({ 'activeItem': this.items[0] });
     }
     this.onItemClick = this.onItemClick.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.items && !this.state.init) {
+      this.items = nextProps.items;
+      this.setState({ 'activeItem': this.items[0] });
+      this.setState({ init: true });
+    }
   }
 
   setWrapperRef(node) {
@@ -52,7 +57,7 @@ export default class Dropdown extends Component {
   onItemClick(itemName) {
     if (itemName !== this.state.activeItem) {
       this.props.onChange(itemName);
-      this.setState({ 'activeItem': itemName });
+      this.setState({ activeItem: itemName });
     }
     this.toggle();
   }

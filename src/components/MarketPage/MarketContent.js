@@ -207,7 +207,8 @@ export default class MarketContent extends Component {
 
                 <Filter onSort={(e) => this.onSort(e)}
                     onSearch={(e) => this.onSearch(e)}
-                    onSearchChange={(e) => this.onSearchChange(e)} />
+                    onSearchChange={(e) => this.onSearchChange(e)}
+                    filters={['Rating', 'Price ascending', 'Price descending', 'Popularity', 'Price to rating ratio']} />
 
                 <CometSpinLoader
                     color="rgb(8, 45, 81)"

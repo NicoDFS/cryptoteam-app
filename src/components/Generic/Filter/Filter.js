@@ -10,9 +10,17 @@ export default class Filter extends Component {
   constructor() {
     super();
     this.state = {
-      filters: ['Rating', 'Price ascending', 'Price descending', 'Popularity', 'Price to rating ratio'],
       activeIndex: 0
     }
+  }
+
+  componentDidMount() {
+    this.setState({ filters: this.props.filters });
+    this.props.onSort(0);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ filters: nextProps.filters });
   }
 
   sortByIndex(e) {
