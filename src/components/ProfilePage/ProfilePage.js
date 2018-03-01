@@ -24,7 +24,7 @@ export default class ProfilePage extends Component {
       bench_split: [],
       cards_per_page: 10,
       current_page: 0,
-      loaded: true,
+      loaded: false,
       userAddress: '',
       no_results: false,
     }
@@ -156,9 +156,16 @@ export default class ProfilePage extends Component {
   render() {
 
     let no_results = null
+    let filter = null
 
     if (this.state.no_results) {
       no_results = <NoResults />
+    } else {
+
+      filter = <Filter onSort={(e) => this.onSort(e)}
+        onSearch={(e) => this.onSearch(e)}
+        onSearchChange={(e) => this.onSearchChange(e)}
+        filters={filters} />
     }
 
     return (
@@ -167,10 +174,7 @@ export default class ProfilePage extends Component {
 
           <div>
 
-            <Filter onSort={(e) => this.onSort(e)}
-              onSearch={(e) => this.onSearch(e)}
-              onSearchChange={(e) => this.onSearchChange(e)}
-              filters={filters} />
+            {filter}
 
             <Row type="flex"
               justify="center">
