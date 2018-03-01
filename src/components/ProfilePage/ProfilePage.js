@@ -5,6 +5,7 @@ import { getUser } from '../../firebase/db'
 import './ProfilePage.css'
 import authenticate from '../../firebase/auth'
 import NoResults from './NoResults'
+import { CometSpinLoader } from 'react-css-loaders';
 import NoSearchResults from '../Generic/NoSearchResults'
 import { Row, Pagination } from 'antd'
 import { chunk } from 'lodash';
@@ -182,6 +183,12 @@ export default class ProfilePage extends Component {
           <div>
 
             {filter}
+
+            <CometSpinLoader
+              color="rgb(8, 45, 81)"
+              size={50}
+              style={{ display: !this.state.loaded ? 'block' : 'none', marginTop: 220 }}
+            />
 
             <Row type="flex"
               justify="center">
