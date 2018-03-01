@@ -75,7 +75,7 @@ export default class ProfilePage extends Component {
         });
         this.setState({ userAddress: address });
       } else {
-        this.setState({ no_results: true, userAddress: address });
+        this.setState({ no_results: true, userAddress: address, loaded: true, });
       }
     });
 
