@@ -6,7 +6,7 @@ import { Web3Provider } from 'react-web3';
 import PriceCard from './PriceCard'
 import Filter from '../Generic/Filter/Filter'
 import Web3Unavailable from '../Web3/Unavailable';
-import NoResults from './NoResults';
+import NoSearchResults from '../Generic/NoSearchResults';
 
 // Tools
 import { chunk } from 'lodash';
@@ -196,7 +196,7 @@ export default class MarketContent extends Component {
         let no_results = null
 
         if (this.state.no_results) {
-            no_results = <NoResults />
+            no_results = <NoSearchResults />
         }
 
         return (

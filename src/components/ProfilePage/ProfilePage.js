@@ -5,6 +5,7 @@ import { getUser } from '../../firebase/db'
 import './ProfilePage.css'
 import authenticate from '../../firebase/auth'
 import NoResults from './NoResults'
+import NoSearchResults from '../Generic/NoSearchResults'
 import { Row, Pagination } from 'antd'
 import { chunk } from 'lodash';
 import Filter from '../Generic/Filter/Filter'
@@ -27,6 +28,7 @@ export default class ProfilePage extends Component {
       loaded: false,
       userAddress: '',
       no_results: false,
+      no_search_results: false,
     }
 
     web3 = this.props.web3;
@@ -136,12 +138,12 @@ export default class ProfilePage extends Component {
       this.setState({
         bench: bench_split[0],
         bench_split: bench_split,
-        no_results: false
+        no_search_results: false
       });
     }
     // no search results
     else {
-      this.setState({ bench: [], no_results: true });
+      this.setState({ bench: [], no_search_results: true });
     }
     window.scrollTo(0, 85);
   }
@@ -149,13 +151,14 @@ export default class ProfilePage extends Component {
   onSearchChange(searchTerm) {
     if (searchTerm === '' || searchTerm === ' ') {
       let bench = this.state.bench_split[this.state.current_page];
-      this.setState({ bench: bench, no_results: false });
+      this.setState({ bench: bench, no_search_results: false });
     }
   }
 
   render() {
 
     let no_results = null
+    let no_search_results = null
     let filter = null
 
     if (this.state.no_results) {
@@ -166,6 +169,10 @@ export default class ProfilePage extends Component {
         onSearch={(e) => this.onSearch(e)}
         onSearchChange={(e) => this.onSearchChange(e)}
         filters={filters} />
+    }
+
+    if (this.state.no_search_results) {
+      no_search_results = <NoSearchResults />
     }
 
     return (
@@ -182,6 +189,7 @@ export default class ProfilePage extends Component {
               <Bench web3={this.props.web3} players={this.state.bench} />
 
               {no_results}
+              {no_search_results}
 
             </Row>
 
@@ -189,7 +197,7 @@ export default class ProfilePage extends Component {
               style={{
                 marginBottom: 30,
                 marginTop: 30,
-                display: this.state.loaded && !this.state.no_results ? 'block' : 'none'
+                display: this.state.loaded && !this.state.no_results && !this.state.no_search_results ? 'block' : 'none'
               }}
               onShowSizeChange={(current, size) => this.onShowSizeChange(current, size)}
               total={this.state.bench_split.length * 10}
