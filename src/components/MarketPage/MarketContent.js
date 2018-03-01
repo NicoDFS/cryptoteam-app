@@ -89,7 +89,7 @@ export default class MarketContent extends Component {
                                     user: address
                                 });
 
-                                // this.sortByIndex(0);
+                                this.onSort(0);
                             }
                         });
                     }
