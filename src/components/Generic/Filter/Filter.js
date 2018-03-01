@@ -15,20 +15,18 @@ export default class Filter extends Component {
     }
   }
 
-  sortMarket(e) {
+  sortByIndex(e) {
     let index = this.state.filters.indexOf(e);
-    this.props.market.sortByIndex(index);
-    this.setState({ activeIndex: index });
+    this.props.onSort(index);
   }
 
-  searchMarket(searchTerm) {
-    this.props.market.searchWith(searchTerm);
+  searchWith(term) {
+    this.props.onSearch(term);
   }
 
-  checkSearchField(e) {
-    this.props.market.checkSearchField(e.target.value);
+  checkSearchField(searchTerm) {
+    this.props.onSearchChange(searchTerm.target.value);
   }
-
 
   render() {
     return (
@@ -42,13 +40,13 @@ export default class Filter extends Component {
 
 
         <Dropdown items={this.state.filters}
-          title="Sort by: " onChange={(e) => this.sortMarket(e)} />
+          title="Sort by: " onChange={(e) => this.sortByIndex(e)} />
 
         <Search placeholder="Search"
           className="input-ant"
           style={{ width: '24%', }}
           onChange={(e) => this.checkSearchField(e)}
-          onSearch={value => this.searchMarket(value)} />
+          onSearch={value => this.searchWith(value)} />
       </Row >
     )
   }

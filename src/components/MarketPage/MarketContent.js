@@ -4,7 +4,7 @@ import { Row, Pagination } from 'antd';
 import { CometSpinLoader } from 'react-css-loaders';
 import { Web3Provider } from 'react-web3';
 import PriceCard from './PriceCard'
-import Filter from './Filter/Filter'
+import Filter from '../Generic/Filter/Filter'
 import Web3Unavailable from '../Web3/Unavailable';
 import NoResults from './NoResults';
 
@@ -89,7 +89,7 @@ export default class MarketContent extends Component {
                                     user: address
                                 });
 
-                                this.sortByIndex(0);
+                                // this.sortByIndex(0);
                             }
                         });
                     }
@@ -98,72 +98,6 @@ export default class MarketContent extends Component {
             }
         })
 
-    }
-
-    sortByIndex(index) {
-
-        let temp = this.state.market_static;
-
-        temp.sort((a, b) => {
-            switch (index) {
-                case 1:
-                    return a.price - b.price; //price ascending
-                case 2:
-                    return b.price - a.price; //price descending
-                case 3:
-                    return a.player.popularity - b.player.popularity; //popularity descending (not ready yet)
-                case 4:
-                    return (b.player.info.rating / b.price) - (a.player.info.rating / a.price) //price:rating ratio
-                default:
-                    return b.player.info.rating - a.player.info.rating; //sort by rating (case 0)
-            }
-        });
-
-        if (temp.length > 0) {
-            let market_split = chunk(temp, this.state.cards_per_page);
-
-            this.setState({
-                market: market_split[0],
-                market_split: market_split
-            });
-        }
-    }
-
-    searchWith(term) {
-
-        let temp = this.state.market_static;
-
-        temp = temp.filter((a) => {
-            return accent_clean(a.player.info.name.toLowerCase())
-                .indexOf(term.toLowerCase()) !== -1 ||
-                a.player.info.name.toLowerCase()
-                    .indexOf(term.toLowerCase()) !== -1
-        });
-
-        if (temp.length > 0) {
-            let market_split = chunk(temp, this.state.cards_per_page);
-
-            this.setState({
-                market: market_split[0],
-                market_split: market_split,
-                no_results: false
-            });
-
-        }
-
-        // no search results
-        else {
-            this.setState({ market: [], no_results: true });
-        }
-
-        window.scrollTo(0, 85);
-    }
-
-    checkSearchField(searchTerm) {
-        if (searchTerm === '' || searchTerm === ' ') {
-            let market = this.state.market_split[this.state.current_page];
-            this.setState({ market: market, no_results: false });
-        }
     }
 
     updatePagination(pageNumber) {
@@ -197,6 +131,65 @@ export default class MarketContent extends Component {
         this.setState({ market: updatedMarket });
     }
 
+    onSort(index) {
+        let temp = this.state.market_static;
+
+        this.state.market_static.sort((a, b) => {
+            switch (index) {
+                case 1:
+                    return a.price - b.price; //price ascending
+                case 2:
+                    return b.price - a.price; //price descending
+                case 3:
+                    return a.player.popularity - b.player.popularity; //popularity descending (not ready yet)
+                case 4:
+                    return (b.player.info.rating / b.price) - (a.player.info.rating / a.price) //price:rating ratio
+                default:
+                    return b.player.info.rating - a.player.info.rating; //sort by rating (case 0)
+            }
+        });
+
+        if (temp.length > 0) {
+            let market_split = chunk(temp, this.state.cards_per_page);
+            this.setState({
+                market: market_split[0],
+                market_split: market_split
+            });
+        }
+    }
+
+    onSearch(term) {
+        let temp = this.state.market_static;
+
+        temp = temp.filter((a) => {
+            return accent_clean(a.player.info.name.toLowerCase())
+                .indexOf(term.toLowerCase()) !== -1 ||
+                a.player.info.name.toLowerCase()
+                    .indexOf(term.toLowerCase()) !== -1
+        });
+
+        if (temp.length > 0) {
+            let market_split = chunk(temp, this.state.cards_per_page);
+            this.setState({
+                market: market_split[0],
+                market_split: market_split,
+                no_results: false
+            });
+        }
+        // no search results
+        else {
+            this.setState({ market: [], no_results: true });
+        }
+        window.scrollTo(0, 85);
+    }
+
+    onSearchChange(searchTerm) {
+        if (searchTerm === '' || searchTerm === ' ') {
+            let market = this.state.market_split[this.state.current_page];
+            this.setState({ market: market, no_results: false });
+        }
+    }
+
 
     render() {
 
@@ -212,7 +205,9 @@ export default class MarketContent extends Component {
                 web3UnavailableScreen={Web3Unavailable}
                 accountUnavailableScreen={Web3Unavailable}>
 
-                <Filter market={this} />
+                <Filter onSort={(e) => this.onSort(e)}
+                    onSearch={(e) => this.onSearch(e)}
+                    onSearchChange={(e) => this.onSearchChange(e)} />
 
                 <CometSpinLoader
                     color="rgb(8, 45, 81)"
