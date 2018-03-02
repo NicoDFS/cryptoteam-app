@@ -39,23 +39,12 @@ export default class MarketContent extends Component {
             width: window.innerWidth,
             height: 0
         }
-        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
         this.removeOffer = this.removeOffer.bind(this);
         this.updateOffer = this.updateOffer.bind(this);
     }
 
-    updateWindowDimensions() {
-        this.setState({ width: window.innerWidth });
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.updateWindowDimensions);
-    }
-
     componentDidMount() {
 
-        this.updateWindowDimensions();
-        window.addEventListener('resize', this.updateWindowDimensions);
 
         document.title = "Marketplace";
         web3 = this.props.web3;
@@ -211,7 +200,7 @@ export default class MarketContent extends Component {
                     filters={['Rating', 'Price ascending', 'Price descending', 'Popularity', 'Price to rating ratio']} />
 
                 <CometSpinLoader
-                    color="rgb(8, 45, 81)"
+                    color="#0082FF"
                     size={50}
                     style={{ display: !this.state.loaded ? 'block' : 'none', marginTop: 220 }}
                 />
@@ -219,7 +208,7 @@ export default class MarketContent extends Component {
                 <Row
                     type="flex"
                     justify="center"
-                    style={{ width: (this.state.width - 100) }}
+                    style={{ paddingLeft: '4%', paddingRight: '4%' }}
                     className={this.state.loaded ? 'cardsContainer' : 'cardsContainer hidden'}>
                     {this.state.market.map((item, index) => (
 

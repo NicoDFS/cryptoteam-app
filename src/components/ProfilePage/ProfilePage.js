@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import Bench from './Bench/Bench'
+import { Web3Provider } from 'react-web3';
+import Web3Unavailable from '../Web3/Unavailable';
 import CustomContent from '../CustomContent/CustomContent'
 import { getUser } from '../../firebase/db'
 import './ProfilePage.css'
@@ -47,38 +49,40 @@ export default class ProfilePage extends Component {
 
   getUserData(address) {
 
-    getUser(address).then((userData) => {
+    if (address) {
+      getUser(address).then((userData) => {
 
-      if (userData.owned) {
+        if (userData.owned) {
 
-        let bench = [];
+          let bench = [];
 
-        // Getting players ids ( json keys )
-        let playerIds = Object.keys(userData.owned);
+          // Getting players ids ( json keys )
+          let playerIds = Object.keys(userData.owned);
 
-        playerIds.forEach((playerId, index) => {
-          // Using players ids to retrieve players data and add them to the bench
-          bench.push(userData.owned[playerId]);
+          playerIds.forEach((playerId, index) => {
+            // Using players ids to retrieve players data and add them to the bench
+            bench.push(userData.owned[playerId]);
 
-          // setting bench state after getting all players data
-          if (index === playerIds.length - 1) {
+            // setting bench state after getting all players data
+            if (index === playerIds.length - 1) {
 
-            let bench_split = chunk(bench, this.state.cards_per_page);
+              let bench_split = chunk(bench, this.state.cards_per_page);
 
-            this.setState({
-              bench: bench_split[0],
-              bench_static: bench,
-              bench_split: bench_split,
-              loaded: true,
-            });
-          }
-        });
-        this.setState({ userAddress: address });
-        this.onSort(0);
-      } else {
-        this.setState({ no_results: true, userAddress: address, loaded: true, });
-      }
-    });
+              this.setState({
+                bench: bench_split[0],
+                bench_static: bench,
+                bench_split: bench_split,
+                loaded: true,
+              });
+            }
+          });
+          this.setState({ userAddress: address });
+          this.onSort(0);
+        } else {
+          this.setState({ no_results: true, userAddress: address, loaded: true, });
+        }
+      });
+    }
 
   }
 
@@ -181,12 +185,14 @@ export default class ProfilePage extends Component {
       <CustomContent title="Bench"
         content={
 
-          <div>
+          <Web3Provider
+            web3UnavailableScreen={Web3Unavailable}
+            accountUnavailableScreen={Web3Unavailable}>
 
             {filter}
 
             <CometSpinLoader
-              color="rgb(8, 45, 81)"
+              color="#0082FF"
               size={50}
               style={{ display: !this.state.loaded ? 'block' : 'none', marginTop: 220 }}
             />
@@ -212,7 +218,7 @@ export default class ProfilePage extends Component {
               pageSizeOptions={['15', '30', '40']}
               onChange={(number, size) => this.updatePagination(number, size)} />
 
-          </div>
+          </Web3Provider>
         } />
     )
   }

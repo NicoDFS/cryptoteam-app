@@ -36,6 +36,8 @@ export default class PlayerModal extends Component {
                 offerId: nextProps.player.offer.id,
                 price: nextProps.player.offer.price,
             })
+        } else {
+            this.setState({ price: null });
         }
     }
 
@@ -150,7 +152,7 @@ export default class PlayerModal extends Component {
     //
 
     priceNotUpdated = (offer) => {
-        if (offer.price != this.state.price) {
+        if (offer.price !== this.state.price) {
             notification['warning']({
                 message: 'This offer is now for ' + offer.price + " ETH.",
                 duration: 15
