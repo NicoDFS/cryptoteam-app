@@ -53,6 +53,7 @@ export default class BenchItem extends Component {
             <img draggable="false" className="benchItemPic" alt=""
               src={this.state.player.info.headshot} />
             <p className="benchItemName" >{this.state.player.info.name.substr(0, 13)}</p>
+            <p className="benchItemRating">{this.props.player.info.rating}</p>
             <img draggable="false" className="benchItemclub" alt=""
               src={this.state.player.club.logo} />
           </div>

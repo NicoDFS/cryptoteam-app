@@ -3,9 +3,9 @@ import React, { Component } from 'react';
 import { Row, Pagination } from 'antd';
 import { CometSpinLoader } from 'react-css-loaders';
 import { Web3Provider } from 'react-web3';
+import Web3Unavailable from '../Web3/Unavailable';
 import PriceCard from './PriceCard'
 import Filter from '../Generic/Filter/Filter'
-import Web3Unavailable from '../Web3/Unavailable';
 import NoSearchResults from '../Generic/NoSearchResults';
 
 // Tools

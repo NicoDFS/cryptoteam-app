@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
-import HomeContent from './HomeContent'
 import CustomContent from '../CustomContent/CustomContent';
-
+import './HomePage.css'
 export default class PlayerPage extends Component {
 
     render() {
         return (
-            <CustomContent title="Home" content={<HomeContent />} />
+            <CustomContent content={
+                <div className="banner">
+                    Hello homepage
+                </div>
+            } />
         )
     }
 

@@ -66,11 +66,11 @@ export default class Navigator extends Component {
                         </Menu.Item>
 
                         <Menu.Item key="6" style={{ float: this.state.tabsFloat }}>
-                            {/* <a style={{ display: 'inline' }} href="https://discord.gg/CPwmU6C"
+                            <a style={{ display: 'inline' }} href="https://discord.gg/CPwmU6C"
                                 target="_blank"
                                 rel="noopener noreferrer">
-                                <i className="fab fa-discord fa-lg"></i>
-                            </a> */}
+                                {/* <i className="fab fa-discord fa-lg"></i> */}
+                            </a>
                             <span>Contact Us</span>
                         </Menu.Item>
 
