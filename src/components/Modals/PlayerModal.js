@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Modal, Button, InputNumber, notification } from 'antd';
 import swal from 'sweetalert2';
-import config from '../../config'
+import config from '../../config/contract';
 import firebase from '../../firebase';
 import { offerPlayer, buyPlayer, removeOffer, updateOffer, checkOfferAvailability } from '../../firebase/db'
 import './PlayerModal.css';

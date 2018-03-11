@@ -1,8 +1,20 @@
 import React, { Component } from 'react'
 import { Timeline, Card, Col } from 'antd';
 import CustomContent from '../CustomContent/CustomContent';
+import * as c from '../../config/commit.js'
 
 export default class Roadmap extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = { commit: '' };
+  };
+
+  componentDidMount() {
+    this.setState({ commit: c.default });
+    console.log(c.default);
+  }
+
   render() {
 
     let roadmap =
@@ -40,6 +52,7 @@ export default class Roadmap extends Component {
           <br />
 
           <p>Built with <span role="img" aria-label="heart">💜</span></p>
+          <p>Last commit: <a>{this.state.commit}</a></p>
 
         </Card>
       </Col>

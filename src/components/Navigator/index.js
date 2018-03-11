@@ -71,7 +71,7 @@ export default class Navigator extends Component {
                                 rel="noopener noreferrer">
                                 {/* <i className="fab fa-discord fa-lg"></i> */}
                             </a>
-                            <span>Contact Us</span>
+                            <span>Discord</span>
                         </Menu.Item>
 
                     </Menu>
