@@ -98,7 +98,8 @@ export default class PlayerModal extends Component {
         }
     }
 
-    afterPurchase = (player, err, txHash) => {
+    // checks before player is transferred
+    beforePurchaseConfirmation = (player, err, txHash) => {
 
         this.setState({
             visible: false,
@@ -106,23 +107,18 @@ export default class PlayerModal extends Component {
         });
 
         // check if offer is still available in market
-
         checkOfferAvailability(this.state.offerId).then((offer) => {
             if (offer != null) {
                 if (this.priceNotUpdated(offer)) {
                     if (!err) {
-                        //transfer player
-
-                        buyPlayer(this.props.offerId, firebase.auth().currentUser.uid, txHash, () => {
-                            swal({
-                                type: 'success',
-                                title: 'Transaction Sent',
-                                html: `<br/> Transaction to buy ${player.info.name} 
+                        swal({
+                            type: 'success',
+                            title: 'Transaction Sent',
+                            html: `<br/> Transaction to buy ${player.info.name} 
                     for ${this.props.price} ETH has been sent. Player will be added to your bench
                     when the transaction is confirmed.`,
-                                footer: `<a href = https://etherscan.io/tx/${txHash}/> View transaction <a/>`
-                            })
-                        });
+                            footer: `<a href = https://etherscan.io/tx/${txHash}/> View transaction <a/>`
+                        })
                     }
                     else {
                         swal({
@@ -140,16 +136,24 @@ export default class PlayerModal extends Component {
                     duration: 3
                 });
 
-                // Return ETH to buyer
-
-
                 this.setVisible(false);
             }
         });
 
     }
 
-    //
+    // transfer player when the transaction is mined and confirmed
+    transferPlayer = (player, txHash) => {
+
+        buyPlayer(this.props.offerId, firebase.auth().currentUser.uid, txHash, () => {
+            notification['success']({
+                message: `${player.info.name} has been added to your bench.`,
+                duration: 4
+            });
+        })
+    }
+
+
 
     priceNotUpdated = (offer) => {
         if (offer.price !== this.state.price) {
@@ -186,14 +190,23 @@ export default class PlayerModal extends Component {
                             value: price
                         }, (err, txHash) => {
 
-                            // let event = contractInstance.Buy();
+                            if (!err) {
 
-                            // event.watch((err, res) => {
-                            //     console.log(err);
-                            //     console.log(res);
-                            // })
+                                this.beforePurchaseConfirmation(player, err, txHash);
+                                let event = contractInstance.Buy();
+                                let eventFired = false;
 
-                            this.afterPurchase(player, err, txHash);
+                                event.watch((err, res) => {
+
+                                    if (!err && !eventFired && res.type === "mined") {
+                                        // console.log(res);
+                                        eventFired = true;
+                                        this.transferPlayer(player, txHash);
+                                    }
+                                })
+
+                            }
+
                         })
                     }
 
@@ -204,15 +217,18 @@ export default class PlayerModal extends Component {
                             value: price
                         }, (err, txHash) => {
 
-                            this.afterPurchase(player, err, txHash);
+                            this.beforePurchaseConfirmation(player, err, txHash);
+                            let event = contractInstance.Buy();
+                            let eventFired = false;
 
-                            // let event = contractInstance.Buy();
+                            event.watch((err, res) => {
 
-                            // event.watch((err, res) => {
-                            //     console.log(err);
-                            //     console.log(res);
-                            // })
-
+                                if (!err && !eventFired && res.type === "mined") {
+                                    // console.log(res);
+                                    eventFired = true;
+                                    this.transferPlayer(player, txHash);
+                                }
+                            })
                         })
                     }
                 }
