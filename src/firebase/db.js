@@ -132,6 +132,8 @@ function buyPlayer(offerID, buyer, txHash, callback) {
             ref.remove(() => {
                 disownPlayer(instanceId, sellerId, givePlayer(player, buyer, (instanceId) => {
 
+                    let time = new Date().getTime() + ""
+
                     //save buy to user history
                     let pushRefBuyer = db.ref('/users/' + buyer + '/trades/bought').push();
                     pushRefBuyer.set({
@@ -139,6 +141,7 @@ function buyPlayer(offerID, buyer, txHash, callback) {
                         txHash: txHash,
                         price: price,
                         seller: sellerId,
+                        time: time
                     });
 
                     //save sell to user history
@@ -147,7 +150,8 @@ function buyPlayer(offerID, buyer, txHash, callback) {
                         player: player,
                         price: price,
                         txHash: txHash,
-                        buyer: buyer
+                        buyer: buyer,
+                        time: time
                     });
 
                     // //save purchase data
@@ -157,6 +161,7 @@ function buyPlayer(offerID, buyer, txHash, callback) {
                         txHash: txHash,
                         buyer: buyer,
                         seller: sellerId,
+                        time: time
                     });
 
                 }));
