@@ -80,6 +80,7 @@ export default class Navigator extends Component {
                 </HashRouter>
                 {/* </Sider> */}
                 {this.props.children}
+                <div style={{ textAlign: "center", marginTop: 60, marginBottom: 40, }}>© CryptoTeam 2018</div>
             </Layout>
         );
     }
