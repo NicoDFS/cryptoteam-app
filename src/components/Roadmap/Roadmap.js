@@ -12,7 +12,7 @@ export default class Roadmap extends Component {
 
   componentDidMount() {
     this.setState({ commit: c.default });
-    console.log(c.default);
+    // console.log(c.default);
   }
 
   render() {
