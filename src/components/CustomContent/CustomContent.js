@@ -36,7 +36,7 @@ export default class CustomContent extends Component {
 
         //only render a title if one was passed as a prop
         if (this.props.title) {
-            header = <Header style={{ width: this.state.screenWidth - 80 }} className="custom-content-navbar ">
+            header = <Header style={{ width: this.state.screenWidth }} className="custom-content-navbar ">
                 <p className="custom-content-logo">{this.props.title}</p>
             </Header>
         }

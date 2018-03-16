@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import { Modal, Button, InputNumber, notification } from 'antd';
 import swal from 'sweetalert2';
-import config from '../../config'
+import config from '../../config/contract';
 import firebase from '../../firebase';
-import { offerPlayer, buyPlayer, removeOffer, updateOffer } from '../../firebase/db'
+import { offerPlayer, buyPlayer, removeOffer, updateOffer, checkOfferAvailability } from '../../firebase/db'
 import './PlayerModal.css';
 let web3;
 
@@ -16,9 +16,46 @@ export default class PlayerModal extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+
+        this.setState({ action: nextProps.action });
+
+        // if price card ( market page )
+
+        if (nextProps.offerId) {
+            this.setState({
+                price: nextProps.price,
+                offerId: nextProps.offerId,
+            });
+        }
+
+        // if bench item ( bench page )
+
+        else if (nextProps.player && nextProps.player.offer) {
+            this.setState({
+                offerId: nextProps.player.offer.id,
+                price: nextProps.player.offer.price,
+            })
+        } else {
+            this.setState({ price: null });
+        }
+    }
+
     componentDidMount = () => {
         web3 = this.props.web3;
-        this.setState({ action: this.props.action, price: this.props.price });
+        this.setState({ action: this.props.action });
+
+        // if price card ( market page )
+
+        if (this.props.offerId) {
+            this.setState({
+                price: this.props.price,
+                offerId: this.props.offerId,
+            });
+        }
+
+        // if bench item ( bench page )
+
         if (this.props.player.offer) {
             this.setState({
                 offerId: this.props.player.offer.id,
@@ -29,6 +66,21 @@ export default class PlayerModal extends Component {
 
     setVisible = (visibility) => {
         this.setState({ visible: visibility });
+        // if (visibility && this.props.offerId) {
+        //     checkOfferAvailability(this.state.offerId).then((offerIsAvailable) => {
+        //         if (offerIsAvailable) {
+        //             this.setState({ visible: visibility });
+        //         } else {
+        //             notification['error']({
+        //                 message: 'This player is no longer available in the market',
+        //                 duration: 3
+        //             });
+        //         }
+        //     });
+        // }
+        // else {
+        //     this.setState({ visible: visibility });
+        // }
     }
 
 
@@ -46,44 +98,75 @@ export default class PlayerModal extends Component {
         }
     }
 
-    afterPurchase = (player, err, txHash) => {
+    // checks before player is transferred
+    beforePurchaseConfirmation = (player, err, txHash) => {
 
         this.setState({
             visible: false,
             confirmLoading: false
         });
 
-        if (!err) {
-
-            //transfer player
-            buyPlayer(this.props.offerId, firebase.auth().currentUser.uid, txHash, () => {
-
-                swal({
-                    type: 'success',
-                    title: 'Purchase Successful',
-                    html: `<br/> You have successfully bought ${player.info.name} 
-                    for ${this.props.price} ETH. Player will be added to your bench
+        // check if offer is still available in market
+        checkOfferAvailability(this.state.offerId).then((offer) => {
+            if (offer != null) {
+                if (this.priceNotUpdated(offer)) {
+                    if (!err) {
+                        swal({
+                            type: 'success',
+                            title: 'Transaction Sent',
+                            html: `<br/> Transaction to buy ${player.info.name} 
+                    for ${this.props.price} ETH has been sent. Player will be added to your bench
                     when the transaction is confirmed.`,
-                    footer: `<a href = https://etherscan.io/tx/${txHash}/> View transaction <a/>`
-                })
-
-            });
-
-
-        }
-
-        else {
-
-            swal({
-                type: 'error',
-                title: 'Oops...',
-                text: `An error occurred while trying to 
+                            footer: `<a href = https://etherscan.io/tx/${txHash}/> View transaction <a/>`
+                        })
+                    }
+                    else {
+                        swal({
+                            type: 'error',
+                            title: 'Oops...',
+                            text: `An error occurred while trying to 
                 purchase this player. Please try again later`
-            })
+                        })
+                    }
+                }
+            }
+            else {
+                notification['error']({
+                    message: 'This player is no longer available in the market',
+                    duration: 3
+                });
 
+                this.setVisible(false);
+            }
+        });
+
+    }
+
+    // transfer player when the transaction is mined and confirmed
+    transferPlayer = (player, txHash) => {
+
+        buyPlayer(this.props.offerId, firebase.auth().currentUser.uid, txHash, () => {
+            notification['success']({
+                message: `${player.info.name} has been added to your bench.`,
+                duration: 4
+            });
+        })
+    }
+
+
+
+    priceNotUpdated = (offer) => {
+        if (offer.price !== this.state.price) {
+            notification['warning']({
+                message: 'This offer is now for ' + offer.price + " ETH.",
+                duration: 15
+            });
+            this.setState({ price: offer.price });
+            this.props.onUpdateOffer(this.props.index, this.state.price)
+            return false;
+        } else {
+            return true
         }
-
-
     }
 
     purchase = (player) => {
@@ -95,26 +178,72 @@ export default class PlayerModal extends Component {
         let contract = web3.eth.contract(config.abi);
         let contractInstance = contract.at(config.address);
 
-        //buy from contract
-        if (seller === config.address) {
-            contractInstance.buyFromContract(price, {
-                from: web3.eth.accounts[0],
-                value: price
-            }, (err, txHash) => {
-                this.afterPurchase(player, err, txHash);
-            })
-        }
+        // check if offer is available in market
 
-        // buy from another user
-        else {
-            contractInstance.buyFromUser(price, seller, {
-                from: web3.eth.accounts[0],
-                value: price
-            }, (err, txHash) => {
-                this.afterPurchase(player, err, txHash);
-            })
-        }
+        checkOfferAvailability(this.state.offerId).then((offer) => {
+            if (offer != null) {
+                if (this.priceNotUpdated(offer)) {
+                    //buy from contract
+                    if (seller === config.address) {
+                        contractInstance.buyFromContract(price, {
+                            from: web3.eth.accounts[0],
+                            value: price
+                        }, (err, txHash) => {
 
+                            if (!err) {
+
+                                this.beforePurchaseConfirmation(player, err, txHash);
+                                let event = contractInstance.Buy();
+                                let eventFired = false;
+
+                                event.watch((err, res) => {
+
+                                    if (!err && !eventFired && res.type === "mined") {
+                                        // console.log(res);
+                                        eventFired = true;
+                                        this.transferPlayer(player, txHash);
+                                    }
+                                })
+
+                            }
+
+                        })
+                    }
+
+                    // buy from another user
+                    else {
+                        contractInstance.buyFromUser(price, seller, {
+                            from: web3.eth.accounts[0],
+                            value: price
+                        }, (err, txHash) => {
+
+                            this.beforePurchaseConfirmation(player, err, txHash);
+                            let event = contractInstance.Buy();
+                            let eventFired = false;
+
+                            event.watch((err, res) => {
+
+                                if (!err && !eventFired && res.type === "mined") {
+                                    // console.log(res);
+                                    eventFired = true;
+                                    this.transferPlayer(player, txHash);
+                                }
+                            })
+                        })
+                    }
+                }
+            } else {
+                notification['error']({
+                    message: 'This player is no longer available in the market',
+                    duration: 3
+                });
+                this.setVisible(false);
+
+                // Remove price card from market
+                this.props.onRemoveOffer(this.props.index);
+
+            }
+        });
     }
 
     removeOffer = () => {
@@ -122,8 +251,19 @@ export default class PlayerModal extends Component {
         removeOffer(this.state.offerId, firebase.auth().currentUser.uid, this.props.player.info.id);
         this.setState({ visible: false, action: "offer", offerPrice: undefined });
 
-        this.props.onRemoveOffer();
-        this.setState({ price: null });
+        // Price card
+        if (this.props.offerId) {
+
+            // Remove price card from market
+            this.props.onRemoveOffer(this.props.index);
+        }
+
+        // Bench item
+        else {
+            this.props.onRemoveOffer();
+            this.setState({ price: null });
+        }
+
 
         notification['success']({
             message: 'Offer removed',
@@ -136,6 +276,13 @@ export default class PlayerModal extends Component {
 
             updateOffer(this.state.offerId, this.props.player.info.id,
                 firebase.auth().currentUser.uid, this.state.price);
+
+            // If price card
+            if (this.props.offerId) {
+
+                // Update price in price card
+                this.props.onUpdateOffer(this.props.index, this.state.price)
+            }
 
             this.setState({ visible: false });
             notification['success']({
@@ -176,7 +323,7 @@ export default class PlayerModal extends Component {
                         <Button style={{ display: this.state.action === "buy" ? "inline" : "none" }}
                             key="buy" type="primary"
                             onClick={() => this.purchase(this.props.player)}>
-                            Buy for {this.props.price} ETH
+                            Buy for {this.state.price} ETH
                         </Button>,
 
                         <Button style={{ display: this.state.action === "offer" ? "inline" : "none" }}
@@ -209,6 +356,10 @@ export default class PlayerModal extends Component {
                             className="price-input" />
                     ]
                     }>
+                    <p style={{ display: this.props.offerId ? 'block' : 'none' }} >
+                        <b>Owner: </b>{this.props.seller}
+                    </p>
+                    <br />
                     <img draggable="false" className="headshot" src={this.props.player.info.headshot} alt="" />
                     <div className="info">
                         <p><b>First Name: </b> {this.props.player.info.firstname}</p>

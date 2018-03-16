@@ -4,7 +4,6 @@
     width: 220px;
     /* height: 408px; */
     height: 356px;
-    
     margin: 14px 7px 0px 7px;
     border-radius: 0px;
     border: solid #ddd 1px;
@@ -16,11 +15,11 @@
 }
 
 .cardContainer-ant{
-    background-color: rgba(255, 255, 255, 0.70);    
+    background-color: rgba(255, 255, 255, 0.40);    
     width: 236px;
     height: 405px;
     margin: 25px 14px 2px 7px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.2);
     transition: transform .1s;
 }
 

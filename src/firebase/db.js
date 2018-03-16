@@ -136,6 +136,14 @@ function buyPlayer(offerID, buyer, txHash, callback) {
     callback();
 }
 
+//check if a player is in the market
+async function checkOfferAvailability(offerId) {
+    let marketRef = db.ref('/market/' + offerId);
+    let snapshot = await marketRef.once('value');
+    return snapshot.val();
+
+}
+
 // updates a users most recent sign in time if the user already exists,
 // otherwise adds as new user
 function signIn(userAddress) {
@@ -166,5 +174,5 @@ async function getUser(userAddress) {
 export {
     addPlayer, addUser, disownPlayer, givePlayer,
     offerPlayer, buyPlayer, getMarket, getPlayer,
-    getUser, signIn, removeOffer, updateOffer
+    getUser, signIn, removeOffer, updateOffer, checkOfferAvailability
 }

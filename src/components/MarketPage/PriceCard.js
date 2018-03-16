@@ -16,18 +16,23 @@ export default class PriceCard extends Component {
       <div>
 
         <a onClick={() => this.openModal()}>
-          <Card className="cardContainer-ant">
+          <Card style={{ opacity: this.props.owned ? 0.4 : 1 }} className="cardContainer-ant">
             <PlayerCard playerInfo={this.props.playerInfo} /> <br />
             <p className="price" >{this.props.price} ETH</p>
           </Card>
         </a>
 
         <PlayerModal web3={this.props.web3}
-          action="buy"
+          index={this.props.index}
+          updateOffer={this.props.updateOffer}
           player={this.props.playerInfo}
           seller={this.props.seller}
           price={this.props.price}
           offerId={this.props.offerId}
+          action={this.props.owned ? "updateOffer" : "buy"}
+          onRemoveOffer={this.props.removeOffer}
+          onUpdateOffer={this.props.updateOffer}
+
           ref='playerModal' />
 
       </div>

@@ -5,6 +5,7 @@
   "dependencies": {
     "antd": "^3.1.1",
     "firebase": "^4.8.2",
+    "git-last-commit": "^0.3.0",
     "lodash": "^4.17.4",
     "react": "^16.2.0",
     "react-css-loaders": "0.0.5",
@@ -15,14 +16,16 @@
     "remove-accents": "^0.4.2",
     "serve": "^6.4.4",
     "sweetalert2": "^7.12.4",
+    "truncate": "^2.0.0",
     "web3": "0.19.1",
     "xhr-request": "^1.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "npm run last-commit && react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
+    "last-commit": "node ./src/config/git",
     "production": "npm run build && serve -s build"
   },
   "devDependencies": {

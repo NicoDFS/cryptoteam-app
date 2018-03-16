@@ -3,10 +3,10 @@ import React, { Component } from 'react';
 import { Row, Pagination } from 'antd';
 import { CometSpinLoader } from 'react-css-loaders';
 import { Web3Provider } from 'react-web3';
-import PriceCard from './PriceCard'
-import Filter from './Filter/Filter'
 import Web3Unavailable from '../Web3/Unavailable';
-import NoResults from './NoResults';
+import PriceCard from './PriceCard'
+import Filter from '../Generic/Filter/Filter'
+import NoSearchResults from '../Generic/NoSearchResults';
 
 // Tools
 import { chunk } from 'lodash';
@@ -39,21 +39,12 @@ export default class MarketContent extends Component {
             width: window.innerWidth,
             height: 0
         }
-        this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
-    }
-
-    updateWindowDimensions() {
-        this.setState({ width: window.innerWidth });
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener('resize', this.updateWindowDimensions);
+        this.removeOffer = this.removeOffer.bind(this);
+        this.updateOffer = this.updateOffer.bind(this);
     }
 
     componentDidMount() {
 
-        this.updateWindowDimensions();
-        window.addEventListener('resize', this.updateWindowDimensions);
 
         document.title = "Marketplace";
         web3 = this.props.web3;
@@ -87,7 +78,7 @@ export default class MarketContent extends Component {
                                     user: address
                                 });
 
-                                this.sortByIndex(0);
+                                this.onSort(0);
                             }
                         });
                     }
@@ -96,72 +87,6 @@ export default class MarketContent extends Component {
             }
         })
 
-    }
-
-    sortByIndex(index) {
-
-        let temp = this.state.market_static;
-
-        temp.sort((a, b) => {
-            switch (index) {
-                case 1:
-                    return a.price - b.price; //price ascending
-                case 2:
-                    return b.price - a.price; //price descending
-                case 3:
-                    return a.player.popularity - b.player.popularity; //popularity descending (not ready yet)
-                case 4:
-                    return (b.player.info.rating / b.price) - (a.player.info.rating / a.price) //price:rating ratio
-                default:
-                    return b.player.info.rating - a.player.info.rating; //sort by rating (case 0)
-            }
-        });
-
-        if (temp.length > 0) {
-            let market_split = chunk(temp, this.state.cards_per_page);
-
-            this.setState({
-                market: market_split[0],
-                market_split: market_split
-            });
-        }
-    }
-
-    searchWith(term) {
-
-        let temp = this.state.market_static;
-
-        temp = temp.filter((a) => {
-            return accent_clean(a.player.info.name.toLowerCase())
-                .indexOf(term.toLowerCase()) !== -1 ||
-                a.player.info.name.toLowerCase()
-                    .indexOf(term.toLowerCase()) !== -1
-        });
-
-        if (temp.length > 0) {
-            let market_split = chunk(temp, this.state.cards_per_page);
-
-            this.setState({
-                market: market_split[0],
-                market_split: market_split,
-                no_results: false
-            });
-
-        }
-
-        // no search results
-        else {
-            this.setState({ market: [], no_results: true });
-        }
-
-        window.scrollTo(0, 85);
-    }
-
-    checkSearchField(searchTerm) {
-        if (searchTerm === '' || searchTerm === ' ') {
-            let market = this.state.market_split[this.state.current_page];
-            this.setState({ market: market, no_results: false });
-        }
     }
 
     updatePagination(pageNumber) {
@@ -183,13 +108,84 @@ export default class MarketContent extends Component {
         window.scrollTo(0, 85);
     }
 
+    removeOffer(index) {
+        let updatedMarket = this.state.market;
+        updatedMarket.splice(index, 1);
+        this.setState({ market: updatedMarket });
+    }
+
+    updateOffer(index, newPrice) {
+        let updatedMarket = this.state.market;
+        updatedMarket[index].price = newPrice;
+        this.setState({ market: updatedMarket });
+    }
+
+    onSort(index) {
+        let temp = this.state.market_static;
+
+        this.state.market_static.sort((a, b) => {
+            switch (index) {
+                case 1:
+                    return a.price - b.price; //price ascending
+                case 2:
+                    return b.price - a.price; //price descending
+                case 3:
+                    return a.player.popularity - b.player.popularity; //popularity descending (not ready yet)
+                case 4:
+                    return (b.player.info.rating / b.price) - (a.player.info.rating / a.price) //price:rating ratio
+                default:
+                    return b.player.info.rating - a.player.info.rating; //sort by rating (case 0)
+            }
+        });
+
+        if (temp.length > 0) {
+            let market_split = chunk(temp, this.state.cards_per_page);
+            this.setState({
+                market: market_split[0],
+                market_split: market_split
+            });
+        }
+    }
+
+    onSearch(term) {
+        let temp = this.state.market_static;
+
+        temp = temp.filter((a) => {
+            return accent_clean(a.player.info.name.toLowerCase())
+                .indexOf(term.toLowerCase()) !== -1 ||
+                a.player.info.name.toLowerCase()
+                    .indexOf(term.toLowerCase()) !== -1
+        });
+
+        if (temp.length > 0) {
+            let market_split = chunk(temp, this.state.cards_per_page);
+            this.setState({
+                market: market_split[0],
+                market_split: market_split,
+                no_results: false
+            });
+        }
+        // no search results
+        else {
+            this.setState({ market: [], no_results: true });
+        }
+        window.scrollTo(0, 85);
+    }
+
+    onSearchChange(searchTerm) {
+        if (searchTerm === '' || searchTerm === ' ') {
+            let market = this.state.market_split[this.state.current_page];
+            this.setState({ market: market, no_results: false });
+        }
+    }
+
 
     render() {
 
         let no_results = null
 
         if (this.state.no_results) {
-            no_results = <NoResults />
+            no_results = <NoSearchResults />
         }
 
         return (
@@ -198,10 +194,13 @@ export default class MarketContent extends Component {
                 web3UnavailableScreen={Web3Unavailable}
                 accountUnavailableScreen={Web3Unavailable}>
 
-                <Filter market={this} />
+                <Filter onSort={(e) => this.onSort(e)}
+                    onSearch={(e) => this.onSearch(e)}
+                    onSearchChange={(e) => this.onSearchChange(e)}
+                    filters={['Rating', 'Price ascending', 'Price descending', 'Popularity (coming soon)', 'Price to rating ratio']} />
 
                 <CometSpinLoader
-                    color="rgb(8, 45, 81)"
+                    color="#0082FF"
                     size={50}
                     style={{ display: !this.state.loaded ? 'block' : 'none', marginTop: 220 }}
                 />
@@ -209,7 +208,7 @@ export default class MarketContent extends Component {
                 <Row
                     type="flex"
                     justify="center"
-                    style={{ width: (this.state.width - 100) }}
+                    style={{ paddingLeft: '4%', paddingRight: '4%' }}
                     className={this.state.loaded ? 'cardsContainer' : 'cardsContainer hidden'}>
                     {this.state.market.map((item, index) => (
 
@@ -217,10 +216,15 @@ export default class MarketContent extends Component {
                             web3={web3}
                             style={{ display: this.state.loaded ? 'block' : 'none' }}
                             key={index}
+                            index={index}
                             offerId={item.id}
                             seller={item.seller}
                             playerInfo={item.player}
-                            price={item.price} />
+                            price={item.price}
+                            owned={item.seller === this.state.user ? true : false}
+                            removeOffer={this.removeOffer}
+                            updateOffer={this.updateOffer}
+                        />
                     ))}
                     {no_results}
                 </Row>
