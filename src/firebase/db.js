@@ -92,46 +92,77 @@ function buyPlayer(offerID, buyer, txHash, callback) {
     ref.once('value').then((snapshot) => {
 
         let data = snapshot.val();
-        let player = data.player;
-        let price = data.price;
-        let sellerId = data.seller;
-        let instanceId = data.instance;     //id of the sellers player instance
 
-        //remove offer from market
-        ref.remove(() => {
-            disownPlayer(instanceId, sellerId, givePlayer(player, buyer, (instanceId) => {
+        // player already bought
+        if (data === null) {
 
-                //save buy to user history
-                let pushRefBuyer = db.ref('/users/' + buyer + '/trades/bought').push();
-                pushRefBuyer.set({
-                    player: player,
-                    txHash: txHash,
-                    price: price,
-                    seller: sellerId,
+            let ref = db.ref('/purchases/' + offerID);
+
+            ref.once('value').then((snapshot) => {
+
+                let data = snapshot.val();
+                let player = data.player;
+                let sellerId = data.seller;
+                let price = data.price;
+
+                givePlayer(player, buyer, () => {
+
+                    let pushRefBuyer = db.ref('/users/' + buyer + '/trades/bought').push();
+
+                    pushRefBuyer.set({
+                        player: player,
+                        txHash: txHash,
+                        price: price,
+                        seller: sellerId,
+                    });
+
                 });
+            })
 
-                //save sell to user history
-                let pushRefSeller = db.ref('/users/' + sellerId + '/trades/sold').push();
-                pushRefSeller.set({
-                    player: player,
-                    price: price,
-                    txHash: txHash,
-                    buyer: buyer
-                });
+        }
 
-                // //save purchase data
-                db.ref('/purchases/').push().set({
-                    player: player,
-                    price: price,
-                    txHash: txHash,
-                    buyer: buyer,
-                    seller: sellerId,
-                });
+        else {
 
-            }));
+            let player = data.player;
+            let price = data.price;
+            let sellerId = data.seller;
+            let instanceId = data.instance;     //id of the sellers player instance
 
-        });
+            //remove offer from market
+            ref.remove(() => {
+                disownPlayer(instanceId, sellerId, givePlayer(player, buyer, (instanceId) => {
 
+                    //save buy to user history
+                    let pushRefBuyer = db.ref('/users/' + buyer + '/trades/bought').push();
+                    pushRefBuyer.set({
+                        player: player,
+                        txHash: txHash,
+                        price: price,
+                        seller: sellerId,
+                    });
+
+                    //save sell to user history
+                    let pushRefSeller = db.ref('/users/' + sellerId + '/trades/sold').push();
+                    pushRefSeller.set({
+                        player: player,
+                        price: price,
+                        txHash: txHash,
+                        buyer: buyer
+                    });
+
+                    // //save purchase data
+                    db.ref('/purchases/' + offerID).set({
+                        player: player,
+                        price: price,
+                        txHash: txHash,
+                        buyer: buyer,
+                        seller: sellerId,
+                    });
+
+                }));
+
+            });
+        }
     });
     callback();
 }
