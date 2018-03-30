@@ -2,8 +2,6 @@
 import React, { Component } from 'react';
 import { Row, Pagination } from 'antd';
 import { CometSpinLoader } from 'react-css-loaders';
-import { Web3Provider } from 'react-web3';
-import Web3Unavailable from '../Web3/Unavailable';
 import PriceCard from './PriceCard'
 import Filter from '../Generic/Filter/Filter'
 import NoSearchResults from '../Generic/NoSearchResults';
@@ -21,7 +19,6 @@ import './MarketContent.css'
 //Other
 let web3;
 let accent_clean = require('remove-accents');
-
 
 export default class MarketContent extends Component {
 
@@ -183,16 +180,13 @@ export default class MarketContent extends Component {
     render() {
 
         let no_results = null
-
         if (this.state.no_results) {
             no_results = <NoSearchResults />
         }
 
         return (
 
-            <Web3Provider
-                web3UnavailableScreen={Web3Unavailable}
-                accountUnavailableScreen={Web3Unavailable}>
+            <div>
 
                 <Filter onSort={(e) => this.onSort(e)}
                     onSearch={(e) => this.onSearch(e)}
@@ -239,8 +233,7 @@ export default class MarketContent extends Component {
                     pageSizeOptions={['15', '30', '40']}
                     onChange={(number, size) => this.updatePagination(number, size)} />
 
-            </Web3Provider >
-
+            </div>
         )
     }
 }
