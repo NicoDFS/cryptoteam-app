@@ -1,7 +1,5 @@
 import React, { Component } from 'react'
 import Bench from './Bench/Bench'
-import { Web3Provider } from 'react-web3';
-import Web3Unavailable from '../Web3/Unavailable';
 import CustomContent from '../CustomContent/CustomContent'
 import { getUser } from '../../firebase/db'
 import './ProfilePage.css'
@@ -185,9 +183,7 @@ export default class ProfilePage extends Component {
       <CustomContent title="Bench"
         content={
 
-          <Web3Provider
-            web3UnavailableScreen={Web3Unavailable}
-            accountUnavailableScreen={Web3Unavailable}>
+          <div>
 
             {filter}
 
@@ -218,7 +214,7 @@ export default class ProfilePage extends Component {
               pageSizeOptions={['15', '30', '40']}
               onChange={(number, size) => this.updatePagination(number, size)} />
 
-          </Web3Provider>
+          </div>
         } />
     )
   }

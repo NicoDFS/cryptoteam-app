@@ -9,7 +9,7 @@ import PageNotFound from './components/PageNotFound/PageNotFound';
 
 // code splitting
 const AsyncMarketPage = asyncComponent(() => import('./components/MarketPage/MarketPage'));
-const AsyncProfilePage = asyncComponent(() => import('./components/ProfilePage/ProfilePage'));
+const AsyncProfilePage = asyncComponent(() => import('./components/ProfilePage/ProfilePageAbstract'));
 
 
 class RouterConfig extends Component {
