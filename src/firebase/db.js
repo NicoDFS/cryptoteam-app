@@ -71,10 +71,10 @@ function givePlayer(player, userId, callback) {
         return undefined;
     }
     else {
-        let usersRef = db.ref('/users/' + userId + '/owned/');
-        let pushRef = usersRef.child(player.info.id);
-        pushRef.set(player);
-        let instanceId = pushRef.key;
+        let userRef = db.ref('/users/' + userId + '/owned/');
+        // let pushRef = usersRef.child(player.info.id);
+        userRef.push(player);
+        let instanceId = userRef.key;
         callback(instanceId);
     }
 }
