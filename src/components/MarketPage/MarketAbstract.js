@@ -24,6 +24,8 @@ export default class MarketAbstract extends Component {
             toRender = <NetworkUnavailable />
         }
 
+        toRender = <MarketContent web3={this.props.web3} />
+
         return (
 
             <Web3Provider
