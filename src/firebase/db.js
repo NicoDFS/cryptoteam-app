@@ -46,7 +46,7 @@ function offerPlayer(playerData, seller, price, callback) {
     let offerId = pushRef.key;
 
     // Add offer id to owned player object
-    let userRef = db.ref('/users/' + seller + "/owned/" + playerData.info.id);
+    let userRef = db.ref('/users/' + seller + "/owned/" + playerData.ownedId);
     pushRef = userRef.child("offer");
 
     pushRef.set({

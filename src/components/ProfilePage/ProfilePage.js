@@ -59,7 +59,10 @@ export default class ProfilePage extends Component {
 
           playerIds.forEach((playerId, index) => {
             // Using players ids to retrieve players data and add them to the bench
-            bench.push(userData.owned[playerId]);
+
+            let player = userData.owned[playerId];
+            player.ownedId = playerId;
+            bench.push(player);
 
             // setting bench state after getting all players data
             if (index === playerIds.length - 1) {

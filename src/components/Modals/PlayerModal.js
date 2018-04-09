@@ -87,7 +87,6 @@ export default class PlayerModal extends Component {
     offerPlayer = () => {
         let playerData = this.props.player;
         let sellerId = firebase.auth().currentUser.uid;
-
         if (!isNaN(this.state.price) && this.state.price > 0) {
             offerPlayer(playerData, sellerId, this.state.price, (offerId) => {
                 this.setState({ visible: false, action: "updateOffer", offerId: offerId });
@@ -171,6 +170,7 @@ export default class PlayerModal extends Component {
 
     purchase = (player) => {
 
+        console.log("prchasing");
         this.setState({ confirmLoading: true });
         let price = web3.toWei(this.state.price, 'ether');
         let seller = this.props.seller;
@@ -182,7 +182,9 @@ export default class PlayerModal extends Component {
 
         checkOfferAvailability(this.state.offerId).then((offer) => {
             if (offer != null) {
+                console.log("offer available");
                 if (this.priceNotUpdated(offer)) {
+                    console.log("offer is same price");
                     //buy from contract
                     if (seller === config.address) {
                         contractInstance.buyFromContract(price, {
@@ -191,7 +193,7 @@ export default class PlayerModal extends Component {
                         }, (err, txHash) => {
 
                             if (!err) {
-
+                                console.log("no error");
                                 this.beforePurchaseConfirmation(player, err, txHash);
                                 let event = contractInstance.Buy();
                                 let eventFired = false;
@@ -205,6 +207,8 @@ export default class PlayerModal extends Component {
                                     }
                                 })
 
+                            } else {
+                                console.log(err);
                             }
 
                         })
@@ -216,7 +220,6 @@ export default class PlayerModal extends Component {
                             from: web3.eth.accounts[0],
                             value: price
                         }, (err, txHash) => {
-
                             this.beforePurchaseConfirmation(player, err, txHash);
                             let event = contractInstance.Buy();
                             let eventFired = false;
