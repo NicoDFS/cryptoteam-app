@@ -6,7 +6,7 @@ next to sidebar.
 import React, { Component } from 'react';
 import { Layout } from 'antd';
 import './CustomContent.css';
-const { Header, Content } = Layout;
+const { Header, Content, Footer } = Layout;
 
 export default class CustomContent extends Component {
     constructor() {
@@ -50,6 +50,7 @@ export default class CustomContent extends Component {
                     {this.props.content}
                 </Content>
 
+                {/* <Footer style={{ textAlign: 'center' }}>© CryptoTeam 2018</Footer> */}
             </Layout >
         )
     }

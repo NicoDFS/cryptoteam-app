@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Layout, Menu, Icon, Affix } from 'antd';
-// import { Layout, Menu } from 'antd';
 import { Link, HashRouter } from 'react-router-dom'
 import './Navigator.css';
 const { Sider } = Layout;
@@ -78,7 +77,6 @@ export default class Navigator extends Component {
                     </HashRouter>
                 </Sider>
                 {this.props.children}
-                <div style={{ textAlign: "center", marginTop: 60, marginBottom: 40, }}>© CryptoTeam 2018</div>
             </Layout>
         );
     }

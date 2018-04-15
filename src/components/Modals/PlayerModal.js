@@ -360,7 +360,7 @@ export default class PlayerModal extends Component {
                     ]
                     }>
                     <p style={{ display: this.props.offerId ? 'block' : 'none' }} >
-                        <b>Owner: </b>{this.props.seller}
+                        <b>Seller: </b>{this.props.seller}
                     </p>
                     <br />
                     <img draggable="false" className="headshot" src={this.props.player.info.headshot} alt="" />

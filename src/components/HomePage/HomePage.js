@@ -8,14 +8,14 @@ export default class PlayerPage extends Component {
         return (
             <CustomContent content={
 
-                <Col offset={7} span={12}>
+                <Col offset={10} span={12}>
 
                     <Card style={{
                         width: 530, boxShadow: "0 0 3px rgba(0,0,0,0.2)", textAlign: "left",
                         marginTop: 70, marginBottom: 50, marginLeft: 30
                     }}
                         title="CryptoTeam Has Launched! - 3/22/2018"
-                        cover={<img alt="example" src="https://www.wallpaperup.com/uploads/wallpapers/2014/01/24/236781/ec0863d44ae28207397f823809930e48.jpg" />}
+                        cover={<img alt="cover" src="https://www.wallpaperup.com/uploads/wallpapers/2014/01/24/236781/ec0863d44ae28207397f823809930e48.jpg" />}
                     >
 
                         CryptoTeam has officially launched with v1.0.
