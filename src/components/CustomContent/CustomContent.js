@@ -8,6 +8,8 @@ import { Layout } from 'antd';
 import './CustomContent.css';
 const { Header, Content, Footer } = Layout;
 
+var footer;
+
 export default class CustomContent extends Component {
     constructor() {
         super();
@@ -42,6 +44,19 @@ export default class CustomContent extends Component {
             </Header>
         }
 
+        if (this.props.footerHidden) {
+            footer = null;
+        } else {
+            footer = (
+                <div>
+                    <p style={{ textAlign: 'center', marginTop: 20, }}>Logged in as
+                <a href={`https://etherscan.io/address/${this.props.account}`} target="_blank"> {this.props.account}</a>
+                    </p>
+                    <p style={{ textAlign: 'center', }}>© CryptoTeam 2018</p>
+                </div>
+            );
+        }
+
         return (
             <Layout className="custom-layout">
 
@@ -50,10 +65,7 @@ export default class CustomContent extends Component {
                 <Content className="custom-content">
                     {this.props.content}
                 </Content>
-                <p style={{ textAlign: 'center', marginTop: 20, }}>Logged in as
-                <a href={`https://etherscan.io/address/${this.props.account}`} target="_blank"> {this.props.account}</a>
-                </p>
-                <p style={{ textAlign: 'center', }}>© CryptoTeam 2018</p>
+                {footer}
             </Layout >
         )
     }
