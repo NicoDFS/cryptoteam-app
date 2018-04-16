@@ -177,7 +177,6 @@ async function checkOfferAvailability(offerId) {
     let marketRef = db.ref('/market/' + offerId);
     let snapshot = await marketRef.once('value');
     return snapshot.val();
-
 }
 
 // updates a users most recent sign in time if the user already exists,

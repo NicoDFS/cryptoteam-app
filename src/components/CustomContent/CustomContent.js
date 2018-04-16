@@ -12,13 +12,14 @@ export default class CustomContent extends Component {
     constructor() {
         super();
         this.state = {
-            screenWidth: 0
+            screenWidth: 0,
+            screenHeight: 0
         }
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     }
 
     updateWindowDimensions() {
-        this.setState({ screenWidth: window.innerWidth });
+        this.setState({ screenWidth: window.innerWidth, screenHeight: window.innerHeight });
     }
 
     componentWillUnmount() {
@@ -49,8 +50,8 @@ export default class CustomContent extends Component {
                 <Content className="custom-content">
                     {this.props.content}
                 </Content>
-                <Footer style={{ textAlign: 'center', bottom: 0 }}>Logged in as <a>{this.props.account}</a></Footer>
-                <Footer style={{ textAlign: 'center', bottom: 0 }}>© CryptoTeam 2018</Footer>
+                <p style={{ textAlign: 'center', marginTop: 20, }}>Logged in as <a>{this.props.account}</a></p>
+                <p style={{ textAlign: 'center', }}>© CryptoTeam 2018</p>
             </Layout >
         )
     }
