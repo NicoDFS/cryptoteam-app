@@ -218,7 +218,9 @@ export default class ProfilePage extends Component {
               onChange={(number, size) => this.updatePagination(number, size)} />
 
           </div>
-        } />
+        }
+        account={this.props.web3.eth.accounts[0]}
+      />
     )
   }
 }
