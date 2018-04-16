@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Col } from 'antd'
+import { Card, Col, Row } from 'antd'
 import CustomContent from '../CustomContent/CustomContent';
 import './HomePage.css'
 export default class PlayerPage extends Component {
@@ -10,13 +10,12 @@ export default class PlayerPage extends Component {
                 footerHidden={true}
                 content={
 
-                    <Col offset={10} span={12}>
-
+                    <Row type="flex" justify="center" style={{ width: window.innerWidth - 100, }}>
                         <Card style={{
                             width: 530, boxShadow: "0 0 3px rgba(0,0,0,0.2)", textAlign: "left",
-                            marginTop: 70, marginBottom: 50, marginLeft: 30
+                            marginTop: 50, marginBottom: 20, marginLeft: 30
                         }}
-                            title="CryptoTeam Has Launched! - 3/22/2018"
+                            title="CryptoTeam Has Launched! - 17/4/2018"
                             cover={<img alt="cover" src="https://www.wallpaperup.com/uploads/wallpapers/2014/01/24/236781/ec0863d44ae28207397f823809930e48.jpg" />}
                         >
 
@@ -36,7 +35,9 @@ export default class PlayerPage extends Component {
 
                     </Card>
 
-                    </Col>
+                    </Row>
+
+
 
 
 
