@@ -50,7 +50,9 @@ export default class CustomContent extends Component {
                 <Content className="custom-content">
                     {this.props.content}
                 </Content>
-                <p style={{ textAlign: 'center', marginTop: 20, }}>Logged in as <a>{this.props.account}</a></p>
+                <p style={{ textAlign: 'center', marginTop: 20, }}>Logged in as
+                <a href={`https://etherscan.io/address/${this.props.account}`} target="_blank"> {this.props.account}</a>
+                </p>
                 <p style={{ textAlign: 'center', }}>© CryptoTeam 2018</p>
             </Layout >
         )
