@@ -251,7 +251,7 @@ export default class PlayerModal extends Component {
 
     removeOffer = () => {
 
-        removeOffer(this.state.offerId, firebase.auth().currentUser.uid, this.props.player.info.id);
+        removeOffer(this.state.offerId, firebase.auth().currentUser.uid, this.props.player.ownedId);
         this.setState({ visible: false, action: "offer", offerPrice: undefined });
 
         // Price card

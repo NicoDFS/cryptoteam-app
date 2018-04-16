@@ -38,7 +38,7 @@ function offerPlayer(playerData, seller, price, callback) {
 
     pushRef.set({
         player: playerData,
-        instance: playerData.info.id,
+        instance: playerData.ownedId,
         seller: seller,
         price: price
     });

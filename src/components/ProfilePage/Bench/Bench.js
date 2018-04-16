@@ -32,7 +32,7 @@ export default class Bench extends Component {
                 <div>
 
                     {/* <p className="benchCount">12 Players</p> */}
-                    <Row type="flex" justify="center" >
+                    <Row type="flex"  >
                         {this.state.bench.map((item, index) => (
                             <BenchItem web3={this.props.web3}
                                 key={index}
