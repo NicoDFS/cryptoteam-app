@@ -45,7 +45,9 @@ export default class CustomContent extends Component {
         }
 
         if (this.props.footerHidden) {
-            footer = null;
+            footer = (
+                <p style={{ textAlign: 'center', marginTop: 50, }}>© CryptoTeam 2018</p>
+            );
         } else {
             footer = (
                 <div>
