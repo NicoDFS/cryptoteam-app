@@ -5,7 +5,7 @@ export default class NoReuslts extends Component {
     render() {
         return (
             <Card
-                title="Your bench is empty"
+                title="Your Bench is Empty"
                 style={{
                     width: 500,
                     boxShadow: "0 0 9px rgba(0,0,0,0.2)",

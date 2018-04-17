@@ -1,26 +1,23 @@
-import {
-    addPlayer, addUser, givePlayer,
-    offerPlayer, buyPlayer
-} from '../firebase/db';
+import { buyPlayer } from '../firebase/db';
 
 export default function dbTest() {
 
-    let player1 = { name: 'ronaldo', speed: 123 };
-    let player2 = { name: 'messi', speed: 20 };
+    let offerID = "-L6fqYCHFx9HJ-TT3Hb0";
+    let buyer = "0x7283dce65c72e1b4fa6120f123af7a12bb4f0f74"
+    let txHash = "32";
 
-    let user1 = { name: 'youssef' }
-    let user2 = { name: 'omar' };
+    // first buy
+    buyPlayer(offerID, buyer, txHash, () => {
 
-    let pid1 = addPlayer(player1)
-    let pid2 = addPlayer(player2)
-    let uid1 = addUser(user1);
-    let uid2 = addUser(user2);
+        // second buy
+        buyer = "10x7283dce65c72e1b4fa6120f123af7a12bb4f0f74"
+        buyPlayer(offerID, buyer, txHash, () => {
 
-    givePlayer(pid1, uid1, (instanceId) => {
-        offerPlayer(instanceId, uid1, 20, (offer) => {
-            buyPlayer(offer, uid2)
-        });
-    });
+        })
+
+    })
+
+
 
 
 }

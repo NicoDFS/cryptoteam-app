@@ -58,7 +58,7 @@ export default class Roadmap extends Component {
       </Col>
 
     return (
-      <CustomContent title="Roadmap" content={roadmap} />
+      <CustomContent footerHidden={true} title="Roadmap" content={roadmap} />
     )
   }
 }

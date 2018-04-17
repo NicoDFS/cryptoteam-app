@@ -6,19 +6,22 @@ next to sidebar.
 import React, { Component } from 'react';
 import { Layout } from 'antd';
 import './CustomContent.css';
-const { Header, Content } = Layout;
+const { Header, Content, Footer } = Layout;
+
+var footer;
 
 export default class CustomContent extends Component {
     constructor() {
         super();
         this.state = {
-            screenWidth: 0
+            screenWidth: 0,
+            screenHeight: 0
         }
         this.updateWindowDimensions = this.updateWindowDimensions.bind(this);
     }
 
     updateWindowDimensions() {
-        this.setState({ screenWidth: window.innerWidth });
+        this.setState({ screenWidth: window.innerWidth, screenHeight: window.innerHeight });
     }
 
     componentWillUnmount() {
@@ -36,9 +39,24 @@ export default class CustomContent extends Component {
 
         //only render a title if one was passed as a prop
         if (this.props.title) {
-            header = <Header style={{ width: this.state.screenWidth }} className="custom-content-navbar ">
+            header = <Header style={{ width: this.state.screenWidth - 50 }} className="custom-content-navbar ">
                 <p className="custom-content-logo">{this.props.title}</p>
             </Header>
+        }
+
+        if (this.props.footerHidden) {
+            footer = (
+                <p style={{ textAlign: 'center', marginTop: 50, }}>© CryptoTeam 2018</p>
+            );
+        } else {
+            footer = (
+                <div>
+                    <p style={{ textAlign: 'center', marginTop: 20, }}>Logged in as
+                <a href={`https://etherscan.io/address/${this.props.account}`} target="_blank"> {this.props.account}</a>
+                    </p>
+                    <p style={{ textAlign: 'center', }}>© CryptoTeam 2018</p>
+                </div>
+            );
         }
 
         return (
@@ -49,7 +67,7 @@ export default class CustomContent extends Component {
                 <Content className="custom-content">
                     {this.props.content}
                 </Content>
-
+                {footer}
             </Layout >
         )
     }
