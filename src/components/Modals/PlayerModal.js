@@ -187,6 +187,7 @@ export default class PlayerModal extends Component {
                     console.log("offer is same price");
                     //buy from contract
                     if (seller === config.address) {
+                        console.log('Seller is contract');
                         contractInstance.buyFromContract.sendTransaction(price, {
                             from: web3.eth.accounts[0],
                             value: price
