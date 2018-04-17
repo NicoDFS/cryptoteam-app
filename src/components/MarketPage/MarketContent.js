@@ -28,7 +28,7 @@ export default class MarketContent extends Component {
             market: [],
             market_static: [],
             market_split: [],
-            cards_per_page: 10,
+            cards_per_page: 15,
             no_results: false,
             current_page: 0,
             loaded: false,
@@ -125,13 +125,13 @@ export default class MarketContent extends Component {
                 case 1:
                     return a.price - b.price; //price ascending
                 case 2:
-                    return b.price - a.price; //price descending
+                    return b.player.info.rating - a.player.info.rating; //sort by rating (case 0)
                 case 3:
                     return a.player.popularity - b.player.popularity; //popularity descending (not ready yet)
                 case 4:
                     return (b.player.info.rating / b.price) - (a.player.info.rating / a.price) //price:rating ratio
                 default:
-                    return b.player.info.rating - a.player.info.rating; //sort by rating (case 0)
+                    return b.price - a.price; //price descending
             }
         });
 
@@ -191,7 +191,7 @@ export default class MarketContent extends Component {
                 <Filter onSort={(e) => this.onSort(e)}
                     onSearch={(e) => this.onSearch(e)}
                     onSearchChange={(e) => this.onSearchChange(e)}
-                    filters={['Rating', 'Price ascending', 'Price descending', 'Popularity (coming soon)', 'Price to rating ratio']} />
+                    filters={['Price descending', 'Price ascending', 'Rating', 'Popularity (coming soon)', 'Price to rating ratio']} />
 
                 <CometSpinLoader
                     color="#0082FF"
@@ -228,6 +228,7 @@ export default class MarketContent extends Component {
                         marginBottom: 30,
                         display: this.state.loaded && !this.state.no_results ? 'block' : 'none'
                     }}
+                    pageSize={15}
                     onShowSizeChange={(current, size) => this.onShowSizeChange(current, size)}
                     total={this.state.market_split.length * 10}
                     pageSizeOptions={['15', '30', '40']}

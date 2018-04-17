@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Card, Col, Row } from 'antd'
+import { Card, Row } from 'antd'
 import CustomContent from '../CustomContent/CustomContent';
 import './HomePage.css'
 export default class PlayerPage extends Component {

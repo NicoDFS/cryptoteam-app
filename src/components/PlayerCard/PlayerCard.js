@@ -20,8 +20,8 @@ export default class PlayerCard extends Component {
     switch (true) {
       case (rating < 78): this.setState({ cardType: "bronze" }); break;
       case (rating >= 78 && rating < 85): this.setState({ cardType: "silver" }); break;
-      case (rating >= 85 && rating < 93): this.setState({ cardType: "gold" }); break;
-      case (rating >= 93): this.setState({ cardType: "plat" }); break;
+      case (rating >= 85 && rating < 97): this.setState({ cardType: "gold" }); break;
+      case (rating >= 97): this.setState({ cardType: "plat" }); break;
       default: break;
     }
   }

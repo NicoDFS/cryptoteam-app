@@ -6,7 +6,7 @@ next to sidebar.
 import React, { Component } from 'react';
 import { Layout } from 'antd';
 import './CustomContent.css';
-const { Header, Content, Footer } = Layout;
+const { Header, Content } = Layout;
 
 var footer;
 
