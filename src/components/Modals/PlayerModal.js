@@ -170,7 +170,6 @@ export default class PlayerModal extends Component {
 
     purchase = (player) => {
 
-        console.log("prchasing");
         this.setState({ confirmLoading: true });
         let price = web3.toWei(this.state.price, 'ether');
         let seller = this.props.seller;
@@ -182,12 +181,10 @@ export default class PlayerModal extends Component {
 
         checkOfferAvailability(this.state.offerId).then((offer) => {
             if (offer != null) {
-                console.log("offer available");
+
                 if (this.priceNotUpdated(offer)) {
-                    console.log("offer is same price");
                     //buy from contract
                     if (seller === config.address) {
-                        console.log('Seller is contract');
                         contractInstance.buyFromContract.sendTransaction(price, {
                             from: web3.eth.accounts[0],
                             value: price
