@@ -42,7 +42,7 @@ module.exports = {
     plugins: [
         new HtmlWebPackPlugin({
             template: "./public/index.html",
-            favicon: 'favicon.ico',
+            favicon: './src/assets/favicon.ico',
             filename: "./index.html"
         }),
         // new BundleAnalyzerPlugin()
