@@ -199,7 +199,6 @@ export default class PlayerModal extends Component {
                                 event.watch((err, res) => {
 
                                     if (!err && !eventFired && res.type === "mined") {
-                                        // console.log(res);
                                         eventFired = true;
                                         this.transferPlayer(player, txHash);
                                     }
@@ -225,7 +224,6 @@ export default class PlayerModal extends Component {
                             event.watch((err, res) => {
 
                                 if (!err && !eventFired && res.type === "mined") {
-                                    // console.log(res);
                                     eventFired = true;
                                     this.transferPlayer(player, txHash);
                                 }
