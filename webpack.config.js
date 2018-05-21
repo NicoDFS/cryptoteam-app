@@ -2,6 +2,10 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 module.exports = {
+    output: {
+        path: __dirname + "/build",
+        filename: "bundle.js"
+    },
     module: {
         rules: [
             {
