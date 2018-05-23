@@ -28,7 +28,7 @@ export default class PlayerPage extends Component {
                         <br /> <br />
 
                             We won't be adding any more players once these are bought and we may decide to remove some players from 
-                            the market in the future if they aren't being traded. You can also get your hands on players buy buying packs which will
+                            the market in the future if they aren't being traded. You can also get your hands on players by buying packs which will
                             be added to the website very soon. 
                                
                                 <br /> <br />
