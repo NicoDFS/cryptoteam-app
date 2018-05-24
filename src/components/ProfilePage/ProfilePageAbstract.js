@@ -19,7 +19,7 @@ export default class ProfilePageAbstract extends Component {
             toRender = <NetworkUnavailable />
         }
 
-        toRender = <ProfilePage web3={this.props.web3} />
+        // toRender = <ProfilePage web3={this.props.web3} />
 
         return (
             <Web3Provider

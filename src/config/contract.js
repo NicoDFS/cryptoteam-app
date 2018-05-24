@@ -1,5 +1,5 @@
 let config = {
-    address: '0x3e45d82bad70a74e072e1afdcdb1352d53ff2985',
+    address: '0xf08d46cbc3f9e17202d5f010d233f57175b77ef5',
     abi: [
         {
             "constant": false,
