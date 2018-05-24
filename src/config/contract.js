@@ -1,5 +1,5 @@
 let config = {
-    address: '0x3e638A3d1e71c43aC596f2C536dB8EB7E3676355',
+    address: '0x3e45d82bad70a74e072e1afdcdb1352d53ff2985',
     abi: [
         {
             "constant": false,
@@ -25,6 +25,10 @@ let config = {
                 {
                     "name": "seller",
                     "type": "address"
+                },
+                {
+                    "name": "_offerID",
+                    "type": "string"
                 }
             ],
             "name": "buyFromUser",
@@ -39,6 +43,10 @@ let config = {
                 {
                     "name": "_expectedAmount",
                     "type": "uint256"
+                },
+                {
+                    "name": "_offerID",
+                    "type": "string"
                 }
             ],
             "name": "buyFromContract",
@@ -69,6 +77,11 @@ let config = {
                     "indexed": false,
                     "name": "_price",
                     "type": "uint256"
+                },
+                {
+                    "indexed": false,
+                    "name": "_offerID",
+                    "type": "string"
                 }
             ],
             "name": "Buy",
@@ -99,4 +112,4 @@ let config = {
     ]
 }
 
-export default config;
+export default config
