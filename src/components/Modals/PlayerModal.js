@@ -66,21 +66,6 @@ export default class PlayerModal extends Component {
 
     setVisible = (visibility) => {
         this.setState({ visible: visibility });
-        // if (visibility && this.props.offerId) {
-        //     checkOfferAvailability(this.state.offerId).then((offerIsAvailable) => {
-        //         if (offerIsAvailable) {
-        //             this.setState({ visible: visibility });
-        //         } else {
-        //             notification['error']({
-        //                 message: 'This player is no longer available in the market',
-        //                 duration: 3
-        //             });
-        //         }
-        //     });
-        // }
-        // else {
-        //     this.setState({ visible: visibility });
-        // }
     }
 
 
@@ -170,7 +155,6 @@ export default class PlayerModal extends Component {
 
     purchase = (player) => {
 
-        console.log("prchasing");
         this.setState({ confirmLoading: true });
         let price = web3.toWei(this.state.price, 'ether');
         let seller = this.props.seller;
@@ -179,16 +163,13 @@ export default class PlayerModal extends Component {
         let contractInstance = contract.at(config.address);
 
         // check if offer is available in market
-
         checkOfferAvailability(this.state.offerId).then((offer) => {
             if (offer != null) {
-                console.log("offer available");
+
                 if (this.priceNotUpdated(offer)) {
-                    console.log("offer is same price");
                     //buy from contract
                     if (seller === config.address) {
-                        console.log('Seller is contract');
-                        contractInstance.buyFromContract.sendTransaction(price, {
+                        contractInstance.buyFromContract.sendTransaction(price, this.props.offerId, {
                             from: web3.eth.accounts[0],
                             value: price
                         }, (err, txHash) => {
@@ -196,18 +177,6 @@ export default class PlayerModal extends Component {
                             if (!err) {
                                 console.log("no error");
                                 this.beforePurchaseConfirmation(player, err, txHash);
-                                let event = contractInstance.Buy();
-                                let eventFired = false;
-
-                                event.watch((err, res) => {
-
-                                    if (!err && !eventFired && res.type === "mined") {
-                                        // console.log(res);
-                                        eventFired = true;
-                                        this.transferPlayer(player, txHash);
-                                    }
-                                })
-
                             } else {
                                 console.log(err);
                             }
@@ -217,22 +186,22 @@ export default class PlayerModal extends Component {
 
                     // buy from another user
                     else {
-                        contractInstance.buyFromUser(price, seller, {
+                        contractInstance.buyFromUser(price, seller, this.props.offerId, {
                             from: web3.eth.accounts[0],
                             value: price
                         }, (err, txHash) => {
                             this.beforePurchaseConfirmation(player, err, txHash);
-                            let event = contractInstance.Buy();
-                            let eventFired = false;
 
-                            event.watch((err, res) => {
+                            // let event = contractInstance.Buy();
+                            // let eventFired = false;
 
-                                if (!err && !eventFired && res.type === "mined") {
-                                    // console.log(res);
-                                    eventFired = true;
-                                    this.transferPlayer(player, txHash);
-                                }
-                            })
+                            // event.watch((err, res) => {
+
+                            //     if (!err && !eventFired && res.type === "mined") {
+                            //         eventFired = true;
+                            //         this.transferPlayer(player, txHash);
+                            //     }
+                            // })
                         })
                     }
                 }

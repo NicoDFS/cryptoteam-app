@@ -18,7 +18,7 @@ export default class PlayerPage extends Component {
                                 width: 530, boxShadow: "0 0 3px rgba(0,0,0,0.2)", textAlign: "left",
                                 marginTop: 50, marginBottom: 20, marginLeft: 30
                             }}
-                                title="Trading is Live - 17/4/2018"
+                                title="Trading is Live - 21/5/2018"
                                 cover={<img alt="cover" src="https://img.apmcdn.org/a469f0356c05a433a4eae580fd6be68184291fc1/uncropped/8f9491-20160804-usbankstadium-soccer-11.jpg" />}
                             >
 
@@ -28,7 +28,7 @@ export default class PlayerPage extends Component {
                         <br /> <br />
 
                             We won't be adding any more players once these are bought and we may decide to remove some players from 
-                            the market in the future if they aren't being traded. You can also get your hands on players buy buying packs which will
+                            the market in the future if they aren't being traded. You can also get your hands on players by buying packs which will
                             be added to the website very soon. 
                                
                                 <br /> <br />
@@ -42,7 +42,7 @@ export default class PlayerPage extends Component {
                                 width: 530, boxShadow: "0 0 3px rgba(0,0,0,0.2)", textAlign: "left",
                                 marginTop: 50, marginBottom: 20, marginLeft: 30
                             }}
-                                title="CryptoTeam Has Launched! - 16/4/2018"
+                                title="CryptoTeam Has Launched! - 20/5/2018"
                                 cover={<img alt="cover" src="https://www.wallpaperup.com/uploads/wallpapers/2014/01/24/236781/ec0863d44ae28207397f823809930e48.jpg" />}
                             >
 
