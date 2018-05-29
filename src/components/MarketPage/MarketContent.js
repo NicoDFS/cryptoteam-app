@@ -100,7 +100,7 @@ export default class MarketContent extends Component {
         this.setState({
             cards_per_page: size,
             market_split: split,
-            market: split[number - 1]
+            market: split[number]
         });
         window.scrollTo(0, 85);
     }
