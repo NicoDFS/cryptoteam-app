@@ -105,7 +105,8 @@ export default class PlayerModal extends Component {
                             title: 'Transaction Sent',
                             html: `<br/> Transaction to buy ${player.info.name} 
                     for ${this.props.price} ETH has been sent. Player will be added to your bench
-                    when the transaction is confirmed.`,
+                    when the transaction is confirmed.
+                    <br/><br/> Please make sure not to close CryptoTeam until your player has transferred.`,
                             footer: `<a href = https://etherscan.io/tx/${txHash}/> View transaction <a/>`
                         })
                     }
