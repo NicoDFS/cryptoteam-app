@@ -36,6 +36,10 @@ module.exports = {
                         options: {}
                     }
                 ]
+            },
+            {
+                test: /\.js?$/,
+                use: 'webpack-strip-log-loader'
             }
         ]
     },

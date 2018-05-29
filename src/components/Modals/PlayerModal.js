@@ -13,7 +13,12 @@ export default class PlayerModal extends Component {
         super(props);
         this.state = {
             visible: false,
+            rerender: true
         }
+    }
+
+    shouldComponentUpdate = (nextProps, nextState) => {
+        return this.state.rerender
     }
 
     componentWillReceiveProps(nextProps) {
@@ -134,6 +139,7 @@ export default class PlayerModal extends Component {
                 message: `${player.info.name} has been added to your bench.`,
                 duration: 4
             });
+            this.setState({ rerender: true })
         })
     }
 
@@ -175,8 +181,25 @@ export default class PlayerModal extends Component {
                         }, (err, txHash) => {
 
                             if (!err) {
-                                console.log("no error");
+
                                 this.beforePurchaseConfirmation(player, err, txHash);
+
+                                let event = contractInstance.Buy();
+                                let eventFired = false;
+                                this.setState({ rerender: false })
+
+                                event.watch((err, res) => {
+
+                                    if (!err && !eventFired) {
+                                        eventFired = true;
+                                        this.transferPlayer(player, txHash);
+                                    }
+                                    else {
+                                        console.log(res);
+                                    }
+                                })
+
+
                             } else {
                                 console.log(err);
                             }
@@ -192,16 +215,17 @@ export default class PlayerModal extends Component {
                         }, (err, txHash) => {
                             this.beforePurchaseConfirmation(player, err, txHash);
 
-                            // let event = contractInstance.Buy();
-                            // let eventFired = false;
+                            let event = contractInstance.Buy();
+                            let eventFired = false;
+                            this.setState({ rerender: false })
 
-                            // event.watch((err, res) => {
+                            event.watch((err, res) => {
 
-                            //     if (!err && !eventFired && res.type === "mined") {
-                            //         eventFired = true;
-                            //         this.transferPlayer(player, txHash);
-                            //     }
-                            // })
+                                if (!err && !eventFired) {
+                                    eventFired = true;
+                                    this.transferPlayer(player, txHash);
+                                }
+                            })
                         })
                     }
                 }
